@@ -1,0 +1,27 @@
+{
+  "name": "agentes",
+  "version": "2.0.0",
+  "homepage": "https://github.com/GobiernoFacil/evaluacion_ciudadana",
+  "authors": [
+    "el coruco <el.coruco@gmail.com>"
+  ],
+  "description": "evaluación ciudadana",
+  "main": "main.js",
+  "keywords": [
+    "agentes",
+    "de",
+    "innovación"
+  ],
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "backbone": "~1.1.2"
+  }
+}

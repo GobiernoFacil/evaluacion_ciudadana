@@ -6,3 +6,4 @@
 */cache/!.htaccess
 .DS_Store
 *.DS_Store
+html/js/bower_components
