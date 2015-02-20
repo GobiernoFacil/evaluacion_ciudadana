@@ -23,7 +23,8 @@ var Form_model = Backbone.Model.extend({
       form_id    : false,
       position   : 0,
       initialize : new Date(),
-      name       : false
+      name       : false,
+      enabled    : true
     }
   }
 });
