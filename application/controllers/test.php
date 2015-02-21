@@ -2,9 +2,15 @@
 
 class Test extends CI_Controller {
 
+  function __construct(){
+    parent::__construct();
+  }
+
 	public function index()
 	{
-		$this->load->view('test_view');
+    $data = [];
+    $data['form'] = $this->blueprint_model->get(1);
+		$this->load->view('test_view', $data);
 	}
 }
 

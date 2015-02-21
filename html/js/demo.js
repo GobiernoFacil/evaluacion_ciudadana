@@ -1,8 +1,16 @@
-// ENDPOINTS
+/* 
+* ENDPOINTS
+* ----------------------------------------
+*/
 var FORM_Endpoint     = '/forms',
     SECTION_Endpoint  = '/sections',
     QUESTION_Endpoint = '/questions'
 
+
+/* 
+* MODELS
+* ----------------------------------------
+*/
 
 // FORM model
 // ---------------------------------------
@@ -65,3 +73,19 @@ var Section_model = Backbone.Model.extend({
     }
   }
 });
+
+
+/* 
+* VIEWS
+* ----------------------------------------
+*/
+
+var Controller = Backbone.View.extend({
+  
+  el : 'body',
+
+  initialize : function(data){
+    this.model = new Form_model(data.form);
+  }
+});
+
