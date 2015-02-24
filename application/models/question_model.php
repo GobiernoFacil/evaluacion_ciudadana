@@ -1,21 +1,21 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 /** 
-* Blueprint model
+* Question model
 *
 * @author @gobiernofacil <howdy@gobiernofacil.com>
 */
 
-class Blueprint_model extends CI_Model{
+class Question_model extends CI_Model{
 
-  const TABLE = 'blueprints';
+  const TABLE = 'questions';
   
   function __construct(){
     parent::__construct();
   }
 
   function get($id){
-    $q = $this->db->get_where(self::TABLE, ['id' => $id]);
-    return $q->row();
+    $q = $this->db->get_where(self::TABLE, ['blueprint_id' => $id]);
+    return $q->result();
   }
 }

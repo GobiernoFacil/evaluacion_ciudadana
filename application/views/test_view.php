@@ -13,7 +13,12 @@
   <script src="/js/demo.js"></script>
   <script>
     var form = <?php echo json_encode($form); ?>;
-    var app = new Controller({form : form});
+    var questions = <?php echo json_encode($questions); ?>;
+    /* <?php echo count($questions); ?> */
+    var app = new Controller({
+      form      : form, 
+      questions : questions
+    });
   </script>
 </body>
 </html>

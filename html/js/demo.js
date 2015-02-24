@@ -85,7 +85,10 @@ var Controller = Backbone.View.extend({
   el : 'body',
 
   initialize : function(data){
-    this.model = new Form_model(data.form);
+    this.model      = new Form_model(data.form);
+    this.collection = new Backbone.Collection(data.questions, {
+      model : Question_model
+    });
   }
 });
 

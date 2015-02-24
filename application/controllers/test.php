@@ -9,7 +9,9 @@ class Test extends CI_Controller {
 	public function index()
 	{
     $data = [];
-    $data['form'] = $this->blueprint_model->get(1);
+    $data['form']      = $this->blueprint_model->get(1);
+    $data['questions'] = $this->question_model->get(1);
+
 		$this->load->view('test_view', $data);
 	}
 }
