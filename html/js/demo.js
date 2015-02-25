@@ -4,7 +4,8 @@
 */
 var FORM_Endpoint     = '/forms',
     SECTION_Endpoint  = '/sections',
-    QUESTION_Endpoint = '/questions'
+    QUESTION_Endpoint = '/questions',
+    OPTIONS_Endpoint  = '/question_options';
 
 
 /* 
@@ -56,6 +57,27 @@ var Question_model = Backbone.Model.extend({
   }
 });
 
+// OPTION model
+// ---------------------------------------
+//
+var Option_model = Backbone.Model.extend({
+  initialize : function(){
+
+  },
+
+  defaults : function(){
+    return {
+      question_id  : null,
+      blueprint_id : null,
+      description  : '',
+      value        : null,
+      name         : null,
+      order_num    : null
+    }
+  }
+});
+
+
 // SECTION model
 // ---------------------------------------
 //
@@ -80,6 +102,9 @@ var Section_model = Backbone.Model.extend({
 * ----------------------------------------
 */
 
+// Controller
+// ---------------------------------------
+//
 var Controller = Backbone.View.extend({
   
   el : 'body',
@@ -91,4 +116,35 @@ var Controller = Backbone.View.extend({
     });
   }
 });
+
+// Question
+// ---------------------------------------
+//
+var question = Backbone.View.extend({
+  events : {
+    'click a.add-option' : add_option
+  },
+
+  tagName : 'div',
+
+  initialize : function(){
+    this.render();
+
+  },
+
+  render : function(){
+
+  },
+
+  add_option : function(e){
+
+  }
+});
+
+/* 
+* TEMPLATES
+* ----------------------------------------
+*/
+
+var question_template = '<p><%= question %></p><ul></ul><p><a class="add-option" href="#">agregar respuesta</p>';
 
