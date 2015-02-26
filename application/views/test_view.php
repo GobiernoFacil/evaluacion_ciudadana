@@ -21,6 +21,8 @@
       form      : form, 
       questions : questions
     });
+
+    app.render();
   </script>
 </body>
 </html>

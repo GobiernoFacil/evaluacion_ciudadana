@@ -1,4 +1,12 @@
 /* 
+* TEMPLATES
+* ----------------------------------------
+*/
+
+var question_template = '<p><%= question %></p><ul></ul><p><a class="add-option" href="#">agregar respuesta</p>';
+var option_template   = '<form><p><label>descripción:</label><input type="text" name="description"></p><p><label>valor:</label><input type="text" name="value"></p><p><input type="submit" value="agregar"></p></form>';
+
+/* 
 * ENDPOINTS
 * ----------------------------------------
 */
@@ -114,37 +122,89 @@ var Controller = Backbone.View.extend({
     this.collection = new Backbone.Collection(data.questions, {
       model : Question_model
     });
+  },
+
+  render : function(){
+    this.collection.each(function(model){
+      var question = new Question({model : model});
+      this.$('#main').append(question.render().el);
+    });
   }
 });
 
 // Question
 // ---------------------------------------
 //
-var question = Backbone.View.extend({
+var Question = Backbone.View.extend({
   events : {
-    'click a.add-option' : add_option
+    'click a.add-option' : 'add_option'
   },
 
   tagName : 'div',
 
-  initialize : function(){
-    this.render();
+  template : _.template(question_template),
 
+  initialize : function(){
+    this.collection = new Backbone.Collection([], {
+      model : Option_model
+    });
+
+    this.model.set({view : this});
+
+    this.listenTo(this.collection, 'add', this.render_option);
   },
 
   render : function(){
+    this.$el.append(this.template(this.model.attributes));
+    return this;
+  },
 
+  render_option : function(model, collection, options){
+    var opt = new Option({model : model});
+    this.$('ul').append(opt.render().el);
   },
 
   add_option : function(e){
+    e.preventDefault();
 
+    this.collection.add({
+      question_id  : this.model.id,
+      blueprint_id : this.model.get('blueprint_id'),
+      order_num    : this.collection.length
+    });
   }
 });
 
-/* 
-* TEMPLATES
-* ----------------------------------------
-*/
+// Option
+// ---------------------------------------
+//
+var Option = Backbone.View.extend({
+  events : {
+    'submit' : 'handle_option'
+  },
 
-var question_template = '<p><%= question %></p><ul></ul><p><a class="add-option" href="#">agregar respuesta</p>';
+  tagName : 'li',
+
+  template : _.template(option_template),
+
+  initialize : function(){
+    this.model.set({view : this});
+  },
+
+  render : function(){
+    this.$el.append(this.template(this.model.attributes));
+    return this;
+  },
+
+  handle_option : function(e){
+    e.preventDefault();
+    if(this.model.isNew()){
+      console.log('is new');
+    }
+    else{
+      console.log('not new');
+    }
+  }
+});
+
 
