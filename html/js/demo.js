@@ -70,8 +70,9 @@ var Question_model = Backbone.Model.extend({
 //
 var Option_model = Backbone.Model.extend({
   initialize : function(){
-
   },
+
+  urlRoot : OPTIONS_Endpoint,
 
   defaults : function(){
     return {
@@ -171,8 +172,7 @@ var Question = Backbone.View.extend({
     this.collection.add({
       question_id  : this.model.id,
       blueprint_id : this.model.get('blueprint_id'),
-      order_num    : this.collection.length,
-      collection   : this.collection
+      order_num    : this.collection.length
     });
   }
 });
@@ -190,7 +190,6 @@ var Option = Backbone.View.extend({
   template : _.template(option_template),
 
   initialize : function(){
-    // this.model.set({view : this});
   },
 
   render : function(){
@@ -201,9 +200,17 @@ var Option = Backbone.View.extend({
   handle_option : function(e){
     e.preventDefault();
 
+    var description = this.$('input[name="description"]').val();
+    var value       = this.$('input[name="value"]').val();
+
+    this.model.set({
+      description : description,
+      value       : value
+    });
+    
     if(this.model.isNew()){
-      console.log('is new', this.model.collection);
-      // this.model.save();
+      console.log('is new');
+      this.model.save();
     }
     else{
       console.log('not new');

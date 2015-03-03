@@ -109,7 +109,7 @@ $autoload['language'] = array();
 |
 */
 
-$autoload['model'] = array('blueprint_model', 'question_model', 'question_options_model');
+$autoload['model'] = array('blueprint_model', 'question_model', 'question_options_model','applicants_model');
 
 
 /* End of file autoload.php */

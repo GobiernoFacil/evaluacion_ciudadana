@@ -15,9 +15,17 @@ class Question_options extends CI_Controller {
 
   public function index(){
     $option = json_decode(file_get_contents('php://input'));
-    // $id     = $this->question_options_model->save($option);
-    header('Content-Type: application/json');
-    echo json_encode(['the_option' => $option, 'the_request' => $_SERVER]);
+    $option->name = uniqid();
+
+    if($_SERVER['REQUEST_METHOD'] == 'POST'){
+      $id = $this->question_options_model->save($option);
+      header('Content-Type: application/json');
+      echo json_encode(['id' => $id]);
+    }
+    else{
+      header('Content-Type: application/json');
+      echo json_encode($option);
+    }
   }
 
   public function delete(){
