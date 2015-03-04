@@ -8,3 +8,4 @@
 *.DS_Store
 html/js/bower_components
 *.pem
+html/css/src_sass
