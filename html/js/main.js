@@ -12,7 +12,7 @@ require.config({
     jquery        : 'bower_components/jquery/dist/jquery',
     backbone      : "bower_components/backbone/backbone",
     underscore    : "bower_components/underscore/underscore",
-    text          : "bower_components/text/text"
+    text          : "bower_components/requirejs-text/text"
   },
   shim : {
     backbone : {
