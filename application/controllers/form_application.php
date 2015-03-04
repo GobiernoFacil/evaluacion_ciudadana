@@ -46,6 +46,7 @@ class Form_application extends CI_Controller {
       // si el form key es válido
       else{
         $data = [];
+        $data['applicant'] = $applicant;
         $data['blueprint'] = $this->blueprint_model->get($applicant->blueprint_id);
         $data['questions'] = $this->question_model->get($data['blueprint']->id);
         $data['options']   = $this->question_options_model->get($data['blueprint']->id);

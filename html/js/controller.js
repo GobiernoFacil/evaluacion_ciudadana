@@ -37,12 +37,26 @@ define(function(require){
     // ------------------------
     //
     initialize : function(){
-    },
 
-    //
-    // D E F I N E   T H E   A P I   M E T H O D S
-    // --------------------------------------------------------------------------------
-    //
+      // [ THE MODEL ]
+      // inicia el modelo con el id del bluprint, el identificador
+      // del formulario y el título
+      this.model = new Backbone.Model({
+        id    : form_id,
+        key   : form_key, 
+        title : form_title
+      });
+
+      // [ THE COLLECTION ]
+      // se inicia la colección con todas las preguntas del
+      // formulario
+      this.collection = new Backbone.Collection(form_questions);
+
+      // [ THE OTHER COLLECTIONS ]
+      // aquí se incluye la lista de opciones (y tal vez respuestas)
+      // de todas las preguntas
+      this.q_options = new Backbone.Collection(form_options);
+    }
 
   });
 
