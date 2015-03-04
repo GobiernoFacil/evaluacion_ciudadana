@@ -40,7 +40,7 @@
 
 $route['default_controller']  = "welcome";
 $route['404_override']        = '';
-$route['cuestionario/(:any)'] = 'form_application/$1';
+$route['cuestionario/(:any)'] = 'form_application/index/$1';
 
 
 /* End of file routes.php */

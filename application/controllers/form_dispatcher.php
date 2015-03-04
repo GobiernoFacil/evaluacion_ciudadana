@@ -6,8 +6,7 @@ class Form_dispatcher extends CI_Controller {
     parent::__construct();
   }
 
-  public function index()
-  {
+  public function index(){
     
     $emails = [];
 
