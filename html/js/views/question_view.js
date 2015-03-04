@@ -7,8 +7,9 @@
 
 define(function(require){
 
-  var Backbone   = require('backbone'),
-      Question   = require('text!templates/survey_question.html');
+  var Backbone = require('backbone'),
+      Question = require('text!templates/survey_question.html'),
+      Option   = require('text!templates/survey_option.html'); 
 
   var section = Backbone.View.extend({
     events : {
@@ -17,13 +18,20 @@ define(function(require){
     tagName : 'div',
 
     template : _.template(Question),
+    opt_temp : _.template(Option),
 
-    initialize : function(){
+    initialize : function(settings){
+      this.opt = settings.opt;
       this.render();
     },
 
     render : function(){
       this.$el.html(this.template(this.model.attributes));
+      if(this.opt.length){
+        this.opt.each(function(option){
+          this.$el.append(this.opt_temp(option.attributes));
+        }, this);
+      }
       return this;
     }
   });

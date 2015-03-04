@@ -74,7 +74,7 @@ define(function(require){
       // [ THE SECTIONS ]
       // agrega un <fieldset> por cada sección del formulario
       // cada uno puede contener descripciones y preguntas.
-      
+
       // [1] obtiene la lista de secciones de la colección de preguntas 
       var sections  = _.uniq(this.collection.pluck('section_id'));
 
@@ -82,7 +82,7 @@ define(function(require){
       //     colección de preguntas y una referencia al controller (por si ocupa).
       _.each(sections, function(section){
         var collection = new Backbone.Collection(this.collection.where({section_id : section}));
-        this.sections.push(new Section({collection : collection, parent : this}));
+        this.sections.push(new Section({collection : collection, controller : this}));
       }, this);
 
       //  [3] por ahora, después de generar la sección, la renderea, pero esto 

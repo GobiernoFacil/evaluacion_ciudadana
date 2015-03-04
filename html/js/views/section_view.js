@@ -16,13 +16,15 @@ define(function(require){
 
     tagName : 'fieldset',
 
-    initialize : function(){
+    initialize : function(settings){
+      this.controller = settings.controller;
       this.questions = [];
     },
 
     render : function(){
       this.collection.each(function(question){
-        var q = new Question({model : question});
+        var opt = new Backbone.Collection(this.controller.q_options.where({question_id : question.id}));
+        var q = new Question({model : question, opt : opt});
         this.$el.append(q.render().el);
         this.questions.push(q);
       }, this);
