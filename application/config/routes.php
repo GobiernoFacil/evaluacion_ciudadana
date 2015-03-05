@@ -41,6 +41,7 @@
 $route['default_controller']  = "welcome";
 $route['404_override']        = '';
 $route['cuestionario/(:any)'] = 'form_application/index/$1';
+$route['respuestas']          = 'survey_handler/index';
 
 
 /* End of file routes.php */

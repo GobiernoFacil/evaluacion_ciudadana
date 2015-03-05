@@ -8,7 +8,7 @@
   <h1>Primer formulario</h1>
   <div id="main">
     <form id="survey">
-
+    
     </form>
   </div>
   

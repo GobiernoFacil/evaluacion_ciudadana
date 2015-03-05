@@ -15,6 +15,8 @@ define(function(require){
 
   var section = Backbone.View.extend({
     events : {
+      'click input[type="radio"]' : 'save_response',
+      'blur input[type="text"]'   : 'save_response'
     },
 
     tagName : 'div',
@@ -25,7 +27,16 @@ define(function(require){
     inp_temp : _.template(Input),
 
     initialize : function(settings){
-      this.opt = settings.opt;
+      // [ THE INITAL SETTINGS ]
+      // [1] this.opt es una colección de opciones (si es de opción múltiple)
+      // [2] this.controller es una referencia al objeto app.
+      // [3] this.server_value es el valor de la respuesta en el servidor
+      this.opt          = settings.opt;
+      this.controller   = settings.controller;
+      this.server_value = false;
+
+      // [ THE HTML ]
+      // las respuestas generan su HTLM desde el momento que se crean
       this.render();
     },
 
@@ -59,13 +70,33 @@ define(function(require){
         this.$el.append(this.inp_temp(this.model.attributes));
       }
 
-      // [ D ] Se trata de una descripción, no hay que hacer nada
-      //       (por ahora)
-      else{
-        //
-      }
-
       return this;
+    },
+
+    save_response : function(e){
+      // [ UPDATE THE SERVER ]
+      // Cada que se contesta o cambia una respuesta, esta es enviada al
+      // servidor.
+      // [1] obtiene y revisa que la respuesta sea válida
+      var res = this.$(e.currentTarget).val();
+      if(res){
+      // [2] genera el objeto de respuesta al servidor
+        var server_res = {
+          question_value : res,
+          form_key       : this.controller.model.get('key'),
+          question_id    : this.model.id
+        };
+
+      // [3] envia la respuesta al servidor
+        var that = this;
+        $.post('/index.php/respuestas', server_res, function(data){
+      // [4] Si la operación tuvo "éxito-hacker cívico", se guarda la respuesta
+      //     dentro del view actual. (Por si las flys)
+          if(data){
+            that.server_value = data;
+          }
+        }, 'json');
+      }
     }
   });
 

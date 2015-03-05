@@ -24,7 +24,7 @@ define(function(require){
     render : function(){
       this.collection.each(function(question){
         var opt = new Backbone.Collection(this.controller.q_options.where({question_id : question.id}));
-        var q = new Question({model : question, opt : opt});
+        var q = new Question({model : question, opt : opt, controller : this.controller});
         this.$el.append(q.render().el);
         this.questions.push(q);
       }, this);
