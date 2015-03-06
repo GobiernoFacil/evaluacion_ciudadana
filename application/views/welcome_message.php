@@ -37,10 +37,10 @@
 <footer>
 	<div class="container">
 		<div class="row">
-			<div class="col-sm-5">
+			<div class="col-sm-3">
 				<p>Forjado artesanalmente por <a href="http://gobiernofacil.com" class="gobiernofacil">Gobierno Fácil</a></p>
 			</div>
-			<div class="col-sm-7">
+			<div class="col-sm-9">
 				<ul>
 					<li>¿Qué es?</li>					
 					<li>Datos abiertos</li>
