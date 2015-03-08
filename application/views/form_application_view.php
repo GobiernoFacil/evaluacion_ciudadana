@@ -46,11 +46,14 @@
   
   <!-- JS STUFF -->
   <script>
-  var form_key       = "<?php echo $applicant->form_key; ?>",
-      form_title     = "<?php echo $blueprint->title; ?>",
-      form_id        = <?php echo $blueprint->id; ?>,
-      form_questions = <?php echo json_encode($questions); ?>,
-      form_options   = <?php echo json_encode($options); ?>;
+  var agentesFormSettings = {
+        key       : "<?php echo $applicant->form_key; ?>",
+        title     : "<?php echo $blueprint->title; ?>",
+        id        : <?php echo $blueprint->id; ?>,
+        questions : <?php echo json_encode($questions); ?>,
+        options   : <?php echo json_encode($options); ?>,
+        answers   : <?php echo json_encode($answers); ?>
+      };
   </script>
   <!-- DEVELOPMENT SOURCE -->
   <script data-main="/js/main" src="/js/bower_components/requirejs/require.js"></script>

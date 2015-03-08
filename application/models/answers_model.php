@@ -31,7 +31,10 @@ class Answers_model extends CI_Model{
     }
 
     return $this->db->affected_rows();
+  }
 
-
+  function get($form_key){
+    $q = $this->db->get_where(self::TABLE, ['form_key' => $form_key]);
+    return $q->result();
   }
 }
