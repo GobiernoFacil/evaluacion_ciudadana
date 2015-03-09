@@ -18,7 +18,6 @@
 	<nav class="col-sm-2 col-sm-offset-10">
 		<ul>
 			<li>Acerca</li>
-			<li>Ingresar</li>
 		</ul>
 	</nav>
 </div>
