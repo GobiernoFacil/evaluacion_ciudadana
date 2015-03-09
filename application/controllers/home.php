@@ -5,7 +5,7 @@ class Home extends CI_Controller {
 	public function index()
 	{
 		$data['title'] 			= 'Tú Evalúas';
-		$data['description'] 	= 'Tú evalúas es una iniciativa dirigida a los beneficiarios de los programas públicos federales.';
+		$data['description'] 	= 'Tu opinión sobre los programas públicos federales ayuda a mejorarlos.';
 		$data['body_class'] 	= 'home';
 		
 		$this->load->view('/templates/header_view', $data);
@@ -15,7 +15,11 @@ class Home extends CI_Controller {
 	
 	public function about()
 	{
+		$data['title'] 			= 'Qué es Tú Evalúas';
+		$data['description'] 	= 'Tú evalúas es una iniciativa dirigida a los beneficiarios de los programas públicos federales.';
+		$this->load->view('/templates/header_view', $data);
 		$this->load->view('/home/about_view');
+		$this->load->view('/templates/footer_view');
 	}
 }
 

@@ -13,11 +13,22 @@
 	<link rel="stylesheet" href="/css/normalize.css">
     <link rel="stylesheet" href="/css/styles.css">
 </head>
-<body <?php echo (!$body_class) ? '' : 'class="' . $body_class . '"';?>>
+<body <?php echo (!isset($body_class)) ? '' : 'class="' . $body_class . '"';?>>
 <div class="row">
+	<?php if (isset($body_class) && ($body_class == "home")):?>
 	<nav class="col-sm-2 col-sm-offset-10">
 		<ul>
-			<li>Acerca</li>
+			<li><?php echo anchor('/about','Acerca');?></li>
 		</ul>
 	</nav>
+	<?php else:?>
+	<nav class="col-sm-3">
+		<a href="/" class="tuevaluas">Tú evalúas</a>
+	</nav>
+	<nav class="col-sm-2 col-sm-offset-7">
+		<ul>
+			<li><?php echo anchor('/about','Acerca');?></li>
+		</ul>
+	</nav>
+	<?php endif;?>
 </div>

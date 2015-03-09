@@ -6,7 +6,7 @@
 			</div>
 			<div class="col-sm-9">
 				<ul>
-					<li>¿Qué es?</li>					
+					<li><?php echo anchor('/about','¿Qué es?');?></li>					
 					<li>Datos abiertos</li>
 					<li>Preguntas</li>
 					<li>Términos</li>
