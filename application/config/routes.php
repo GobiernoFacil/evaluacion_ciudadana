@@ -43,7 +43,10 @@ $route['404_override']        = '';
 $route['cuestionario/(:any)'] = 'form_application/index/$1';
 $route['respuestas']          = 'survey_handler/index';
 $route['about']          	  = 'home/about';
-
+$route['preguntas']           = 'home/preguntas';
+$route['terms']           	  = 'home/terms';
+$route['privacy']             = 'home/privacy';
+$route['contact']             = 'home/contact';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
