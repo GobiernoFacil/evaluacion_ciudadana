@@ -186,8 +186,8 @@ input[type="search"]::-webkit-search-decoration {
 
 fieldset {
   counter-reset: div;
-  border-top: #ccc 1px solid;
-  border-bottom: #ccc 1px solid;
+  border-top: #f2f2f2 1px solid;
+  border-bottom: #e2edf2 1px solid;
   padding: 40px 0;
   margin: 40px 0; }
   fieldset p, fieldset li, fieldset ul {
@@ -202,18 +202,30 @@ fieldset {
       margin-bottom: 20px; }
   fieldset input[type="radio"] {
     margin-right: 5px; }
+  fieldset input[type="text"] {
+    line-height: 40px;
+    padding: 0 10px;
+    width: 90%; }
   fieldset .count {
-    background: #f2f2f2; }
+    background: #f2f2f2;
+    margin-bottom: 30px;
+    padding-bottom: 20px; }
     fieldset .count p {
       font-size: 18px;
-      padding-top: 0.8em;
-      margin-top: 0.8em;
-      border-bottom: #e2edf2 1px solid;
-      margin-bottom: 0.45rem; }
-      fieldset .count p:before {
-        counter-increment: div;
-        /* Increment the section counter*/
-        content: counter(div) ". "; }
+      margin: 0 0 10px 80px;
+      text-align: left; }
+    fieldset .count b.number:before {
+      background: #FF6F69;
+      color: white;
+      font-size: 22px;
+      font-weight: 700;
+      counter-increment: div;
+      /* Increment the section counter*/
+      content: counter(div);
+      padding: 10px 15px 15px; }
+    fieldset .count li {
+      text-align: left;
+      margin-left: 80px; }
     fieldset .count header {
       background: white; }
       fieldset .count header p {
@@ -221,7 +233,7 @@ fieldset {
         font-weight: 300;
         line-height: 1.5;
         border: none;
-        margin-top: 10px;
+        margin: 10px 0 0;
         text-align: left; }
         fieldset .count header p + p {
           color: #011C26;
@@ -234,7 +246,8 @@ fieldset {
         fieldset .count header ol li {
           text-align: left;
           list-style: decimal;
-          font: 500 18px/1.4 "Raleway"; }
+          font: 500 18px/1.4 "Raleway";
+          margin-left: 0; }
       fieldset .count header p:before {
         content: ""; }
 
