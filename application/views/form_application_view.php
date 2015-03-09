@@ -13,6 +13,11 @@
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
+<div class="row">
+	<nav class="col-sm-3">
+		<a href="/" class="tuevaluas">Tú evalúas</a>
+	</nav>
+</div>
 	<div class="container cuestiona">
 		<h1>Primer formulario</h1>
 		<div id="main" class="row">
