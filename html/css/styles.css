@@ -185,14 +185,11 @@ input[type="search"]::-webkit-search-decoration {
   padding: 0.2em 0; }
 
 fieldset {
+  counter-reset: div;
+  border-top: #ccc 1px solid;
   border-bottom: #ccc 1px solid;
-  padding-bottom: 40px;
-  margin-bottom: 40px; }
-  fieldset header p {
-    font-weight: 300; }
-    fieldset header p:last-child {
-      font-size: 15px;
-      margin-top: 10px; }
+  padding: 40px 0;
+  margin: 40px 0; }
   fieldset p, fieldset li, fieldset ul {
     text-align: center;
     margin-bottom: 0; }
@@ -205,6 +202,41 @@ fieldset {
       margin-bottom: 20px; }
   fieldset input[type="radio"] {
     margin-right: 5px; }
+  fieldset .count {
+    background: #f2f2f2; }
+    fieldset .count p {
+      font-size: 18px;
+      padding-top: 0.8em;
+      margin-top: 0.8em;
+      border-bottom: #e2edf2 1px solid;
+      margin-bottom: 0.45rem; }
+      fieldset .count p:before {
+        counter-increment: div;
+        /* Increment the section counter*/
+        content: counter(div) ". "; }
+    fieldset .count header {
+      background: white; }
+      fieldset .count header p {
+        font-size: 28px;
+        font-weight: 300;
+        line-height: 1.5;
+        border: none;
+        margin-top: 10px;
+        text-align: left; }
+        fieldset .count header p + p {
+          color: #011C26;
+          font: 500 18px/1.4 "Raleway"; }
+      fieldset .count header small {
+        font-size: 13px;
+        font-style: oblique; }
+      fieldset .count header ol {
+        margin-left: 50px; }
+        fieldset .count header ol li {
+          text-align: left;
+          list-style: decimal;
+          font: 500 18px/1.4 "Raleway"; }
+      fieldset .count header p:before {
+        content: ""; }
 
 .wrapper {
   width: 90%;

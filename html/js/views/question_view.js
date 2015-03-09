@@ -37,6 +37,7 @@ define(function(require){
     // -----------------
     //
     tagName : 'div',
+    className : 'col-sm-10 col-sm-offset-1 count',
 
     // -----------------
     // SET THE TEMPLATES
