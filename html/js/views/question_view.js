@@ -87,6 +87,10 @@ define(function(require){
       //       de <radio>
       if(this.opt.length){
         this.opt.each(function(option){
+          // [ A.1 ] le pasa a cada opción el valor del servidor para
+          //         la pregunta a la que pertenece. Si ya fue respondida,
+          //         le agrega el atributo "checked"; si no, no pasa nada. 
+          option.set({default_value : this.model.get('default_value')});
           this.$el.append(this.opt_temp(option.attributes));
         }, this);
       }
@@ -108,7 +112,7 @@ define(function(require){
     //
     save_response : function(e){
       // [ UPDATE THE SERVER ]
-      // Cada que se contesta o cambia una respuesta, esta es enviada al
+      // Cada que se contesta o cambia una respuesta, ésta es enviada al
       // servidor.
       // [1] obtiene y revisa que la respuesta sea válida
       var res = this.$(e.currentTarget).val();

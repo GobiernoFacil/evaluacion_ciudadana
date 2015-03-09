@@ -69,6 +69,14 @@ define(function(require){
       // saber si el usuario ha terminado de contestar cada sección.
       this._update_questions();
 
+      // [ GENERATE SECTIONS ]
+      // cada sección es un paso en la navegación del formulario.
+      this._create_sections();
+
+      // [ THE POINTER ]
+      // lleva registro de dónde va el la navegación del formulario
+      this.navigation_pointer = 0;
+
       // [ RENDER ]
       // genera el HTML para el formulario
       this.render();
@@ -79,22 +87,37 @@ define(function(require){
     // --------------------------------------------------------------------------------
     //
     render : function(){
+      // [ THE FIRST SECTION ]
+      // [1] dibuja solo la primera sección del formulario
+      this.$('#survey').append(this.sections[0].render().el);
+      // [2] por si las flys, actualiza el pointer
+      this.navigation_pointer = 0;
+    },
+
+    render_next : function(){
+      // [ THE n SECTION ]
+      // dibuja la siguiente sección, siempre y cuando exista!
+
+      // [1] obtiene la siguiente posición del formulario
+      var position = this.navigation_pointer + 1;
+
+      // [2] revisa que la nueva posición sea válida!
+      if(position < this.sections.length){
+
+      // [3] hace hueco para el siguiente contenido.
+      //     aquí es donde podría haber "magia" en la interacción
+        this.$('#survey').html('');
+      // [4] renderea la siguiente sección
+        this.$('#survey').append(this.sections[position].render().el);
+      // [5] actualiza el pointer
+        this.navigation_pointer++;
+      }
+    },
+
+    render_all : function(){
       // [ THE SECTIONS ]
       // agrega un <fieldset> por cada sección del formulario
       // cada uno puede contener descripciones y preguntas.
-
-      // [1] obtiene la lista de secciones de la colección de preguntas 
-      var sections  = _.uniq(this.collection.pluck('section_id'));
-
-      // [2] para cada sección, genera un view (Section), que incluye una 
-      //     colección de preguntas y una referencia al controller (por si ocupa).
-      _.each(sections, function(section){
-        var collection = new Backbone.Collection(this.collection.where({section_id : section}));
-        this.sections.push(new Section({collection : collection, controller : this}));
-      }, this);
-
-      //  [3] por ahora, después de generar la sección, la renderea, pero esto 
-      //      puede/debe cambiar en el futuro.
       _.each(this.sections, function(section){
         this.$('#survey').append(section.render().el);
       }, this);
@@ -105,6 +128,22 @@ define(function(require){
     // I N T E R N A L   F U N C T I O N S 
     // --------------------------------------------------------------------------------
     //
+    _create_sections : function(){
+      // [ THE SECTIONS ]
+      // A partir de la colección de preguntas, genera una lista de secciones.
+      // Con esta lista llena un Array (this.sections) de Views, uno por cada sección.
+
+      // [1] obtiene la lista de secciones de la colección de preguntas 
+      var sections  = _.uniq(this.collection.pluck('section_id'));
+
+      // [2] para cada sección, genera un view (Section), que incluye una 
+      //     colección de preguntas y una referencia al controller (por si ocupa).
+      _.each(sections, function(section){
+        var collection = new Backbone.Collection(this.collection.where({section_id : section}));
+        this.sections.push(new Section({collection : collection, controller : this}));
+      }, this);
+    },
+
     _update_questions : function(){
       this.collection.each(function(question){
         // [ THE ANSWER ]
