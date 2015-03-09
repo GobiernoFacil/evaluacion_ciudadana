@@ -38,10 +38,11 @@
 |
 */
 
-$route['default_controller']  = "welcome";
+$route['default_controller']  = "home";
 $route['404_override']        = '';
 $route['cuestionario/(:any)'] = 'form_application/index/$1';
 $route['respuestas']          = 'survey_handler/index';
+$route['about']          	  = 'home/about';
 
 
 /* End of file routes.php */
