@@ -9,12 +9,13 @@
 	<title><?php echo $title;?></title>
 	<meta name="description" content="<?php echo $description;?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="/img/favicon.ico">
 	<link href='http://fonts.googleapis.com/css?family=Raleway:700,400,300' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="/css/normalize.css">
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body <?php echo (!isset($body_class)) ? '' : 'class="' . $body_class . '"';?>>
-<div class="row">
+<div class="clearfix">
 	<?php if (isset($body_class) && ($body_class == "home")):?>
 	<nav class="col-sm-2 col-sm-offset-10">
 		<ul>
