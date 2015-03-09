@@ -847,8 +847,8 @@ nav {
     width: 44px; }
     nav .tuevaluas:hover {
       width: 125px;
-      -webkit-transition: width 0.6s;
-      transition: width 0.6s; }
+      -webkit-transition: width 0.4s;
+      transition: width 0.4s; }
 
 .intro {
   color: #011C26;
