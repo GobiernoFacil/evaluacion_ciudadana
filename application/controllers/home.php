@@ -4,12 +4,12 @@ class Home extends CI_Controller {
 
 	public function index()
 	{
-		$this->load->view('welcome_message');
+		$this->load->view('/home/home_view');
 	}
 	
 	public function about()
 	{
-		$this->load->view('welcome_message');
+		$this->load->view('/home/about_view');
 	}
 }
 
