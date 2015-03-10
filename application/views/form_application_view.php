@@ -38,12 +38,12 @@
 			</div>
 			<div class="col-sm-9">
 				<ul>
-					<li>¿Qué es?</li>					
+					<li><?php echo anchor('/about','¿Qué es?');?></li>					
 					<li>Datos abiertos</li>
-					<li>Preguntas</li>
-					<li>Términos</li>
-					<li>Privacidad</li>
-					<li>Contacto</li>
+					<li><?php echo anchor('/preguntas','Preguntas');?></li>
+					<li><?php echo anchor('/terms','Términos');?></li>
+					<li><?php echo anchor('/privacy','Privacidad');?></li>
+					<li><?php echo anchor('/contact','Contacto');?></li>
 				</ul>
 			</div>
 		</div>
