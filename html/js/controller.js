@@ -57,10 +57,12 @@ define(function(require){
       // [ THE OTHER COLLECTIONS ]
       // aquí se incluye la lista de opciones (y tal vez respuestas)
       // de todas las preguntas. También las secciones en las que está
-      // dividido el cuestionario
+      // dividido el cuestionario y las reglas que se aplican para navegar
+      // en él.
       this.q_options = new Backbone.Collection(agentesFormSettings.options);
       this.answers   = new Backbone.Collection(agentesFormSettings.answers);
       this.sections  = [];
+      this._define_nav_rules();
 
       // [ UPDATE THE COLLECTION ]
       // si la pregunta ya fue contestada, se le asigna un valor por default;
@@ -103,13 +105,47 @@ define(function(require){
 
       // [2] revisa que la nueva posición sea válida!
       if(position < this.sections.length){
+      // [3] obtiene los requisitos para la siguiente sección
+        var rules = this.nav_rules[position];
+      // [4] si hay requisitos, revisa que se cumplan, y si no,
+      //     que cargue los requisitos de la siguiente sección
+      //     y así hasta llegar a una sección que cumpla los requisitos
+      //     o al final del formulario
+        while(rules){
+        // [4.1] busca la pregunta que define si se despliega o no la siguiente
+        //       sección. Por ahora solo se puede poner una pregunta x regla.
+        //       Seguro en el futuro serán más lol.
+          var question = this.collection.findWhere({id : rules.question});
+        // [4.2] obtiene el valor de default de la pregunta.
+          var value    = question.get('default_value');
+        // [4.3] si el valor coincide con la condición, termina el ciclo
+        console.log(value, rules.val.indexOf(value), rules);
+          if(rules.val.indexOf(value) > -1){
+            console.log('se cumple la condicición', rules);
+            break;
+          }
+        // [4.4] si el valor no coincide, pero no hay más preguntas,
+        //       también termina el ciclo y renderea la última sección 
+          else if(position + 1 >= this.sections.length){
+            console.log('no se cumple la condicición, pero es la última sección', rules);
+            break;
+          }
+        // [4.5] si el valor no coincide, pero hay más secciones, mueve
+        //       el pointer y revisa de nuevo
+          else{
+            position++;
+            this.navigation_pointer++;
+            rules = this.nav_rules[position];
+            console.log('se refifa el ciclo', rules);
+          }
+        }
 
-      // [3] hace hueco para el siguiente contenido.
+      // [5] hace hueco para el siguiente contenido.
       //     aquí es donde podría haber "magia" en la interacción
         this.$('#survey').html('');
-      // [4] renderea la siguiente sección
+      // [6] renderea la siguiente sección
         this.$('#survey').append(this.sections[position].el);
-      // [5] actualiza el pointer
+      // [7] actualiza el pointer
         this.navigation_pointer++;
       }
     },
@@ -141,21 +177,25 @@ define(function(require){
     // --------------------------------------------------------------------------------
     //
     _define_nav_rules : function(){
-      var nav_rules = [
+      // [ THE NAV RULES]
+      // con esta guía, no se muestran todos los páneles, solo
+      // los que concuerden con la navegación.
+      // hace falta definir algo similar para validar las respuestas.
+      this.nav_rules = [
       null, 
       null,
-      {question : '1', value : ['1', '2']},
+      {question : '6', val : ['1', '2']},
       null,
-      {question : '12', value : ['1']},
-      {question : '1', value : ['1', '2']},
-      {question : '1', value : ['2']},
-      {question : '1', value : ['3']},
-      {question : '25', value : ['1']},
+      {question : '12', val : ['1']},
+      {question : '6',  val : ['1', '2']},
+      {question : '6',  val : ['2']},
+      {question : '6',  val : ['3']},
+      {question : '25', val : ['1']},
       null,
-      {question : '1', value : ['1', '2']},
-      {question : '32', value : ['1']},
+      {question : '6',  val : ['1', '2']},
+      {question : '32', val : ['1']},
       null,
-      {question : '38', value : ['1']},
+      {question : '38', val : ['1']},
       null
       ];
     },
