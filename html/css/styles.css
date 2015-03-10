@@ -206,6 +206,13 @@ fieldset {
     line-height: 40px;
     padding: 0 10px;
     width: 90%; }
+  fieldset a.next {
+    background: #FF6F69;
+    color: white;
+    margin: 10px 0;
+    padding: 10px 40px; }
+    fieldset a.next:hover {
+      background: #011C26; }
   fieldset .count {
     background: #f2f2f2;
     margin-bottom: 30px;
@@ -227,7 +234,8 @@ fieldset {
       text-align: left;
       margin-left: 80px; }
     fieldset .count header {
-      background: white; }
+      background: white;
+      padding-bottom: 20px; }
       fieldset .count header p {
         font-size: 28px;
         font-weight: 300;
@@ -243,7 +251,7 @@ fieldset {
         font-style: oblique;
         padding-bottom: 10px; }
       fieldset .count header ol {
-        margin-left: 50px; }
+        margin: 10px 0 0 50px; }
         fieldset .count header ol li {
           text-align: left;
           list-style: decimal;
