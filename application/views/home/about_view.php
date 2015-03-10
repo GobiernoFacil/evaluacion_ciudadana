@@ -1,11 +1,10 @@
 <div class="container">
 	<div class="row">
 		<article>
-			<div class="col-sm-10 col-sm-offset-1">
+			<div class="col-sm-8 col-sm-offset-2">
 				<h1>¿Qué es <strong>Tú Evalúas</strong>?</h1>
 				<p><strong>Tú Evalúas</strong> es una plataforma digital que tiene como objetivo recabar la opinión ciudadana sobre los 
-					programas públicos federales.</p>
-				<p>Mediante <strong>Tú Evalúas</strong> podrás valorar los procesos seguidos por cada programa y expresar tu 
+					programas públicos federales. Mediante <strong>Tú Evalúas</strong> podrás valorar los procesos seguidos por cada programa y expresar tu 
 					satisfacción con los productos y servicios que ofrecen.</p>
 				<p><strong>Tú Evalúas</strong> facilitará la colaboración entre el gobierno y la ciudadanía partiendo de una base 
 					tecnológica para:</p>

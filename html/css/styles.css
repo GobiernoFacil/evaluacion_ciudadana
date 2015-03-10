@@ -899,14 +899,17 @@ article {
     border-top: #e2edf2 1px solid;
     margin-bottom: 0.45rem; }
   article p {
-    font-size: 16px;
-    line-height: 1.4; }
+    font-size: 17px;
+    line-height: 28px; }
     article p strong {
       color: #FF6F69; }
     article p a:link, article p a:visited {
       color: #FF6F69; }
       article p a:link:hover, article p a:visited:hover {
         border-bottom: 1px dotted #FF6F69; }
+  article li {
+    font-size: 17px;
+    line-height: 28px; }
   article div {
     border-bottom: 1px solid #f2f2f2;
     padding-bottom: 30px; }
