@@ -26,6 +26,7 @@ define(function(require){
     // ------------------
     //
     events : {
+      'click .next' : 'next'
     },
 
     // -----------------
@@ -47,7 +48,7 @@ define(function(require){
     initialize : function(settings){
       this.controller = settings.controller;
       this.questions = [];
-      
+      this.render();
     },
 
     //
@@ -55,15 +56,39 @@ define(function(require){
     // --------------------------------------------------------------------------------
     //
     render : function(){
+      // [ THE SECTION ]
+      // una sección es un <fieldset> que contiene descripciones, algunas preguntas 
+      // y un botón para avanzar en el cuestionario
+
+      // [ THE QUESTIONS ]
       this.collection.each(function(question){
+      // [1] genera una colección de opciones para cada pregunta. La lista de opciones
+      //     está disponible en el controller.
         var opt = new Backbone.Collection(this.controller.q_options.where({question_id : question.id}));
+      // [2] se genera un View con la pregunta, y se le pasan las siguiente variables:
+      //     * el modelo de la pregunta (question)
+      //     * la colección de opciones (opt)
+      //     * la referencia al controller (this.controller)
         var q = new Question({model : question, opt : opt, controller : this.controller});
+      // [3] una vez generado el View, inmediatamente se "renderea" y el HTML es
+      //     agregado a la sección.
         this.$el.append(q.render().el);
+      // [4] el view se guarda en un array de la sección, por si las flys
         this.questions.push(q);
       }, this);
 
-      // this.$el.append(Next_btn);
+      // [5] se agrega el botón de "siguiente"
+      this.$el.append(Next_btn);
       return this;
+    },
+
+    //
+    // N A V   F U N C T I O N S 
+    // --------------------------------------------------------------------------------
+    //
+    next : function(e){
+      e.preventDefault();
+      this.controller.render_next();
     }
   });
 

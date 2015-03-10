@@ -89,7 +89,7 @@ define(function(require){
     render : function(){
       // [ THE FIRST SECTION ]
       // [1] dibuja solo la primera sección del formulario
-      this.$('#survey').append(this.sections[0].render().el);
+      this.$('#survey').append(this.sections[0].el);
       // [2] por si las flys, actualiza el pointer
       this.navigation_pointer = 0;
     },
@@ -108,18 +108,30 @@ define(function(require){
       //     aquí es donde podría haber "magia" en la interacción
         this.$('#survey').html('');
       // [4] renderea la siguiente sección
-        this.$('#survey').append(this.sections[position].render().el);
+        this.$('#survey').append(this.sections[position].el);
       // [5] actualiza el pointer
         this.navigation_pointer++;
       }
     },
 
+    render_any : function(position){
+      // [ THE n SECTION ]
+      // dibuja CUALQUIER SECCIÓN O____O!!!!
+
+      // [1] hace hueco para el contenido
+        this.$('#survey').html('');
+      // [2] renderea la siguiente sección
+        this.$('#survey').append(this.sections[position].el);
+      // [5] actualiza el pointer
+        this.navigation_pointer = position;
+    },
+
     render_all : function(){
       // [ THE SECTIONS ]
-      // agrega un <fieldset> por cada sección del formulario
+      // agrega un <fieldset> por cada sección del formulario;
       // cada uno puede contener descripciones y preguntas.
       _.each(this.sections, function(section){
-        this.$('#survey').append(section.render().el);
+        this.$('#survey').append(section.el);
       }, this);
     },
 
@@ -128,6 +140,26 @@ define(function(require){
     // I N T E R N A L   F U N C T I O N S 
     // --------------------------------------------------------------------------------
     //
+    _define_nav_rules : function(){
+      var nav_rules = [
+      null, 
+      null,
+      {question : '1', value : ['1', '2']},
+      null,
+      {question : '12', value : ['1']},
+      {question : '1', value : ['1', '2']},
+      {question : '1', value : ['2']},
+      {question : '1', value : ['3']},
+      {question : '25', value : ['1']},
+      null,
+      {question : '1', value : ['1', '2']},
+      {question : '32', value : ['1']},
+      null,
+      {question : '38', value : ['1']},
+      null
+      ];
+    },
+
     _create_sections : function(){
       // [ THE SECTIONS ]
       // A partir de la colección de preguntas, genera una lista de secciones.
