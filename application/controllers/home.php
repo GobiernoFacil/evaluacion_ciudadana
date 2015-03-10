@@ -49,8 +49,8 @@ class Home extends CI_Controller {
 	//privacy
 	public function privacy()
 	{
-		$data['title'] 			= 'Política de Privacidad de Tú Evalúas';
-		$data['description'] 	= 'Política de Privacidad de la plataforma Tú Evalúas';
+		$data['title'] 			= 'Aviso de Privacidad de Tú Evalúas';
+		$data['description'] 	= 'Aviso de Privacidad de la plataforma Tú Evalúas';
 		
 		$this->load->view('/templates/header_view', $data);
 		$this->load->view('/home/privacy_view');
