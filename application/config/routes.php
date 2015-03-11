@@ -41,7 +41,8 @@
 $route['default_controller']  = "home";
 $route['404_override']        = '';
 $route['cuestionario/(:any)'] = 'form_application/index/$1';
-$route['datos']       		   = 'open_data';
+
+$route['datos']       		  = 'open_data';
 $route['datos/(:any)']        = 'open_data/index/$1/$2';
 $route['respuestas']          = 'survey_handler/index';
 $route['about']          	    = 'home/about';
