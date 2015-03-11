@@ -951,6 +951,15 @@ article {
   article.data_hm figure {
     height: 350px;
     overflow: hidden; }
+  article.data_hm .lead {
+    color: #FF6F69; }
+    article.data_hm .lead .btn {
+      background: #011C26;
+      color: white;
+      padding: 5px 10px; }
+      article.data_hm .lead .btn:hover {
+        border-bottom: none;
+        background: #FF6F69; }
 
 /* =Cuestionario
 -------------------------------------------------------------- */

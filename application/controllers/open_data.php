@@ -72,10 +72,20 @@ class Open_data extends CI_Controller {
 	 	  echo json_encode($r);
 	 	}
 	 	else{
-	 	  echo "<pre>";
-	 	  var_dump($r);
-	 	  echo "</pre>";
+	 	  
+	 	
+	 	$data['response'] 				= $r;
+  
+	 	  
+	 	$data['title'] 			= 'Resultados de las encuestas Tú Evalúas';
+		$data['description'] 	= 'Resultados de las encuestas Tú Evalúas';
+		$data['body_class'] 	= 'data';
+		$this->load->view('/templates/header_view', $data);
+		$this->load->view('/data/singledata_viz_view');
+		$this->load->view('/templates/footer_view');
 	 	}
+	 	
+	 	
 	 }	
 	 	
   }
