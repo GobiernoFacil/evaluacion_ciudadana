@@ -30,7 +30,7 @@ class Open_data extends CI_Controller {
   *
   */
   public function index($form_id = false, $format = false){
-	if  ( $form_id == FALSE) {
+	if  ( $form_id == false) {
 		$data['title'] 			= 'Resultados de las encuestas Tú Evalúas';
 		$data['description'] 	= 'Resultados de las encuestas Tú Evalúas';
 		$data['body_class'] 	= 'data';
@@ -46,13 +46,25 @@ class Open_data extends CI_Controller {
 	 	$response = $this->open_data_model->get($blueprint_id);
 	 		
 	 	foreach($response['questions'] as $question){
-	 		 $question->options = array_filter($response['options'], function($option) use($question){
-	 		    return $option->question_id == $question->id;
-	 		 });
-	 		
-	 		  $question->answers = array_filter($response['answers'], function($answer) use($question){
-	 		    return $answer->question_id == $question->id;
-	 		  });
+	 	  $question->options = array_filter($response['options'], function($option) use($question){
+	 		  return $option->question_id == $question->id;
+	 	  });
+
+      if(empty($question->options)){
+        $question->answers = array_filter($response['answers'], function($answer) use($question){
+          return $answer->question_id == $question->id;
+        });
+      }
+      else{
+        $question->answers = false;
+        foreach($question->options as $option){
+          $option->answer = array_filter($response['answers'], function($answer) use($question, $option){
+            return $answer->question_id == $question->id && $answer->num_value == $option->value;
+          });
+
+          $option->answer_num = empty($option->answer) ? 0 : array_pop($option->answer)->total;
+        }
+      }
 	 	}
 	 	
 	 	$r = [
