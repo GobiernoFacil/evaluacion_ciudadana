@@ -60,6 +60,18 @@
         options   : <?php echo json_encode($options); ?>,
         answers   : <?php echo json_encode($answers); ?>
       };
+
+      agentesFormSettings.questions.push({
+        blueprint_id   : '1',
+        creation_date  : '2015-02-23 12:14:59',
+        default_value  : null,
+        id             : '666666',
+        question       : '<p>gracias por participar en este estudio</p>',
+        is_description : '1',
+        order_num      : '1',
+        section_id     : '666',
+        type           : 'text'
+      });
   </script>
   <!-- DEVELOPMENT SOURCE -->
   <script data-main="/js/main" src="/js/bower_components/requirejs/require.js"></script>

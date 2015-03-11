@@ -119,15 +119,12 @@ define(function(require){
         // [4.2] obtiene el valor de default de la pregunta.
           var value    = question.get('default_value');
         // [4.3] si el valor coincide con la condición, termina el ciclo
-        console.log(value, rules.val.indexOf(value), rules);
           if(rules.val.indexOf(value) > -1){
-            console.log('se cumple la condicición', rules);
             break;
           }
         // [4.4] si el valor no coincide, pero no hay más preguntas,
         //       también termina el ciclo y renderea la última sección 
           else if(position + 1 >= this.sections.length){
-            console.log('no se cumple la condicición, pero es la última sección', rules);
             break;
           }
         // [4.5] si el valor no coincide, pero hay más secciones, mueve
@@ -136,7 +133,6 @@ define(function(require){
             position++;
             this.navigation_pointer++;
             rules = this.nav_rules[position];
-            console.log('se refifa el ciclo', rules);
           }
         }
 
@@ -145,8 +141,13 @@ define(function(require){
         this.$('#survey').html('');
       // [6] renderea la siguiente sección
         this.$('#survey').append(this.sections[position].el);
+
+      // [6.1] HACK: quita el botón de siguiente al llegar al final de formulario
+        if(this.sections[position].pos +1 == this.sections.length) this.$('a.next').remove();
+
       // [7] actualiza el pointer
         this.navigation_pointer++;
+
       }
     },
 
@@ -176,6 +177,7 @@ define(function(require){
     // I N T E R N A L   F U N C T I O N S 
     // --------------------------------------------------------------------------------
     //
+
     _define_nav_rules : function(){
       // [ THE NAV RULES]
       // con esta guía, no se muestran todos los páneles, solo
@@ -210,9 +212,9 @@ define(function(require){
 
       // [2] para cada sección, genera un view (Section), que incluye una 
       //     colección de preguntas y una referencia al controller (por si ocupa).
-      _.each(sections, function(section){
+      _.each(sections, function(section, pos){
         var collection = new Backbone.Collection(this.collection.where({section_id : section}));
-        this.sections.push(new Section({collection : collection, controller : this}));
+        this.sections.push(new Section({collection : collection, controller : this, pos : pos}));
       }, this);
     },
 
