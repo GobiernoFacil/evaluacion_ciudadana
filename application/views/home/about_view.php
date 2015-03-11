@@ -24,7 +24,8 @@
 					y la participación ciudadana mediante el uso de las  tecnologías de la información y la comunicación (TIC). </p>
 				
 				<p>Así, <strong>Tú Evalúas</strong> nace de la cooperación entre la Presidencia de la República a través de la Coordinación de Estrategia 
-					Digital Nacional, la Secretaría de Hacienda y Crédito Público a través de la Unidad de Evaluación del Desempeño, CREA, A.C y 
+					Digital Nacional, la Secretaría de Hacienda y Crédito Público a través de la Unidad de Evaluación del Desempeño, 
+					<a href="http://www.crea.org.mx/">CREA, A.C.</a>  y 
 					<a href="http://gobiernofacil.com/" title="Gobierno Fácil">Gobierno Fácil</a>. 
 				</p>
 				<p><strong>Tú Evalúas</strong> busca consolidarse como una herramienta para que los ciudadanos participen de la configuración 

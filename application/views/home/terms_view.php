@@ -6,7 +6,7 @@
 			<p>El portal web <strong>http://tuevaluas.com.mx/</strong> es una iniciativa de la <a href="http://www.presidencia.gob.mx/edn/">Coordinación de 
 				Estrategia Digital Nacional de Presidencia de la República</a>, 
 				en coordinación con la <strong>Secretaría de Hacienda y Crédito Público</strong> a través de la <strong>Unidad de Evaluación del 
-				Desempeño</strong>, <strong>CREA, A.C.</strong> y 
+				Desempeño</strong>, <a href="http://www.crea.org.mx/">CREA, A.C.</a> y 
 				<a href="http://gobiernofacil.com/">Gobierno Fácil</a>. El objetivo del portal es recabar y difundir la opinión ciudadana sobre 
 				los programas públicos federales.
 			</p>
