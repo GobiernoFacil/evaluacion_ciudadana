@@ -48,6 +48,7 @@ define(function(require){
     initialize : function(settings){
       this.controller = settings.controller;
       this.questions = [];
+      this.pos = settings.pos;
       this.render();
     },
 
@@ -79,6 +80,7 @@ define(function(require){
 
       // [5] se agrega el botón de "siguiente"
       this.$el.append(Next_btn);
+      
       return this;
     },
 
