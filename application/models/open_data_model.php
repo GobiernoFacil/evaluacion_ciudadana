@@ -18,19 +18,41 @@ class Open_data_model extends CI_Model{
     parent::__construct();
   }
 
-  function get($form_id){
+  public function get($blueprint_id){
     // [ THE JSON COMPONENTS ]
     // Esta función regresa:
     // + el número de encuestas
     // + la lista de preguntas
     // + la lista de opciones numeradas
     // - FALSE si la encuesta no existe
+    $blueprint = $this->_get_blueprint($blueprint_id);
+    // [1] revisa que exista el blueprint
+    if(empty($blueprint)) return false;
+
+    // [2] si existe el blueprint, regresa un arreglo
+    //     con todos los elementos que generan los datos
+    $response = [
+      'blueprint'  => $blueprint,
+      'applicants' => $this->_get_applicants_num($blueprint_id),
+      'questions'  => $this->_get_questions($blueprint_id),
+      'options'    => $this->_get_options($blueprint_id),
+      'answers'    => $this->_get_answers($blueprint_id)
+    ];
+    return $response;
+  }
+
+  public function get_blueprints(){
+    $pb = $this->db->get(self::BLUEPRINTS);
+    return $bp->result();
   }
 
   private function _get_blueprint($id){
+    $this->db->select('id, title, creation_date');
     $pb = $this->db->get_where(self::BLUEPRINTS, ['id' => $id]);
-    return $bp->row();
+    return $pb->row();
   }
+
+  
 
   private function _get_applicants_num($id){
     $this->db->from(self::APPLICANTS);
@@ -39,11 +61,17 @@ class Open_data_model extends CI_Model{
   }
 
   private function _get_questions($id){
-    $qs = $this->db->get_where(self::QUESTIONS, ['blueprint_id' => $id]);
+    $this->db->select('id, question');
+    $qs = $this->db->get_where(self::QUESTIONS, [
+      'blueprint_id' => $id, 
+      'is_description' => 0, 
+      'type' => 'number'
+      ]);
     return $qs->result();
   }
 
   private function _get_options($id){
+    $this->db->select('id, question_id, description, value');
     $op = $this->db->get_where(self::OPTIONS, ['blueprint_id' => $id]);
     return $op->result();
   }
