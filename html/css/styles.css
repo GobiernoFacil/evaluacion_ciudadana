@@ -948,6 +948,9 @@ article {
     padding-bottom: 30px; }
   article ol {
     margin-left: 20px; }
+  article.data_hm figure {
+    height: 350px;
+    overflow: hidden; }
 
 /* =Cuestionario
 -------------------------------------------------------------- */
