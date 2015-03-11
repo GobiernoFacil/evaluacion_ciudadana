@@ -3,11 +3,17 @@
 		<article>
 		<div class="col-sm-8 col-sm-offset-2">
 			<h1>Términos y condiciones de la plataforma <strong>Tú Evalúas</strong></h1>
-			<p>El portal web http://tuevaluas.com.mx/ es una iniciativa de la Coordinación de Estrategia Digital Nacional de Presidencia de la República, en coordinación con la Secretaría de Hacienda y Crédito Público a través de la Unidad de Evaluación del Desempeño y CREA, A.C. El objetivo del portal es recabar y difundir la opinión ciudadana sobre los programas públicos federales.
+			<p>El portal web <strong>http://tuevaluas.com.mx/</strong> es una iniciativa de la <a href="http://www.presidencia.gob.mx/edn/">Coordinación de 
+				Estrategia Digital Nacional de Presidencia de la República</a>, 
+				en coordinación con la <strong>Secretaría de Hacienda y Crédito Público</strong> a través de la <strong>Unidad de Evaluación del 
+				Desempeño</strong>, <strong>CREA, A.C.</strong> y 
+				<a href="http://gobiernofacil.com/">Gobierno Fácil</a>. El objetivo del portal es recabar y difundir la opinión ciudadana sobre 
+				los programas públicos federales.
 			</p>
 			<p>El acceso al portal web es totalmente libre y gratuito, los usuarios no deberán registrarse para acceder al mismo, sin embargo, la consulta de la información y los materiales, así como la descarga de bases de datos y el uso de las herramientas en él disponibles implican el consentimiento de estos términos y condiciones por parte de los usuarios. 
 			</p>
-			<p>La información, herramientas y materiales contenidos en el portal web son propiedad de la Coordinación de Estrategia Digital Nacional de la Presidencia de la República, la cual autoriza a los usuarios su utilización total o parcial de manera gratuita.  
+			<p>La información, herramientas y materiales contenidos en el portal web son propiedad de la <strong>Coordinación de Estrategia Digital 
+				Nacional de la Presidencia de la República</strong>, la cual autoriza a los usuarios su utilización total o parcial de manera gratuita.  
 La información sobre satisfacción de beneficiarios que se difunde mediante el portal son de carácter público en tiempo real y podrán descargarse en formato de datos abiertos, entendidos éstos como información pública del gobierno que es puesta a disposición de toda la población de manera accesible, en formatos técnicos y legales que permiten su uso, reutilización y redistribución para cualquier fin legal que se desee, los presentes “Términos y condiciones de uso” promueven el uso, reuso y redistribución de los conjuntos de datos abiertos. De este modo, usted puede: </p>
 			<ol>
 				<li>Hacer y distribuir copias del conjunto de datos y su contenido;														 </li>
