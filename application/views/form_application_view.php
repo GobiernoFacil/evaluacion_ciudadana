@@ -39,7 +39,7 @@
 			<div class="col-sm-9">
 				<ul>
 					<li><?php echo anchor('/about','¿Qué es?');?></li>					
-					<li>Datos abiertos</li>
+					<li><?php echo anchor('/datos','Resultados');?></li>
 					<li><?php echo anchor('/preguntas','Preguntas');?></li>
 					<li><?php echo anchor('/terms','Términos');?></li>
 					<li><?php echo anchor('/privacy','Privacidad');?></li>
