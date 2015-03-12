@@ -62,7 +62,9 @@
 												$tha_class = 100;
 												break;
 										};?>
+										<span class="the_bar"> 
 										<span class="bar a<?php echo $tha_class;?>"></span>
+										</span>
 									</li>
 								</span>
 								<?php endforeach;?>

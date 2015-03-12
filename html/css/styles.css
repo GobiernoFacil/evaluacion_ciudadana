@@ -988,6 +988,11 @@ article {
         text-align: right; }
         article.data_hm .answers ol ul li:first-child {
           display: block; }
+  article.data_hm .the_bar {
+    background: #f2f2f2;
+    display: inline-block;
+    height: 20px;
+    width: 100%; }
   article.data_hm .bar {
     height: 20px;
     background: #23272d;
