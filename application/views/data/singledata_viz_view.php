@@ -31,20 +31,32 @@
 									<li class="col-sm-8">
 										
 										<?php 
-											
+											///sad thing
 											$amount = $respuesta->answer_num / $response['applicants'];
 											switch($amount) {
 											case 0:
 												$tha_class = 0;
 												break;
+											case $amount <= 0.125:
+												$tha_class = 12;
+												break;
 											case $amount <= 0.25:
 												$tha_class = 25;
+												break;
+											case $amount <= 0.375:
+												$tha_class = 37;
 												break;
 											case $amount <= 0.5:
 												$tha_class = 25;
 												break;
+											case $amount <= 0.625:
+												$tha_class = 62;
+												break;
 											case $amount <= 0.75:
 												$tha_class = 75;
+												break;
+											case $amount <= 0.875:
+												$tha_class = 87;
 												break;
 											default:
 												$tha_class = 100;
@@ -61,6 +73,7 @@
 					<?php endforeach;?>
 					</ol>
 	 			</div>
+				<p><?php echo anchor("datos/1/archivo", 'Descargar datos', array("class"=>"btn"));?></p>
 			</div>			
 		</article>
 	</div>

@@ -880,8 +880,8 @@ nav {
     width: 44px; }
     nav .tuevaluas:hover {
       width: 125px;
-      -webkit-transition: width 0.4s;
-      transition: width 0.4s; }
+      -webkit-transition: width 0.3s;
+      transition: width 0.3s; }
 
 .intro {
   color: #011C26;
@@ -996,12 +996,20 @@ article {
     padding: 0; }
     article.data_hm .bar.a0 {
       width: 0; }
+    article.data_hm .bar.a12 {
+      width: 12.5%; }
     article.data_hm .bar.a25 {
       width: 25%; }
+    article.data_hm .bar.a37 {
+      width: 37.5%; }
     article.data_hm .bar.a50 {
       width: 50%; }
+    article.data_hm .bar.a62 {
+      width: 62.5%; }
     article.data_hm .bar.a75 {
       width: 75%; }
+    article.data_hm .bar.a87 {
+      width: 87.5%; }
     article.data_hm .bar.a100 {
       width: 100%; }
 
