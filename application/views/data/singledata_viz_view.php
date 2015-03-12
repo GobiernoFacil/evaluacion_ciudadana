@@ -3,15 +3,15 @@
 		<article class="data_hm">
 			<div class="col-sm-8 col-sm-offset-2">
 				<h1>Resultados de Cuestionario 1, <strong>Prospera</strong></h1>
-				<section>
-					<h2>Participantes: <strong><?php echo $response['applicants'];?></strong></h3>
-
+				<section class="row">
+				<h3 class="col-sm-6" >Participantes: <strong><?php echo $response['applicants'];?></strong></h3>
+				<?php echo anchor("datos/1/archivo", 'Descargar datos', array("class"=>"btn col-sm-3"));?>
 				</section>
-				<div>
+				<div class="answers">
 					<h2>Respuestas</h2>
 					<ol>
 					<?php foreach($response['questions'] as $question):?>
-						<li>
+						<li >
 							<h3><?php	echo $question->question;?></h3>
 							<?php if(empty($question->options)):?>
 								<?php foreach($question->answers as $respuesta):?>
@@ -20,11 +20,25 @@
 									</p>
 								<?php endforeach;?>
 							<?php else:?>
-								<ul>
+								<ul class="row">
+
 								<?php foreach($question->options as $respuesta):?>
-									<li>
-									<?php echo '<strong>' . $respuesta->answer_num . '</strong>: ' . $respuesta->description;?>
+								<span class="clearfix">
+									<li class="col-sm-4">
+									<?php echo  $respuesta->description . ': <strong>' . $respuesta->answer_num . '</strong>';?>
 									</li>
+									<li class="col-sm-8">
+										<?php switch($respuesta->answer_num) {
+											case (0):
+												$tha_class = 0;
+												break;
+											default:
+												$tha_class = 100;
+												break;
+										};?>
+										<span class="bar a<?php echo $tha_class;?>"></span>
+									</li>
+								</span>
 								<?php endforeach;?>
 										
 								</ul>

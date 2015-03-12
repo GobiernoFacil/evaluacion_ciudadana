@@ -960,6 +960,44 @@ article {
       article.data_hm .lead .btn:hover {
         border-bottom: none;
         background: #FF6F69; }
+  article.data_hm .btn {
+    background: #FF6F69;
+    color: white;
+    padding: 5px 10px; }
+    article.data_hm .btn:hover {
+      border-bottom: none;
+      background: #011C26; }
+  article.data_hm .answers ol {
+    margin-left: 40px; }
+    article.data_hm .answers ol li {
+      border-top: 1px solid #f2f2f2;
+      margin: 20px 0 40px;
+      padding-top: 20px; }
+      article.data_hm .answers ol li h3 {
+        margin-bottom: 20px; }
+      article.data_hm .answers ol li:first-child {
+        display: none; }
+    article.data_hm .answers ol ul {
+      margin-left: 20px; }
+      article.data_hm .answers ol ul li {
+        border-top: none;
+        list-style: none;
+        font-size: 15px;
+        margin: 0;
+        padding-top: 0;
+        text-align: right; }
+        article.data_hm .answers ol ul li:first-child {
+          display: block; }
+  article.data_hm .bar {
+    height: 20px;
+    background: #23272d;
+    display: inline-block;
+    margin: 0;
+    padding: 0; }
+    article.data_hm .bar.a0 {
+      width: 0; }
+    article.data_hm .bar.a100 {
+      width: 100%; }
 
 /* =Cuestionario
 -------------------------------------------------------------- */
