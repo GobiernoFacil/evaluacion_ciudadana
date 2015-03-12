@@ -10,6 +10,7 @@
 				<div class="answers">
 					<h2>Respuestas</h2>
 					<ol>
+						
 					<?php foreach($response['questions'] as $question):?>
 						<li >
 							<h3><?php	echo $question->question;?></h3>
@@ -28,9 +29,22 @@
 									<?php echo  $respuesta->description . ': <strong>' . $respuesta->answer_num . '</strong>';?>
 									</li>
 									<li class="col-sm-8">
-										<?php switch($respuesta->answer_num) {
-											case (0):
+										
+										<?php 
+											
+											$amount = $respuesta->answer_num / $response['applicants'];
+											switch($amount) {
+											case 0:
 												$tha_class = 0;
+												break;
+											case $amount <= 0.25:
+												$tha_class = 25;
+												break;
+											case $amount <= 0.5:
+												$tha_class = 25;
+												break;
+											case $amount <= 0.75:
+												$tha_class = 75;
 												break;
 											default:
 												$tha_class = 100;

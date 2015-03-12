@@ -991,11 +991,17 @@ article {
   article.data_hm .bar {
     height: 20px;
     background: #23272d;
-    display: inline-block;
+    display: block;
     margin: 0;
     padding: 0; }
     article.data_hm .bar.a0 {
       width: 0; }
+    article.data_hm .bar.a25 {
+      width: 25%; }
+    article.data_hm .bar.a50 {
+      width: 50%; }
+    article.data_hm .bar.a75 {
+      width: 75%; }
     article.data_hm .bar.a100 {
       width: 100%; }
 
