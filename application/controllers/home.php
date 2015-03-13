@@ -1,11 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Home extends CI_Controller {
-	
-	// settings contact form
-	protected 	$sendEmailTo 		= 	'hugo@gobiernofaciñ.com'; 
-
-	
+		
 	public function __construct() {
 		parent::__construct();
 		$this->load->library('form_validation');
@@ -71,8 +67,6 @@ class Home extends CI_Controller {
 	//contact
 	public function contact()
 	{
-		$this->subjectLine = "Mensaje enviado desde " . $_SERVER['HTTP_HOST'];
-		
 		if($this->form_validation->run("contact-form") == FALSE) 
 		{
 			$data['title'] 			= 'Contacto en Tú Evalúas';
@@ -82,40 +76,34 @@ class Home extends CI_Controller {
 			$this->load->view('/home/contact_view');
 			$this->load->view('/templates/footer_view');
 		} 
+		
 		else 
 		{		
-			if ($this->send_mail()) {
+			$this->load->library('email_library');
+			if($this->email_library->send_contact_message($this->input->post()))
+			{
 				$data['title'] 			= 'Mensaje enviado a Tú Evalúas';
 				$data['description'] 	= 'Tu mensaje ha sido enviado a la plataforma Tú Evalúas';
 		
 				$this->load->view('/templates/header_view', $data);
 				$this->load->view('/home/contact_success_view');
 				$this->load->view('/templates/footer_view');
+				
 			}
-			else { 
-				log_message("error","Contact form - Error enviado el mensaje: " . $this->email->print_debugger() . " De: {$this->input->post('email')}. Mensaje: {$this->input->post('message')}");
+			else{
+				
 				$data['title'] 			= 'Contacto en Tú Evalúas';
 				$data['description'] 	= 'Envía un mensaje a la plataforma Tú Evalúas';
 		
 				$this->load->view('/templates/header_view', $data);
 				$this->load->view('/home/contact_view');
 				$this->load->view('/templates/footer_view');
-			
-			}
-			
+				
+				
+			}			
 			
 		}
-	}
-	
-	/* HELPER FUNCTIONS */
-	// send_mail
-	protected function send_mail() {
-			$this->email->from($this->input->post('email'), $this->input->post('name'));
-			$this->email->to($this->sendEmailTo);
-			$this->email->subject($this->subjectLine);
-			$this->email->message($this->input->post('message'));
-			return $this->email->send();
-	}
+	}	
 
 }
 
