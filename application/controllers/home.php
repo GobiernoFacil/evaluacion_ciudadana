@@ -25,6 +25,7 @@ class Home extends CI_Controller {
 	{
 		$data['title'] 			= 'Qué es Tú Evalúas';
 		$data['description'] 	= 'Tú evalúas es una iniciativa dirigida a los beneficiarios de los programas públicos federales.';
+		$data['body_class'] 	= 'about';
 		
 		$this->load->view('/templates/header_view', $data);
 		$this->load->view('/home/about_view');
@@ -36,7 +37,8 @@ class Home extends CI_Controller {
 	{
 		$data['title'] 			= 'Preguntas Frecuentes sobre Tú Evalúas';
 		$data['description'] 	= 'Algunas de las preguntas frecuentes de la plataforma Tú Evalúas';
-		
+		$data['body_class'] 	= 'faqs';
+
 		$this->load->view('/templates/header_view', $data);
 		$this->load->view('/home/preguntas_view');
 		$this->load->view('/templates/footer_view');

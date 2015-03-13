@@ -53,9 +53,15 @@ window.twttr=(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],t=window.
 		</nav>
 		<nav class="col-sm-5 col-sm-offset-3">
 			<ul>
-				<li><?php echo anchor('/about','¿Qué es?');?></li>
-				<li><?php echo anchor('/datos','Resultados');?></li>
-				<li><?php echo anchor('/preguntas','Preguntas Frecuentes');?></li>
+				<li <?php echo (isset($body_class) && ($body_class == "about")) ? 'class="current"' : '';?>>
+					<?php echo anchor('/about','¿Qué es?');?>
+				</li>
+				<li <?php echo (isset($body_class) && ($body_class == "data")) ? 'class="current"' : '';?>>
+					<?php echo anchor('/datos','Resultados');?>
+				</li>
+				<li <?php echo (isset($body_class) && ($body_class == "faqs")) ? 'class="current"' : '';?>>
+					<?php echo anchor('/preguntas','Preguntas Frecuentes');?>
+				</li>
 			</ul>
 		</nav>
 	</div>	
