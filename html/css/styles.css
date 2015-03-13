@@ -866,22 +866,31 @@ strong {
   direction: ltr; }
 
 nav {
+  margin-top: 30px;
   padding: 15px 0;
   text-align: right; }
+  nav ul {
+    float: right; }
   nav li {
     display: inline-block;
     margin: 0 30px 0 0;
-    color: #999; }
+    color: #999;
+    padding: 5px 10px; }
+    nav li a:hover {
+      color: #FF6F69; }
   nav .tuevaluas {
     margin-left: 20px;
     background-position: 0;
-    height: 40px;
-    background-size: auto 40px;
-    width: 44px; }
+    height: 50px;
+    background-size: auto 50px;
+    width: 150px;
+    -webkit-opacity: 1;
+    -moz-opacity: 1;
+    opacity: 1; }
     nav .tuevaluas:hover {
-      width: 125px;
-      -webkit-transition: width 0.4s;
-      transition: width 0.4s; }
+      -webkit-opacity: 0.8;
+      -moz-opacity: 0.8;
+      opacity: 0.8; }
 
 .intro {
   color: #011C26;
@@ -937,8 +946,10 @@ article {
     article p strong {
       color: #FF6F69; }
     article p a:link, article p a:visited {
-      color: #FF6F69; }
+      color: #011C26;
+      border-bottom: 1px dotted #FF6F69; }
       article p a:link:hover, article p a:visited:hover {
+        color: #FF6F69;
         border-bottom: 1px dotted #FF6F69; }
   article li {
     font-size: 17px;
@@ -952,14 +963,68 @@ article {
     height: 350px;
     overflow: hidden; }
   article.data_hm .lead {
-    color: #FF6F69; }
+    color: #011C26; }
     article.data_hm .lead .btn {
-      background: #011C26;
+      display: inline-block;
+      margin-top: 10px; }
+  article.data_hm .btn {
+    background: #FF6F69;
+    color: white;
+    padding: 5px 10px; }
+    article.data_hm .btn:hover {
+      border-bottom: none;
       color: white;
-      padding: 5px 10px; }
-      article.data_hm .lead .btn:hover {
-        border-bottom: none;
-        background: #FF6F69; }
+      background: #011C26; }
+  article.data_hm .answers ol {
+    margin-left: 40px; }
+    article.data_hm .answers ol li {
+      border-top: 1px solid #f2f2f2;
+      margin: 20px 0 40px;
+      padding-top: 20px; }
+      article.data_hm .answers ol li h3 {
+        margin-bottom: 20px; }
+      article.data_hm .answers ol li:first-child {
+        display: none; }
+    article.data_hm .answers ol ul {
+      margin-left: 20px; }
+      article.data_hm .answers ol ul li {
+        border-top: none;
+        list-style: none;
+        font-size: 15px;
+        margin: 0;
+        padding-top: 0;
+        text-align: right; }
+        article.data_hm .answers ol ul li:first-child {
+          display: block; }
+  article.data_hm .the_bar {
+    background: #f2f2f2;
+    display: inline-block;
+    height: 20px;
+    width: 100%; }
+  article.data_hm .bar {
+    height: 20px;
+    background: #23272d;
+    display: block;
+    margin: 0;
+    padding: 0; }
+    article.data_hm .bar.a0 {
+      width: 0; }
+    article.data_hm .bar.a12 {
+      width: 12.5%; }
+    article.data_hm .bar.a25 {
+      width: 25%; }
+    article.data_hm .bar.a37 {
+      width: 37.5%; }
+    article.data_hm .bar.a50 {
+      width: 50%; }
+    article.data_hm .bar.a62 {
+      width: 62.5%; }
+    article.data_hm .bar.a75 {
+      width: 75%; }
+    article.data_hm .bar.a87 {
+      width: 87.5%; }
+    article.data_hm .bar.a100 {
+      width: 100%; }
 
 /* =Cuestionario
 -------------------------------------------------------------- */
