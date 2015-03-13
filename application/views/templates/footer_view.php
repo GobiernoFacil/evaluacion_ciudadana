@@ -8,7 +8,7 @@
 				<ul>
 					<li><?php echo anchor('/about','¿Qué es?');?></li>					
 					<li><?php echo anchor('/datos','Resultados');?></li>
-					<li><?php echo anchor('/preguntas','Preguntas');?></li>
+					<li><?php echo anchor('/preguntas','Preguntas Frecuentes');?></li>
 					<li><?php echo anchor('/terms','Términos');?></li>
 					<li><?php echo anchor('/privacy','Privacidad');?></li>
 					<li><?php echo anchor('/contact','Contacto');?></li>
