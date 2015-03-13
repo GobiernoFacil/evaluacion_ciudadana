@@ -1,5 +1,8 @@
 <?php
 
+// Include the composer autoload file
+include_once __DIR__ ."/../vendor/autoload.php";
+
 /*
  *---------------------------------------------------------------
  * APPLICATION ENVIRONMENT

@@ -1,0 +1,5 @@
+{
+    "require": {
+        "cartalyst/sentry": "~2.1"
+    }
+}
