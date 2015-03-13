@@ -865,6 +865,12 @@ strong {
   text-align: left;
   direction: ltr; }
 
+.home nav {
+  margin-top: 0;
+  margin-bottom: 30px; }
+  .home nav ul li {
+    padding-top: 0; }
+
 nav {
   margin-top: 30px;
   padding: 15px 0;
