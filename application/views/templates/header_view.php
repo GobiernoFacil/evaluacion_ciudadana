@@ -39,9 +39,9 @@ window.twttr=(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],t=window.
 	</nav>
 		<nav class="col-sm-6 col-sm-offset-3">
 			<ul>
-				<li><?php echo anchor('/about','¿Qué es?', array("class"=>"hm_link"));?></li>
-				<li><?php echo anchor('/datos','Resultados',array("class"=>"hm_link"));?></li>
-					<li><?php echo anchor('/preguntas','Preguntas Frecuentes',array("class"=>"hm_link"));?></li>
+				<li><?php echo anchor('/que-es','¿Qué es?', array("class"=>"hm_link"));?></li>
+				<li><?php echo anchor('/resultados','Resultados',array("class"=>"hm_link"));?></li>
+					<li><?php echo anchor('/preguntas-frecuentes','Preguntas Frecuentes',array("class"=>"hm_link"));?></li>
 			</ul>
 		</nav>
 </div>
