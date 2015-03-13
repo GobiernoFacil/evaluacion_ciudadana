@@ -954,20 +954,17 @@ article {
     height: 350px;
     overflow: hidden; }
   article.data_hm .lead {
-    color: #FF6F69; }
+    color: #011C26; }
     article.data_hm .lead .btn {
-      background: #011C26;
-      color: white;
-      padding: 5px 10px; }
-      article.data_hm .lead .btn:hover {
-        border-bottom: none;
-        background: #FF6F69; }
+      display: inline-block;
+      margin-top: 10px; }
   article.data_hm .btn {
     background: #FF6F69;
     color: white;
     padding: 5px 10px; }
     article.data_hm .btn:hover {
       border-bottom: none;
+      color: white;
       background: #011C26; }
   article.data_hm .answers ol {
     margin-left: 40px; }
