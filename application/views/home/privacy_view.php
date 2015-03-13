@@ -22,7 +22,7 @@
 				podrán descargarse en formato de datos abiertos.
 			</p>
 			<p>El sitio <strong>Tuevaluas.com.mx</strong> no solicita datos de identificación personal. </p>
-			<p>En caso de requerir más información, favor de referirse a la opción <?php echo anchor("/contact", '"Contáctanos"');?>. </p>
+			<p>En caso de requerir más información, favor de referirse a la opción <?php echo anchor("/contacto", '"Contáctanos"');?>. </p>
 		</div>
 		</article>
 	</div>

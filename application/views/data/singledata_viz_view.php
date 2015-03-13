@@ -5,7 +5,7 @@
 				<h1>Resultados de Cuestionario 1, <strong>Prospera</strong></h1>
 				<section class="row">
 				<h3 class="col-sm-6" >Participantes: <strong><?php echo $response['applicants'];?></strong></h3>
-				<?php echo anchor("datos/1/archivo", 'Descargar datos', array("class"=>"btn col-sm-3"));?>
+				<?php echo anchor("resultados/1/archivo", 'Descargar datos', array("class"=>"btn col-sm-3"));?>
 				</section>
 				<div class="answers">
 					<h2>Respuestas</h2>
@@ -75,7 +75,7 @@
 					<?php endforeach;?>
 					</ol>
 	 			</div>
-				<p><?php echo anchor("datos/1/archivo", 'Descargar datos', array("class"=>"btn"));?></p>
+				<p><?php echo anchor("resultados/1/archivo", 'Descargar datos', array("class"=>"btn"));?></p>
 			</div>			
 		</article>
 	</div>

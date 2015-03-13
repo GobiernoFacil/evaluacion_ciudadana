@@ -54,13 +54,13 @@ window.twttr=(function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0],t=window.
 		<nav class="col-sm-5 col-sm-offset-3">
 			<ul>
 				<li <?php echo (isset($body_class) && ($body_class == "about")) ? 'class="current"' : '';?>>
-					<?php echo anchor('/about','¿Qué es?');?>
+					<?php echo anchor('/que-es','¿Qué es?');?>
 				</li>
 				<li <?php echo (isset($body_class) && ($body_class == "data")) ? 'class="current"' : '';?>>
-					<?php echo anchor('/datos','Resultados');?>
+					<?php echo anchor('/resultados','Resultados');?>
 				</li>
 				<li <?php echo (isset($body_class) && ($body_class == "faqs")) ? 'class="current"' : '';?>>
-					<?php echo anchor('/preguntas','Preguntas Frecuentes');?>
+					<?php echo anchor('/preguntas-frecuentes','Preguntas Frecuentes');?>
 				</li>
 			</ul>
 		</nav>

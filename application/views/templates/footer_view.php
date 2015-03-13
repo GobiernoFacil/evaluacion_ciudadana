@@ -22,12 +22,12 @@
 			</div>
 			<div class="col-sm-9">
 				<ul>
-					<li><?php echo anchor('/about','¿Qué es?');?></li>					
-					<li><?php echo anchor('/datos','Resultados');?></li>
-					<li><?php echo anchor('/preguntas','Preguntas Frecuentes');?></li>
-					<li><?php echo anchor('/terms','Términos y Condiciones');?></li>
-					<li><?php echo anchor('/privacy','Privacidad');?></li>
-					<li><?php echo anchor('/contact','Contacto');?></li>
+					<li><?php echo anchor('/que-es','¿Qué es?');?></li>					
+					<li><?php echo anchor('/resultados','Resultados');?></li>
+					<li><?php echo anchor('/preguntas-frecuentes','Preguntas Frecuentes');?></li>
+					<li><?php echo anchor('/terminos','Términos y Condiciones');?></li>
+					<li><?php echo anchor('/privacidad','Privacidad');?></li>
+					<li><?php echo anchor('/contacto','Contacto');?></li>
 				</ul>
 			</div>
 		</div>
