@@ -20,8 +20,8 @@
 <div class="clearfix">
 		<nav class="col-sm-5 col-sm-offset-7">
 			<ul>
-				<li><?php echo anchor('/about','¿Qué es?');?></li>
-				<li><?php echo anchor('/datos','Resultados');?></li>
+				<li><?php echo anchor('/about','¿Qué es?', array("class"=>"hm_link"));?></li>
+				<li><?php echo anchor('/datos','Resultados',array("class"=>"hm_link"));?></li>
 			</ul>
 		</nav>
 </div>
