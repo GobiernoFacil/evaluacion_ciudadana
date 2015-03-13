@@ -937,8 +937,10 @@ article {
     article p strong {
       color: #FF6F69; }
     article p a:link, article p a:visited {
-      color: #FF6F69; }
+      color: #011C26;
+      border-bottom: 1px dotted #FF6F69; }
       article p a:link:hover, article p a:visited:hover {
+        color: #FF6F69;
         border-bottom: 1px dotted #FF6F69; }
   article li {
     font-size: 17px;
