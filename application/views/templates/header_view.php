@@ -28,7 +28,8 @@
 <div class="clearfix">
 	<nav class="col-sm-3">
 		<div class="fb">
-			<div class="fb-share-button" data-href="http://<?php echo $_SERVER['REQUEST_URI'];?>" data-layout="button_count"></div>
+			<?php $url= 'http://'.$_SERVER['HTTP_HOST'].$_SERVER['PHP_SELF'];?>
+			<div class="fb-share-button" data-href="<?php  echo $url;?>" data-layout="button_count"></div>
 		</div>
 		<div class="tw">
 			<a class="twitter-share-button" href="https://twitter.com/share">Tweet</a>
