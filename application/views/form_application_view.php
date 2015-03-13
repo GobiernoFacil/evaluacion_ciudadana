@@ -38,12 +38,12 @@
 			</div>
 			<div class="col-sm-9">
 				<ul>
-					<li>¿Qué es?</li>					
-					<li>Datos abiertos</li>
-					<li>Preguntas</li>
-					<li>Términos</li>
-					<li>Privacidad</li>
-					<li>Contacto</li>
+					<li><?php echo anchor('/about','¿Qué es?');?></li>					
+					<li><?php echo anchor('/datos','Resultados');?></li>
+					<li><?php echo anchor('/preguntas','Preguntas Frecuentes');?></li>
+					<li><?php echo anchor('/terms','Términos y Condiciones');?></li>
+					<li><?php echo anchor('/privacy','Privacidad');?></li>
+					<li><?php echo anchor('/contact','Contacto');?></li>
 				</ul>
 			</div>
 		</div>
@@ -60,6 +60,18 @@
         options   : <?php echo json_encode($options); ?>,
         answers   : <?php echo json_encode($answers); ?>
       };
+
+      agentesFormSettings.questions.push({
+        blueprint_id   : '1',
+        creation_date  : '2015-02-23 12:14:59',
+        default_value  : null,
+        id             : '666666',
+        question       : '<p>gracias por participar en este estudio</p>',
+        is_description : '1',
+        order_num      : '1',
+        section_id     : '666',
+        type           : 'text'
+      });
   </script>
   <!-- DEVELOPMENT SOURCE -->
   <script data-main="/js/main" src="/js/bower_components/requirejs/require.js"></script>

@@ -15,21 +15,28 @@
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body <?php echo (!isset($body_class)) ? '' : 'class="' . $body_class . '"';?>>
+
+<?php if (isset($body_class) && ($body_class == "home")):?>
 <div class="clearfix">
-	<?php if (isset($body_class) && ($body_class == "home")):?>
-	<nav class="col-sm-2 col-sm-offset-10">
-		<ul>
-			<li><?php echo anchor('/about','Acerca');?></li>
-		</ul>
-	</nav>
-	<?php else:?>
-	<nav class="col-sm-3">
-		<a href="/" class="tuevaluas">Tú evalúas</a>
-	</nav>
-	<nav class="col-sm-2 col-sm-offset-7">
-		<ul>
-			<li><?php echo anchor('/about','Acerca');?></li>
-		</ul>
-	</nav>
-	<?php endif;?>
+		<nav class="col-sm-5 col-sm-offset-7">
+			<ul>
+				<li><?php echo anchor('/about','¿Qué es?', array("class"=>"hm_link"));?></li>
+				<li><?php echo anchor('/datos','Resultados',array("class"=>"hm_link"));?></li>
+			</ul>
+		</nav>
 </div>
+<?php else:?>
+<div class="container">
+	<div class="row">
+		<nav class="col-sm-3">
+			<a href="/" class="tuevaluas">Tú evalúas</a>
+		</nav>
+		<nav class="col-sm-6 col-sm-offset-3">
+			<ul>
+				<li><?php echo anchor('/about','¿Qué es?');?></li>
+				<li><?php echo anchor('/datos','Resultados');?></li>
+			</ul>
+		</nav>
+	</div>
+</div>		
+<?php endif;?>
