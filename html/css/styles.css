@@ -914,6 +914,21 @@ strong {
   .home nav ul li {
     padding-top: 0; }
 
+header.pg {
+  background: #f9f9f9; }
+  header.pg nav {
+    background: transparent;
+    margin-top: 0;
+    padding: 0 0 10px; }
+    header.pg nav + nav {
+      background: #FF6F69; }
+      header.pg nav + nav a:link, header.pg nav + nav a:visited {
+        border-bottom-color: white;
+        color: white; }
+        header.pg nav + nav a:link:hover, header.pg nav + nav a:visited:hover {
+          color: #011C26;
+          border-bottom-color: #011C26; }
+
 nav {
   margin-top: 30px;
   padding: 15px 0;
@@ -928,12 +943,12 @@ nav {
     display: inline-block;
     margin: 0 30px 0 0;
     color: #999;
-    padding: 20px 10px 0; }
+    padding: 25px 10px 0; }
     nav li a:link, nav li a:visited {
       color: #011C26;
       border-bottom: 2px solid #011C26;
       font-weight: 700;
-      font-size: 14px;
+      font-size: 13px;
       padding-bottom: 3px;
       letter-spacing: 1px;
       text-transform: uppercase; }
@@ -943,10 +958,10 @@ nav {
       nav li a:link:hover, nav li a:visited:hover {
         color: #FF6F69; }
   nav .tuevaluas {
-    margin-left: 20px;
+    margin: 15px 0 0 20px;
     background-position: 0;
-    height: 50px;
-    background-size: auto 50px;
+    height: 48px;
+    background-size: auto 48px;
     width: 150px;
     -webkit-opacity: 1;
     -moz-opacity: 1;
@@ -995,8 +1010,7 @@ header p {
 -------------------------------------------------------------- */
 article {
   margin: 30px 0 70px;
-  padding-top: 70px;
-  border-top: 1px solid #FF6F69; }
+  padding-top: 70px; }
   article h1 {
     margin-bottom: 30px; }
   article h2 {

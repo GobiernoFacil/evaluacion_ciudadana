@@ -2,7 +2,7 @@
 	<div class="container">
 		<div class="row integrantes">
 			<div class="col-sm-10 col-sm-offset-1">
-			<h3>Integrantes</h3>
+			<h3>Equipo</h3>
 			<ul class="row">
 				<li class="col-sm-3 col-sm-offset-1"><span class="presidencia">Presidencia</span></li>
 				<li class="col-sm-3"><a href="http://www.presidencia.gob.mx/edn/" class="mx_digital">Estrategia Digital</a></li>
