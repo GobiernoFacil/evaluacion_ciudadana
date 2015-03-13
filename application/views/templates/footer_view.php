@@ -1,8 +1,24 @@
 <footer>
 	<div class="container">
-		<div class="row">
+		<div class="row integrantes">
+			<div class="col-sm-10 col-sm-offset-1">
+			<h3>Integrantes</h3>
+			<ul class="row">
+				<li class="col-sm-3 col-sm-offset-1"><span class="presidencia">Presidencia</span></li>
+				<li class="col-sm-3"><a href="http://www.presidencia.gob.mx/edn/" class="mx_digital">Estrategia Digital</a></li>
+				<li class="col-sm-3"><span class="shcp">SHCP</span></li>
+				<li class="col-sm-3 col-sm-offset-1"><a href="http://www.transparenciapresupuestaria.gob.mx/" class="transparencia">Transparencia Presupuestaria</a></li>
+				<li class="col-sm-3"><a href="http://www.crea.org.mx/" class="crea">CREA A.C.</a></li>
+				<li class="col-sm-3"><a href="http://gobiernofacil.com" class="gobiernofacil" title="Gobierno Fácil">Gobierno Fácil</a></li>
+			</ul>
+			</div>
+		</div>
+	</div>
+	<div class="links_bottom">
+		<div class="container">
+			<div class="row">
 			<div class="col-sm-3">
-				<p>Forjado artesanalmente por <a href="http://gobiernofacil.com" class="gobiernofacil">Gobierno Fácil</a></p>
+				<p>Tú Evalúas ©2015</p>
 			</div>
 			<div class="col-sm-9">
 				<ul>
@@ -14,6 +30,7 @@
 					<li><?php echo anchor('/contact','Contacto');?></li>
 				</ul>
 			</div>
+		</div>
 		</div>
 	</div>
 </footer>
