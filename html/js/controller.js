@@ -99,7 +99,6 @@ define(function(require){
     render_next : function(){
       // [ THE n SECTION ]
       // dibuja la siguiente sección, siempre y cuando exista!
-
       // [1] obtiene la siguiente posición del formulario
       var position = this.navigation_pointer + 1;
 
@@ -135,7 +134,6 @@ define(function(require){
             rules = this.nav_rules[position];
           }
         }
-
       // [5] hace hueco para el siguiente contenido.
       //     aquí es donde podría haber "magia" en la interacción
         this.$('#survey').html('');
