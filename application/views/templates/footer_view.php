@@ -18,7 +18,7 @@
 		<div class="container">
 			<div class="row">
 			<div class="col-sm-3">
-				<p>Tú Evalúas ©2015</p>
+				<p><span class="tu_evaluas">Tú Evalúas</span> ©2015</p>
 			</div>
 			<div class="col-sm-9">
 				<ul>
