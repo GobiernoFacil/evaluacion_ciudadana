@@ -871,6 +871,9 @@ nav {
   text-align: right; }
   nav ul {
     float: right; }
+  nav .tw, nav .fb {
+    text-align: left;
+    float: left; }
   nav li {
     display: inline-block;
     margin: 0 30px 0 0;
