@@ -1,15 +1,52 @@
-<li>
-  <select name="<%= 'st' + question_id %>" class="estado">
-    <option value="00">Selecciona un estado</option>
-  </select>
-</li>
-<li>
-  <select name="<%= 'mn' + question_id %>" class="municipio">
-    <option value="00">Selecciona un estado</option>
-  </select>
-</li>
-<li>
-  <select name="<%= 'mn' + question_id %>" class="localidad">
-    <option value="00">Selecciona un estado</option>
-  </select>
-</li>
+<b class="number"></b>
+<p><%= question %></p>
+<ul>
+  <li>
+    <select name="<%= 'st' + id %>" class="estado">
+      <option value="00">Selecciona un estado</option>
+      <option value="01">Aguascalientes</option>
+      <option value="02">Baja California</option>
+      <option value="03">Baja California Sur</option>
+      <option value="04">Campeche</option>
+      <option value="05">Coahuila de Zaragoza</option>
+      <option value="06">Colima</option>
+      <option value="07">Chiapas</option>
+      <option value="08">Chihuahua</option>
+      <option value="09">Distrito Federal</option>
+      <option value="10">Durango</option>
+      <option value="11">Guanajuato</option>
+      <option value="12">Guerrero</option>
+      <option value="13">Hidalgo</option>
+      <option value="14">Jalisco</option>
+      <option value="15">México</option>
+      <option value="16">Michoacán de Ocampo</option>
+      <option value="17">Morelos</option>
+      <option value="18">Nayarit</option>
+      <option value="19">Nuevo León</option>
+      <option value="20">Oaxaca</option>
+      <option value="21">Puebla</option>
+      <option value="22">Querétaro</option>
+      <option value="23">Quintana Roo</option>
+      <option value="24">San Luis Potosí</option>
+      <option value="25">Sinaloa</option>
+      <option value="26">Sonora</option>
+      <option value="27">Tabasco</option>
+      <option value="28">Tamaulipas</option>
+      <option value="29">Tlaxcala</option>
+      <option value="30">Veracruz de Ignacio de la Llave</option>
+      <option value="31">Yucatán</option>
+      <option value="32">Zacatecas</option>
+    </select>
+  </li>
+  <li>
+    <select name="<%= 'mn' + id %>" class="municipio">
+      <option value="000">Selecciona un municipio</option>
+    </select>
+  </li>
+  <li>
+    <select name="<%= 'lc' + id %>" class="localidad">
+      <option value="0000">Selecciona una localidad</option>
+    </select>
+  </li>
+</ul>
+<input type="hidden" name="<%= 'q' + id %>" <% if(default_value) print('value="'+default_value+'"') %>>

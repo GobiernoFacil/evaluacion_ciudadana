@@ -15,7 +15,8 @@ define(function(require){
       Description = require('text!templates/survey_description.html'),
       Question    = require('text!templates/survey_question.html'),
       Option      = require('text!templates/survey_option.html'),
-      Input       = require('text!templates/survey_input.html');
+      Input       = require('text!templates/survey_input.html'),
+      Location    = require('text!templates/survey_location.html');
 
   //
   // I N I T I A L I Z E   T H E   B A C K B O N E   V I E W
@@ -28,8 +29,14 @@ define(function(require){
     // ------------------
     //
     events : {
+      // [ GENERAL QUESTIONS]
       'click input[type="radio"]' : 'save_response',
-      'blur input[type="text"]'   : 'save_response'
+      'blur input[type="text"]'   : 'save_response',
+
+      // [ LOCATION QUESTIONS]
+      'change select[class="estado"]'    : '_update_state',
+      'change select[class="municipio"]' : '_update_city',
+      'change select[class="localidad"]' : '_update_locality',
     },
 
     // -----------------
@@ -47,6 +54,7 @@ define(function(require){
     des_temp : _.template(Description),
     opt_temp : _.template(Option),
     inp_temp : _.template(Input),
+    loc_temp : _.template(Location),
 
     // ------------------------
     // THE INITIALIZE FUNCTION
@@ -70,47 +78,89 @@ define(function(require){
     // R E N D E R   F U N C T I O N S 
     // --------------------------------------------------------------------------------
     //
+
+    // --------------------
+    // CALL THE MAIN RENDER
+    // --------------------
+    //
     render : function(){
-      // [ THE QUESTION ]
-      // escribe dentro de un <p> la pregunta y agrega un <ul>
-      // para agregar una lista de posibles respuestas. Si es 
-      // una descripción, agrega un <div> en lugar del <p>
-      // y no incluye un <ul>
+      // [ THE QUESTION TYPES ]
+
+      // [ THE DESCRIPTION ] 
       if(Number(this.model.get('is_description'))){
-        this.$el.html(this.des_temp(this.model.attributes));
+        this._render_description();
       }
+
+      // [ THE LOCATION ]
+      else if(Number(this.model.get('is_location'))){
+        this._render_location();
+      }
+
+      // [ THE MULTIPLE OPTION ] 
+      else if(this.opt.length){
+        this._render_radio();
+      }
+
+      // [ THE OPEN QUESTION ]
       else{
         this.$el.html(this.template(this.model.attributes));
       }
 
-      // [ THE OPTIONS ]
-      // [ A ] Si hay opciones disponibles, las pone como una lista
-      //       de <radio>
-      if(this.opt.length){
-        this.opt.each(function(option){
-          // [ A.1 ] le pasa a cada opción el valor del servidor para
-          //         la pregunta a la que pertenece. Si ya fue respondida,
-          //         le agrega el atributo "checked"; si no, no pasa nada. 
-          option.set({default_value : this.model.get('default_value')});
-          this.$el.append(this.opt_temp(option.attributes));
-        }, this);
-      }
-
-      // [ B ] Si no hay opciones, pero no es descripción, agrega
-      //       un <input> para texto. Un elemento de "pregunta" en la DB
-      //       también puede ser HTML con algún texto que describa parte
-      //       del proceso
-      else if(! Number(this.model.get('is_description'))){
-        this.$el.append(this.inp_temp(this.model.attributes));
-      }
-
       return this;
+    },
+
+    _render_description : function(){
+      this.$el.html(this.des_temp(this.model.attributes));
+    },
+
+    _render_radio : function(model){
+      this.$el.html(this.template(this.model.attributes));
+      // [ THE OPTIONS ]
+      this.opt.each(function(option){
+        // [ A.1 ] le pasa a cada opción el valor del servidor para
+        //         la pregunta a la que pertenece. Si ya fue respondida,
+        //         le agrega el atributo "checked"; si no, no pasa nada. 
+        option.set({default_value : this.model.get('default_value')});
+        this.$el.append(this.opt_temp(option.attributes));
+      }, this);
+    },
+
+    _render_location : function(){
+      this.$el.html(this.loc_temp(this.model.attributes));
+    },
+
+    _render_input : function(){
+      this.$el.html(this.template(this.model.attributes));
+      this.$el.append(this.inp_temp(this.model.attributes));
     },
 
     //
     // I N T E R N A L   F U N C T I O N S 
     // --------------------------------------------------------------------------------
     //
+    _update_state : function(e){
+
+    },
+
+    _update_city : function(e){
+    },
+
+    _update_locality : function(e){
+
+    }
+
+    _save_location : function(){
+
+    },
+
+    _get_cities : function(){
+
+    },
+
+    _get_localities : function(){
+
+    },
+
     save_response : function(e){
       // [ UPDATE THE SERVER ]
       // Cada que se contesta o cambia una respuesta, ésta es enviada al
