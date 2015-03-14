@@ -1313,6 +1313,14 @@ footer {
     footer li {
       margin: 0 8px 10px; } }
 
+/* min-width: 768px and max-width:991px
+-------------------------------------------------------------- */
+@media screen and (min-width: 768px) and (max-width: 991px) {
+  header h1.tuevaluas {
+    background-size: 100% auto; }
+  nav li {
+    margin: 10px; } }
+
 /* =Print
 ----------------------------------------------- */
 @media print { }
