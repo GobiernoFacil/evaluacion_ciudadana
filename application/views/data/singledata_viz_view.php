@@ -9,61 +9,78 @@
 				</section>
 				<div class="answers">
 					<h2>Respuestas</h2>
+					<?php 
+						// buscamos totales
+						$array_answer=array();
+						foreach($response['questions'] as $question):?>
+						<?php 
+							$total_answer_num = 0;
+							// los sacamos de fea manera
+							foreach($question->options as $respuesta):?>
+								<?php 
+									//si es string
+									if (is_string($respuesta->answer_num)) 
+									{
+										$number = (int)$respuesta->answer_num;
+										$float  = (float)$number;
+										$total_answer_num = $total_answer_num + $float;
+									}
+									else 
+									{
+										$total_answer_num = $total_answer_num + $respuesta->answer_num;
+									}
+								?>
+						<?php endforeach;
+							// clavamos total y id al array
+							$array_answer[] = array(
+											"id" 		=> $question->id,
+											"total_num" => $total_answer_num,
+							);
+						?>	
+						<?php endforeach;?>
+					<!-- comienza lista de preguntas-->
 					<ol>
-						
 					<?php foreach($response['questions'] as $question):?>
 						<li >
 							<h3><?php	echo $question->question;?></h3>
-							<?php if(empty($question->options)):?>
+							<?php 
+								// si no hay opciones
+								if(empty($question->options)):?>
 								<?php foreach($question->answers as $respuesta):?>
 									<p>
 									<?php echo $respuesta->num_value;?>
 									</p>
 								<?php endforeach;?>
-							<?php else:?>
+							<?php 
+								// si hay opciones
+								else:?>
 								<ul class="row">
-
 								<?php foreach($question->options as $respuesta):?>
 								<span class="clearfix">
-									<li class="col-sm-4">
-									<?php echo  $respuesta->description . ': <strong>' . $respuesta->answer_num . '</strong>';?>
+									<li class="col-sm-6">
+									<?php 
+										/// buscamos el total de respuestas de la pregunta
+										$le_total = 0;
+										foreach ($array_answer as $los_totales):?>
+										<?php 											
+											if ($los_totales['id'] == $question->id) {
+												$le_total = $los_totales['total_num'];		
+											}
+										?>
+									<?php endforeach;?>
+									<?php 
+										///calcula porcentaje de respuestas… sad thing
+										if ($le_total > 0) {
+											$amount =  ($respuesta->answer_num / $le_total) * 100;																			}
+										else {
+											$amount = 0;
+										}
+										echo  $respuesta->description . ': <strong>' . $amount . '</strong>%';
+									?>
 									</li>
-									<li class="col-sm-8">
-										
-										<?php 
-											///sad thing
-											$amount = $respuesta->answer_num / $response['applicants'];
-											switch($amount) {
-											case 0:
-												$tha_class = 0;
-												break;
-											case $amount <= 0.125:
-												$tha_class = 12;
-												break;
-											case $amount <= 0.25:
-												$tha_class = 25;
-												break;
-											case $amount <= 0.375:
-												$tha_class = 37;
-												break;
-											case $amount <= 0.5:
-												$tha_class = 25;
-												break;
-											case $amount <= 0.625:
-												$tha_class = 62;
-												break;
-											case $amount <= 0.75:
-												$tha_class = 75;
-												break;
-											case $amount <= 0.875:
-												$tha_class = 87;
-												break;
-											default:
-												$tha_class = 100;
-												break;
-										};?>
+									<li class="col-sm-6">
 										<span class="the_bar"> 
-										<span class="bar a<?php echo $tha_class;?>"></span>
+										<span class="bar" style="width:<?php echo $amount;?>%"></span>
 										</span>
 									</li>
 								</span>

@@ -1082,25 +1082,16 @@ article {
     background: #23272d;
     display: block;
     margin: 0;
-    padding: 0; }
-    article.data_hm .bar.a0 {
-      width: 0; }
-    article.data_hm .bar.a12 {
-      width: 12.5%; }
-    article.data_hm .bar.a25 {
-      width: 25%; }
-    article.data_hm .bar.a37 {
-      width: 37.5%; }
-    article.data_hm .bar.a50 {
-      width: 50%; }
-    article.data_hm .bar.a62 {
-      width: 62.5%; }
-    article.data_hm .bar.a75 {
-      width: 75%; }
-    article.data_hm .bar.a87 {
-      width: 87.5%; }
-    article.data_hm .bar.a100 {
-      width: 100%; }
+    padding: 0;
+    /*&.a0 { width: 0;}
+			&.a12 { width: 12.5%;}
+			&.a25 { width: 25%;}
+			&.a37 { width: 37.5%;}
+			&.a50 { width: 50%;}
+			&.a62 { width: 62.5%;}
+			&.a75 { width: 75%;}
+			&.a87 { width: 87.5%;}
+			&.a100 { width: 100%;}*/ }
 
 /* =Cuestionario
 -------------------------------------------------------------- */
