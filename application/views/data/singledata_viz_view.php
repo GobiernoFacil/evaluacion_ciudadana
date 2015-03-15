@@ -75,7 +75,7 @@
 										else {
 											$amount = 0;
 										}
-										echo  $respuesta->description . ': <strong>' . $amount . '</strong>%';
+										echo  $respuesta->description . ': <strong>' . $amount . '%</strong>';
 									?>
 									</li>
 									<li class="col-sm-6">

@@ -1061,6 +1061,8 @@ article {
         margin-bottom: 20px; }
       article.data_hm .answers ol li:first-child {
         display: none; }
+      article.data_hm .answers ol li strong {
+        color: #FF6F69; }
     article.data_hm .answers ol ul {
       margin-left: 20px; }
       article.data_hm .answers ol ul li {
