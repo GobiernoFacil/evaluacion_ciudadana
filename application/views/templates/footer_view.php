@@ -1,15 +1,15 @@
 <footer>
 	<div class="container">
 		<div class="row integrantes">
-			<div class="col-sm-10 col-sm-offset-1">
-			<h3>Integrantes</h3>
+			<div class="col-sm-8 col-sm-offset-2">
+			<h3>Equipo</h3>
 			<ul class="row">
-				<li class="col-sm-3 col-sm-offset-1"><span class="presidencia">Presidencia</span></li>
-				<li class="col-sm-3"><a href="http://www.presidencia.gob.mx/edn/" class="mx_digital">Estrategia Digital</a></li>
-				<li class="col-sm-3"><span class="shcp">SHCP</span></li>
-				<li class="col-sm-3 col-sm-offset-1"><a href="http://www.transparenciapresupuestaria.gob.mx/" class="transparencia">Transparencia Presupuestaria</a></li>
-				<li class="col-sm-3"><a href="http://www.crea.org.mx/" class="crea">CREA A.C.</a></li>
-				<li class="col-sm-3"><a href="http://gobiernofacil.com" class="gobiernofacil" title="Gobierno Fácil">Gobierno Fácil</a></li>
+				<li class="col-xs-4"><span class="presidencia">Presidencia</span></li>
+				<li class="col-xs-4"><a href="http://www.presidencia.gob.mx/edn/" class="mx_digital">Estrategia Digital</a></li>
+				<li class="col-xs-4"><span class="shcp">SHCP</span></li>
+				<li class="col-xs-4"><a href="http://www.transparenciapresupuestaria.gob.mx/" class="transparencia">Transparencia Presupuestaria</a></li>
+				<li class="col-xs-4"><a href="http://www.crea.org.mx/" class="crea">CREA A.C.</a></li>
+				<li class="col-xs-4"><a href="http://gobiernofacil.com" class="gobiernofacil" title="Gobierno Fácil">Gobierno Fácil</a></li>
 			</ul>
 			</div>
 		</div>
@@ -22,12 +22,12 @@
 			</div>
 			<div class="col-sm-9">
 				<ul>
-					<li><?php echo anchor('/about','¿Qué es?');?></li>					
-					<li><?php echo anchor('/datos','Resultados');?></li>
-					<li><?php echo anchor('/preguntas','Preguntas Frecuentes');?></li>
-					<li><?php echo anchor('/terms','Términos y Condiciones');?></li>
-					<li><?php echo anchor('/privacy','Privacidad');?></li>
-					<li><?php echo anchor('/contact','Contacto');?></li>
+					<li><?php echo anchor('/que-es','¿Qué es?');?></li>					
+					<li><?php echo anchor('/resultados','Resultados');?></li>
+					<li><?php echo anchor('/preguntas-frecuentes','Preguntas Frecuentes');?></li>
+					<li><?php echo anchor('/terminos','Términos y Condiciones');?></li>
+					<li><?php echo anchor('/privacidad','Privacidad');?></li>
+					<li><?php echo anchor('/contacto','Contacto');?></li>
 				</ul>
 			</div>
 		</div>

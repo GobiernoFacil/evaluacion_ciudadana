@@ -28,7 +28,11 @@ class Question_options extends CI_Controller {
     }
   }
 
-  public function delete(){
+  public function get_cities($state_id){
+
+  }
+
+  public function get_localities($city_id){
 
   }
 }

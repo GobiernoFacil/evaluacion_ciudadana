@@ -34,7 +34,7 @@ La información sobre satisfacción de beneficiarios que se difunde mediante el 
 	<h2>Aviso sobre contenidos de terceros</h2>
 	<p>Estos términos y condiciones de uso no lo autorizan para utilizar el contenido de terceros como pueden ser obras en cualquier formato que se encuentren dentro de los conjuntos de datos. En caso de que requiera utilizar dicho contenido, deberá buscar la autorización directamente del titular de los derechos correspondientes de conformidad con la Ley Federal de Derechos de Autor.</p>
 	<p>Los usuarios serán responsables del uso que realicen respecto de la información, materiales y herramientas contenidas en el portal web, por lo que están obligados a responder por el uso indebido que hagan de los mismos y que pudiere ocasionar algún daño o perjuicio a terceros.
-Cualquier duda relacionada con respecto al uso y reproducción de la información, material y herramientas del portal web, así como con el contenido de los presentes términos y condiciones, favor de referirse a la opción <?php echo anchor("/contact", '"Contáctanos"');?>. </p>
+Cualquier duda relacionada con respecto al uso y reproducción de la información, material y herramientas del portal web, así como con el contenido de los presentes términos y condiciones, favor de referirse a la opción <?php echo anchor("/contacto", '"Contáctanos"');?>. </p>
 
 		</div>
 		</article>

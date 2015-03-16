@@ -4,7 +4,7 @@
 		<div class="col-sm-8 col-sm-offset-2">
 			<h1>Envía un mensaje a la plataforma <strong>Tú Evalúas</strong></h1>
 			<?php echo validation_errors('<p class="error">', '</p>'); ?>
-
+			<?php echo $this->email->print_debugger();?>
 			<?php echo form_open(current_url(), array('class'=>'contact_form'));?>
 				<p><?php echo form_label('Nombre: ', 'name');?></p>
 				<p>	<?php echo form_input('name', set_value('name'));?></p>

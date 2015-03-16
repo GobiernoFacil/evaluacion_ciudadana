@@ -9,16 +9,20 @@
 	<title>Custionario | Test</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="/img/favicon.ico">
-	<link href='http://fonts.googleapis.com/css?family=Raleway:700,400,300' rel='stylesheet' type='text/css'>
 	<link rel="stylesheet" href="/css/normalize.css">
     <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
-<div class="row">
-	<nav class="col-sm-3">
-		<a href="/" class="tuevaluas">Tú evalúas</a>
-	</nav>
-</div>
+<header class="pg">
+	<div class="clearfix">
+		<nav class="col-sm-3 col-sm-offset-1">
+			<a href="/" class="tuevaluas">Tú evalúas</a>
+		</nav>
+		
+	</div>	
+</header>
+	
+
 	<div class="container cuestiona">
 		<h1>Primer formulario</h1>
 		<div id="main" class="row">
@@ -54,12 +58,12 @@
 			</div>
 			<div class="col-sm-9">
 				<ul>
-					<li><?php echo anchor('/about','¿Qué es?');?></li>					
-					<li><?php echo anchor('/datos','Resultados');?></li>
-					<li><?php echo anchor('/preguntas','Preguntas Frecuentes');?></li>
-					<li><?php echo anchor('/terms','Términos y Condiciones');?></li>
-					<li><?php echo anchor('/privacy','Privacidad');?></li>
-					<li><?php echo anchor('/contact','Contacto');?></li>
+					<li><?php echo anchor('/que-es','¿Qué es?');?></li>					
+					<li><?php echo anchor('/resultados','Resultados');?></li>
+					<li><?php echo anchor('/preguntas-frecuentes','Preguntas Frecuentes');?></li>
+					<li><?php echo anchor('/terminos','Términos y Condiciones');?></li>
+					<li><?php echo anchor('/privacidad','Privacidad');?></li>
+					<li><?php echo anchor('/contacto','Contacto');?></li>
 				</ul>
 			</div>
 		</div>

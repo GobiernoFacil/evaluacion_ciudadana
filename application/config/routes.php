@@ -38,20 +38,18 @@
 |
 */
 
-$route['default_controller']  = "home";
-$route['404_override']        = '';
-$route['cuestionario/(:any)'] = 'form_application/index/$1';
-
-$route['datos']               = 'open_data';
-$route['datos/(:any)']        = 'open_data/index/$1/$2';
-$route['respuestas']          = 'survey_handler/index';
-$route['municipios/(:num)']   = 'question_options/get_cities/$1';
-$route['localidades/(:num)']  = 'question_options/get_localities/$1';
-$route['about']          	    = 'home/about';
-$route['preguntas']           = 'home/preguntas';
-$route['terms']           	  = 'home/terms';
-$route['privacy']             = 'home/privacy';
-$route['contact']             = 'home/contact';
+$route['default_controller']  	= "home";
+$route['404_override']        	= '';
+$route['cuestionario/(:any)'] 	= 'form_application/index/$1';
+							  	
+$route['resultados']          	= 'open_data';
+$route['resultados/(:any)']   	= 'open_data/index/$1/$2';
+$route['respuestas']          	= 'survey_handler/index';
+$route['que-es']          	  	= 'home/about';
+$route['preguntas-frecuentes']	= 'home/preguntas';
+$route['terminos']           	= 'home/terms';
+$route['privacidad']            = 'home/privacy';
+$route['contacto']             	= 'home/contact';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
