@@ -71,7 +71,8 @@
 									<?php 
 										///calcula porcentaje de respuestas… sad thing
 										if ($le_total > 0) {
-											$amount =  ($respuesta->answer_num / $le_total) * 100;																			}
+											$amount =  ($respuesta->answer_num / $le_total) * 100;																			$amount = round($amount, 2);
+										}
 										else {
 											$amount = 0;
 										}
