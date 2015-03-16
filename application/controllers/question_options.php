@@ -29,11 +29,15 @@ class Question_options extends CI_Controller {
   }
 
   public function get_cities($state_id){
-
+    $response = $this->location_model->get_cities((int)$state_id);
+    header('Content-Type: application/json');
+    echo json_encode($response);
   }
 
   public function get_localities($city_id){
-
+    $response = $this->location_model->get_localities((int)$city_id);
+    header('Content-Type: application/json');
+    echo json_encode($response);
   }
 }
 

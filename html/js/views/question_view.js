@@ -16,7 +16,8 @@ define(function(require){
       Question    = require('text!templates/survey_question.html'),
       Option      = require('text!templates/survey_option.html'),
       Input       = require('text!templates/survey_input.html'),
-      Location    = require('text!templates/survey_location.html');
+      Location    = require('text!templates/survey_location.html'),
+      Loc_option  = require('text!templates/survey_location_option.html');
 
   //
   // I N I T I A L I Z E   T H E   B A C K B O N E   V I E W
@@ -30,8 +31,9 @@ define(function(require){
     //
     events : {
       // [ GENERAL QUESTIONS]
-      'click input[type="radio"]' : 'save_response',
-      'blur input[type="text"]'   : 'save_response',
+      'click input[type="radio"]'   : 'save_response',
+      'blur input[type="text"]'     : 'save_response',
+      'change input[type="hidden"]' : 'save_response',
 
       // [ LOCATION QUESTIONS]
       'change select[class="estado"]'    : '_update_state',
@@ -55,6 +57,7 @@ define(function(require){
     opt_temp : _.template(Option),
     inp_temp : _.template(Input),
     loc_temp : _.template(Location),
+    lo_temp  : _.template(Loc_option),
 
     // ------------------------
     // THE INITIALIZE FUNCTION
@@ -139,6 +142,18 @@ define(function(require){
     // --------------------------------------------------------------------------------
     //
     _update_state : function(e){
+      // [ THE STATE ] 
+      // [1] obtiene el valor del select
+      var state = this.$(e.currentTarget).val();
+      // [2] limpia la lista de municipios y localidades
+      this.$('select.municipio option.data').remove();
+      this.$('select.localidad option.data').remove();
+      // [3] genera la nueva clave de ubicación
+      var location = state + String('0000000');
+      // [4] salva la nueva ubicación
+      this.$('input[type="hidden"]').val(location).change();
+      // [5] si es algún estado en particular, carga los municipios
+      if(Number(state)) this._set_cities(state);
 
     },
 
@@ -147,17 +162,20 @@ define(function(require){
 
     _update_locality : function(e){
 
-    }
-
-    _save_location : function(){
-
     },
 
-    _get_cities : function(){
-
+    _set_cities : function(state){
+      var that = this;
+      $.get('/municipios/' + state, {}, function(data){
+        if(data.length){
+          _.each(data, function(city){
+            this.$('select.municipio').append(this.lo_temp(city));
+          }, that);
+        }
+      }, 'json');
     },
 
-    _get_localities : function(){
+    _set_localities : function(){
 
     },
 
