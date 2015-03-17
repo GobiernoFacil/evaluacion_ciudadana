@@ -106,7 +106,7 @@ define(function(require){
 
       // [ THE OPEN QUESTION ]
       else{
-        this.$el.html(this.template(this.model.attributes));
+        this._render_input();
       }
 
       return this;
