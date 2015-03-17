@@ -50,6 +50,20 @@
 			</div>
 		</div>
 	</div>
+	<!-- participantes-->
+	<div class="integrantes participantes">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-8 col-sm-offset-2">
+					<h3>Participantes <strong>Tú Evalúas</strong></h3>
+					<ul class="row">
+						<li class="col-xs-4"></li>
+						<li class="col-xs-4"><a href="http://www.vas.gob.mx/swb/swb/PORTALVAS/home" class="prospera">Sedesol Prospera</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
 	<div class="links_bottom">
 		<div class="container">
 			<div class="row">
