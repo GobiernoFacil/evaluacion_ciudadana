@@ -20,8 +20,15 @@ class Location_model extends CI_Model{
     return $q->result();
   }
 
-  function get_localities($id){
-    $q = $this->db->get_where(self::LOCALITIES, ['municipio_id' => $id]);
+  function get_city($state, $city){
+    $key = str_pad($city, 3, "0", STR_PAD_LEFT); 
+    $q = $this->db->get_where(self::CITIES, ['estado_id' => $state, 'clave' => $key]);
+    return $q->row();
+  }
+
+  function get_localities($state, $city){
+    $city = $this->get_city($state, $city);
+    $q = $this->db->get_where(self::LOCALITIES, ['municipio_id' => $city->id]);
     return $q->result();
   }
 }

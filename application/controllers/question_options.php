@@ -34,8 +34,8 @@ class Question_options extends CI_Controller {
     echo json_encode($response);
   }
 
-  public function get_localities($city_id){
-    $response = $this->location_model->get_localities((int)$city_id);
+  public function get_localities($state_id, $city_id){
+    $response = $this->location_model->get_localities((int)$state_id, (int)$city_id);
     header('Content-Type: application/json');
     echo json_encode($response);
   }

@@ -43,7 +43,7 @@ $route['404_override']        = '';
 $route['cuestionario/(:any)'] = 'form_application/index/$1';
 
 $route['municipios/(:num)']  = 'question_options/get_cities/$1';
-$route['localidades/(:num)'] = 'question_options/get_localities/$1';
+$route['localidades/(:num)/(:num)'] = 'question_options/get_localities/$1/$2';
 							  	
 $route['resultados']           = 'open_data';
 $route['resultados/(:any)']    = 'open_data/index/$1/$2';

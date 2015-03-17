@@ -130,6 +130,16 @@ define(function(require){
 
     _render_location : function(){
       this.$el.html(this.loc_temp(this.model.attributes));
+      if(this.model.get('default_value')){
+        var location = this.model.get('default_value');
+        var state    = location.slice(0,2);
+        var city     = location.slice(2,5);
+        var locality = location.slice(5);
+        
+        this.$('select.estado').val(state);
+        this._set_cities(state, city);
+        this._set_localities(state, city, locality);
+      }
     },
 
     _render_input : function(){
@@ -154,29 +164,64 @@ define(function(require){
       this.$('input[type="hidden"]').val(location).change();
       // [5] si es algún estado en particular, carga los municipios
       if(Number(state)) this._set_cities(state);
-
     },
 
     _update_city : function(e){
+      // [ THE CITY ]
+      // [1] obtiene el valor del estado y el municipio
+      var state = this.$('select.estado').val();
+      var city  = this.$('select.municipio').val();
+      // [2] limpia la lista de localidades
+      this.$('select.localidad option.data').remove();
+      // [3] genera la nueva clave de ubicación
+      var location = state + String(city) + String('0000');
+      // [4] salva la nueva ubicación
+      this.$('input[type="hidden"]').val(location).change();
+      // [5] si es algún estado en particular, carga los municipios
+      if(Number(city)) this._set_localities(state, city);
     },
 
     _update_locality : function(e){
-
+      // [ THE LOCALITY ]
+      // [1] obtiene el valor de la localidad, el municipio y el estado
+      var state    = this.$('select.estado').val();
+      var city     = this.$('select.municipio').val();
+      var locality = this.$(e.currentTarget).val();
+    
+      // [3] genera la nueva clave de ubicación
+      var location = state + String(city) + String(locality);
+      // [4] salva la nueva ubicación
+      this.$('input[type="hidden"]').val(location).change();
     },
 
-    _set_cities : function(state){
+    _set_cities : function(state, city){
       var that = this;
       $.get('/municipios/' + state, {}, function(data){
         if(data.length){
           _.each(data, function(city){
             this.$('select.municipio').append(this.lo_temp(city));
           }, that);
+
+          if(city || false){
+            that.$('select.municipio').val(city);
+          }
         }
       }, 'json');
     },
 
-    _set_localities : function(){
+    _set_localities : function(state, city, locality){
+      var that = this;
+      $.get('/localidades/' + state + '/' + city, {}, function(data){
+        if(data.length){
+          _.each(data, function(loc){
+            this.$('select.localidad').append(this.lo_temp(loc));
+          }, that);
 
+          if(locality || false){
+            that.$('select.localidad').val(locality);
+          }
+        }
+      }, 'json');
     },
 
     save_response : function(e){
