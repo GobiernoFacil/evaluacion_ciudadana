@@ -5,24 +5,25 @@
 	<title>Contacto en Sitio Tú Evaluas</title>
 </head>
 
-<body>
+<body style="padding: 0 20px 20px; color: #011C26;font-family: sans-serif;">
 <!-- saludo -->
-<h2 style="color:#626C8C; font: 500 24px sans-serif; margin:20px auto; padding: 0px 20px; background: #fff;  text-align: center;">
+<h2 style="  margin:20px auto;    text-align: center; background: #f9f9f9;border-bottom: 5px solid #FF6F69;padding: 30px 0 20px;font: 700 24px sans-serif;">
 ¡Hola <?php echo $name; ?>!</h2>
-<p>Bienvenido a la plataforma “Tú Evalúas” mediante la cual podrás expresar 
+<p style="padding: 0 20px;line-height: 1.4; color: #666;">Bienvenido a la plataforma <strong>Tú Evalúas</strong> mediante la cual podrás expresar 
 tu opinión acerca de los programas del Gobierno Federal. Para ello, te 
-pedimos que nos ayudes a responder una encuesta sobre PROSPERA que te 
+pedimos que nos ayudes a responder una encuesta sobre <strong>PROSPERA</strong> que te 
 tomará alrededor de 5 minutos.</p>
 
-<p>Toda la información que nos proporciones será confidencial y utilizada 
+<p style="padding: 0 20px;line-height: 1.4; color: #666;">Toda la información que nos proporciones será confidencial y utilizada 
 únicamente para conocer tu opinión de los apoyos o servicios que recibes 
-y así mejorar PROSPERA.</p>
+y así mejorar <strong>PROSPERA</strong>.</p>
 
-<p>Si estás de acuerdo con participar en la encuesta, por favor da 
-clic en el siguiente vínculo: <a href="<?php echo $url; ?>">http://tuevaluas.com.mx</a></p>
+<p style="padding: 0 20px;line-height: 1.4; color: #666;">Si estás de acuerdo con participar en la encuesta, por favor da 
+clic en el siguiente vínculo: <a href="<?php echo $url; ?>" style="background: #FF6F69;color: white;padding: 3px 5px;text-decoration: none;">tuevaluas.com.mx</a></p>
 
-<p>¿Tienes dudas acerca del cuestionario? Escribe a atencion@prospera.gob.mx
-Ir al Portal ¡Vas!: 
-<a href="http://www.vas.gob.mx/swb/swb/PORTALVAS/home">http://www.vas.gob.mx</a></p>
+<p style="padding: 0 20px;line-height: 1.4; color: #666;">¿Tienes dudas acerca del cuestionario? Escribe a atencion@prospera.gob.mx o ve al Portal ¡Vas!: 
+<a href="http://www.vas.gob.mx/swb/swb/PORTALVAS/home" style="color:#666; border-bottom: 1px solid #FF6F69; text-decoration: none">http://www.vas.gob.mx</a></p>
+<p style="padding: 0 20px;line-height: 1.4; color: #666;">¡Gracias por participar en esta encuesta, nos interesa tu opinión!</p>
+<div style="border-bottom: 1px solid #ccc;padding-top: 30px;"></div>
 </body>
 </html>
