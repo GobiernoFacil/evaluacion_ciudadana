@@ -19,6 +19,14 @@ class Applicants_model extends CI_Model{
     return $q->row();
   }
 
+  function get_key($user_email, $blueprint_id){
+    $this->db->select('form_key');
+    $this->db->where(['user_email' => $user_email, 'blueprint_id' => $blueprint_id]);
+    $q = $this->db->get(self::TABLE);
+
+    return $q->row();
+  }
+
   function save($applicant){
     $this->db->insert(self::TABLE, $applicant);
     return $this->db->insert_id();

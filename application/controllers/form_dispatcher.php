@@ -7,16 +7,14 @@ class Form_dispatcher extends CI_Controller {
   }
 
   public function index(){
-    
-    $emails = [];
-
+    $applicants = [];
     $blueprint_id = 1;
 
-    foreach($emails as $email){
+    foreach($applicants as $email){
       $this->applicants_model->save([
         'blueprint_id' => $blueprint_id,
-        'user_email'   => $email,
-        'form_key'     => md5('blueprint' . $blueprint_id . $email),
+        'user_email'   => $email->email,
+        'form_key'     => md5('blueprint' . $blueprint_id . $email->email),
         'is_over'      => 0
       ]);
     }
