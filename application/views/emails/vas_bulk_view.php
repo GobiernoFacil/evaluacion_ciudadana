@@ -24,6 +24,8 @@ clic en el siguiente vínculo: <a href="<?php echo $url; ?>" style="background: 
 <p style="padding: 0 20px;line-height: 1.4; color: #666;">¿Tienes dudas acerca del cuestionario? Escribe a atencion@prospera.gob.mx o ve al Portal ¡Vas!: 
 <a href="http://www.vas.gob.mx/swb/swb/PORTALVAS/home" style="color:#666; border-bottom: 1px solid #FF6F69; text-decoration: none">http://www.vas.gob.mx</a></p>
 <p style="padding: 0 20px;line-height: 1.4; color: #666;">¡Gracias por participar en esta encuesta, nos interesa tu opinión!</p>
-<div style="border-bottom: 1px solid #ccc;padding-top: 30px;"></div>
+<p style="background: #f9f9f9; border-top:1px solid #ccc;color:#999;padding: 20px; font-size: 12px; margin-top: 20px;"> Por favor no respondas a este mensaje, ya que los correos enviados a esta dirección no se pueden contestar, para cualquier pregunta contacta a PROSPERA.
+	
+</p>
 </body>
 </html>
