@@ -24,7 +24,7 @@
 	
 
 	<div class="container cuestiona">
-		<h1>Primer formulario</h1>
+		<h1>Jóvenes Prospera</h1>
 		<div id="main" class="row">
 			<div class="col-sm-12">
 				<form id="survey">

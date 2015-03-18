@@ -2,7 +2,7 @@
 	<div class="row">
 		<article class="data_hm">
 			<div class="col-sm-8 col-sm-offset-2">
-				<h1>Resultados de Cuestionario 1, <strong>Prospera</strong></h1>
+				<h1>Resultados de Cuestionario <strong>Jóvenes Prospera</strong></h1>
 				<section class="row">
 				<h3 class="col-sm-6" >Participantes: <strong><?php echo $response['applicants'];?></strong></h3>
 				<?php echo anchor("resultados/1/archivo", 'Descargar datos', array("class"=>"btn col-sm-3"));?>
