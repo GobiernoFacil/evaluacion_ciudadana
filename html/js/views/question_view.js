@@ -196,7 +196,7 @@ define(function(require){
 
     _set_cities : function(state, city){
       var that = this;
-      $.get('/municipios/' + state, {}, function(data){
+      $.get('/index.php/municipios/' + state, {}, function(data){
         if(data.length){
           _.each(data, function(city){
             this.$('select.municipio').append(this.lo_temp(city));
@@ -211,7 +211,7 @@ define(function(require){
 
     _set_localities : function(state, city, locality){
       var that = this;
-      $.get('/localidades/' + state + '/' + city, {}, function(data){
+      $.get('/index.php/localidades/' + state + '/' + city, {}, function(data){
         if(data.length){
           _.each(data, function(loc){
             this.$('select.localidad').append(this.lo_temp(loc));

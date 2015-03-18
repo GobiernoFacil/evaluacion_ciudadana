@@ -1,5 +1,6 @@
 {
     "require": {
-        "cartalyst/sentry": "~2.1"
+        "cartalyst/sentry": "~2.1",
+        "mailgun/mailgun-php": "~1.7"
     }
 }
