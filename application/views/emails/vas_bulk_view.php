@@ -21,7 +21,7 @@ y así mejorar <strong>PROSPERA</strong>.</p>
 <p style="padding: 0 20px;line-height: 1.4; color: #666;">Si estás de acuerdo con participar en la encuesta, por favor da 
 clic en el siguiente vínculo: <a href="<?php echo $url; ?>" style="background: #FF6F69;color: white;padding: 3px 5px;text-decoration: none;">tuevaluas.com.mx</a></p>
 
-<p style="padding: 0 20px;line-height: 1.4; color: #666;">¿Tienes dudas acerca del cuestionario? Escribe a atencion@prospera.gob.mx o ve al Portal ¡Vas!: 
+<p style="padding: 0 20px;line-height: 1.4; color: #666;">¿Tienes dudas acerca de PROSPERA? Escribe a atencion@prospera.gob.mx o ve al Portal ¡Vas!: 
 <a href="http://www.vas.gob.mx/swb/swb/PORTALVAS/home" style="color:#666; border-bottom: 1px solid #FF6F69; text-decoration: none">http://www.vas.gob.mx</a></p>
 <p style="padding: 0 20px;line-height: 1.4; color: #666;">¡Gracias por participar en esta encuesta, nos interesa tu opinión!</p>
 <p style="background: #f9f9f9; border-top:1px solid #ccc;color:#999;padding: 20px; font-size: 12px; margin-top: 20px;"> Por favor no respondas a este mensaje, ya que los correos enviados a esta dirección no se pueden contestar, para cualquier pregunta contacta a PROSPERA.
