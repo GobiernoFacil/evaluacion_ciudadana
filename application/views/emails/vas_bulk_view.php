@@ -8,7 +8,7 @@
 <body style="padding: 0 20px 20px; color: #011C26;font-family: sans-serif;">
 <!-- saludo -->
 <h2 style="  margin:20px auto;    text-align: center; background: #f9f9f9;border-bottom: 5px solid #FF6F69;padding: 30px 0 20px;font: 700 24px sans-serif;">
-¡Hola <?php echo $name; ?>!</h2>
+¡Hola!</h2>
 <p style="padding: 0 20px;line-height: 1.4; color: #666;">Bienvenido a la plataforma <strong>Tú Evalúas</strong> mediante la cual podrás expresar 
 tu opinión acerca de los programas del Gobierno Federal. Para ello, te 
 pedimos que nos ayudes a responder una encuesta sobre <strong>PROSPERA</strong> que te 
