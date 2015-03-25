@@ -7,7 +7,8 @@ class Form_dispatcher extends CI_Controller {
   }
 
   public function index(){
-    $applicants = [];
+    $q = $this->db->get('small_vas');
+    $applicants = $q->result();
     $blueprint_id = 1;
 
     foreach($applicants as $email){
@@ -19,10 +20,12 @@ class Form_dispatcher extends CI_Controller {
       ]);
     }
 
+    /*
     $users = $this->applicants_model->all($blueprint_id);
     echo "<pre>";
     var_dump($users);
     echo "</pre>";
+    */
 
   }
 }
