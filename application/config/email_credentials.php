@@ -5,7 +5,7 @@
 |--------------------------------------------------------------------------
 |
 */
-
+$config['credential_from_email']     		  	  = 'contacto@tuevaluas.com.mx';
 $config['credential_general_email']     		  = 'contacto.tuevaluas@gmail.com';
 $config['credential_general_name']	      		  = 'Tú Evalúas';
 
