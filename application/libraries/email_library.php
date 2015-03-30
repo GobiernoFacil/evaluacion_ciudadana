@@ -45,7 +45,7 @@ class Email_library {
 		$from_email = $CI->config->item('credential_general_email');
 		$from_name	= $CI->config->item('credential_general_name');
 		$CI->email->from($from_email,$from_name);
-		$CI->email->to($CI->config->item('credential_general_contact_uam_email'));
+		$CI->email->to($CI->config->item('credential_general_email'));
 		$CI->email->subject('Contacto en Tú Evalúas');
 		$data_to_message['data'] = $data;
 		$html_email = $CI->load->view($CI->config->item('email_html_contact'),$data_to_message,true);
