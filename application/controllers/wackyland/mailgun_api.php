@@ -16,7 +16,7 @@ class Mailgun_api extends CI_Controller {
 
     $blueprint_id = 1;
 
-    $q = $this->db->get('small_vas');
+    $q = $this->db->query('SELECT * FROM small_vas LIMIT 1000 OFFSET 8000');
 
     foreach($q->result() as $applicant){
       $applicant->key = $this->applicants_model->get_key($applicant->email, $blueprint_id);
@@ -28,8 +28,12 @@ class Mailgun_api extends CI_Controller {
         'subject' => 'Tú Evalúas. Ayúdanos a mejorar PROSPERA',
         'html'    => $this->load->view('emails/vas_bulk_view', $applicant, true)
       ];
+      $result = $mailgun->sendMessage($this->config['domain'], $email);
 
-      $mailgun->sendMessage($this->config['domain'], $email);
-    } 
+      echo $result->http_response_body->message;
+      echo "<br>";
+    }
+
+    echo "done offset 8000"; 
   }
 }
