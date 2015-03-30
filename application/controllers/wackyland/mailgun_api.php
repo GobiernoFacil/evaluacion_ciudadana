@@ -16,7 +16,7 @@ class Mailgun_api extends CI_Controller {
 
     $blueprint_id = 1;
 
-    $q = $this->db->query('SELECT * FROM small_vas LIMIT 100');
+    $q = $this->db->query('SELECT * FROM small_vas LIMIT 500 OFFSET 1500');
 
     foreach($q->result() as $applicant){
       $applicant->key = $this->applicants_model->get_key($applicant->email, $blueprint_id);
