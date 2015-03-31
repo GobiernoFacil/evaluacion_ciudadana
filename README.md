@@ -7,3 +7,4 @@ Permite a los beneficiarios de un programa presupuestario opinar fuera del esque
 * tener la librería mcrypt
 * un archivo en el directorio raíz llamado ".keys.php", y dentro de este, el siguiente array:
 * * $ci_keys = ['encryption_key' => "xxxxxxx"]; // con alguna cadena de caracteres estilo trabalenguas.
+* la tabla de sesiones que recomienda CI en su documentación: https://ellislab.com/codeigniter/user-guide/libraries/sessions.html
