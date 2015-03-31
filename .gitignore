@@ -11,3 +11,4 @@ html/js/bower_components
 html/css/src_sass
 vendor/
 .mailgun_config.php
+.keys.php
