@@ -111,6 +111,7 @@ define(function(require){
       //     y así hasta llegar a una sección que cumpla los requisitos
       //     o al final del formulario
         while(rules){
+          console.log(position+1);
         // [4.1] busca la pregunta que define si se despliega o no la siguiente
         //       sección. Por ahora solo se puede poner una pregunta x regla.
         //       Seguro en el futuro serán más lol.
@@ -182,21 +183,23 @@ define(function(require){
       // los que concuerden con la navegación.
       // hace falta definir algo similar para validar las respuestas.
       this.nav_rules = [
-      null, 
-      null,
-      {question : '6', val : ['1', '2']},
-      null,
-      {question : '12', val : ['1']},
-      {question : '6',  val : ['1', '2']},
-      {question : '6',  val : ['2']},
-      {question : '6',  val : ['3']},
-      {question : '25', val : ['1']},
-      null,
-      {question : '6',  val : ['1', '2']},
-      {question : '32', val : ['1']},
-      null,
-      {question : '38', val : ['1']},
-      null
+      null, // 1
+      null, // 2
+      {question : '6', val : ['1', '2']}, // 3
+      null, // 4
+      {question : '12', val : ['1']}, // 5
+      {question : '6',  val : ['1', '2']}, //6
+      {question : '6',  val : ['2']},//7
+      {question : '6',  val : ['3']},//8
+      {question : '25', val : ['1']},//9
+      null,//10
+      /*
+      {question : '6',  val : ['1', '2']},//11
+      {question : '32', val : ['1']},// 12
+      */
+      null,//13
+      {question : '38', val : ['1']},//14
+      null// 15
       ];
     },
 
