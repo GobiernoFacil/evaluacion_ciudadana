@@ -8,18 +8,21 @@ class Login extends CI_Controller {
 
   public function index()
   {
+    if($this->input->post('')){
+
+    }
     $this->load->view('wackyland/login_view');
   }
 
   private function validate(){
-    $response = [];
-    // valida el correo
-    $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
-    $pass  = filter_input(INPUT_POST, 'pass');
+    $response = [
+      $email => filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL),
+      $pass  => filter_input(INPUT_POST, 'pass'),
+      $user  => $this->admins_model->get_by_email($email),
+      $valid => password_verify($pass, $user->password)
+    ]
 
-    $user  = $this->admins_model->get_by_email($email);
-    $valid = password_verify($pass, $user->password);
-
+    return $response[];
   }
 
 
