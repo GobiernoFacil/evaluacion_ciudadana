@@ -12,7 +12,17 @@ class Login extends CI_Controller {
   }
 
   private function validate(){
+    $response = [];
+    // valida el correo
+    $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+    $pass  = filter_input(INPUT_POST, 'pass');
+
+    $user  = $this->admins_model->get_by_email($email);
+    $valid = password_verify($pass, $user->password);
+
   }
+
+
 }
 
 /* End of file test.php */

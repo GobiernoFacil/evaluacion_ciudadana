@@ -19,6 +19,11 @@ class Admins_model extends CI_Model{
     return $q->row();
   }
 
+  function get_by_email($email){
+    $q = $this->db->get_where(self::TABLE, ['email' => $email]);
+    return $q->row();
+  }
+
   function exist($email){
     $this->db->from(self::TABLE);
     $this->db->where('email',$email);
