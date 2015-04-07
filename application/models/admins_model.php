@@ -32,6 +32,7 @@ class Admins_model extends CI_Model{
 
   function all(){
     $q = $this->db->get(self::TABLE);
+    return $q->result();
   }
 
   function add($admin){
