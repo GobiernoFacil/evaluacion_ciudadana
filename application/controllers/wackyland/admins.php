@@ -9,13 +9,16 @@ class Admins extends CI_Controller {
 
   function __construct(){
     parent::__construct();
-    /*
-    if(self::MIN_LEVEL > $this->session->userdata('user')->level){
-      redirect('wackyland/tuevaluas', 'refresh');
-    }
-    */
+    $this->user = $this->session->userdata('user');
+    if(! $this->user || self::MIN_LEVEL > $this->user->level){
+      redirect('wackyland/login', 'refresh');
+    }   
   }
 
+  //
+  // [ ADMINS PANEL ]
+  //
+  //
   public function index(){
     $report = false;
     if(!empty($_POST)){
@@ -28,14 +31,15 @@ class Admins extends CI_Controller {
   //
   // [ NEW ADMIN ]
   //
+  //
   private function create(){
     // [1] revisa que tenga el nivel de usuario necesario para
     //     crear otro administrador. Nomás por si las flys
-    /*
+    
     if(self::CREATE_LEVEL > $this->session->userdata('user')->level){
       return false;
     }
-    */
+    
     // [2] valida los datos
     $email    = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
     $password = filter_input(INPUT_POST, 'password');
@@ -59,10 +63,18 @@ class Admins extends CI_Controller {
     }
   }
 
-  public function update($id){
+  //
+  // [ UPDATE ADMIN ]
+  //
+  //
+  public function update($id = false){
 
   }
 
+  //
+  // [ DELETE ADMIN ]
+  //
+  //
   public function delete($id){
 
   }
