@@ -2,9 +2,18 @@
 
 class Surveys extends CI_Controller {
 
+  //
+  // [ THE SETTINGS ]
+  //
+  //
   const MIN_LEVEL     = 3;
   const CREATE_LEVEL  = 3;
+  const ADMIN_LEVEL   = 5;
 
+  //
+  // [ THE CONSTRUCTOR ]
+  //
+  //
   function __construct(){
     parent::__construct();
     $this->user = $this->session->userdata('user');
@@ -13,11 +22,19 @@ class Surveys extends CI_Controller {
     }   
   }
 
+  //
+  // [ THE SURVEY LIST ]
+  //
+  //
   public function index(){
     $surveys = $this->blueprint_model->all();
     $this->load->view('wackyland/surveys_view', ['surveys' => $surveys]);
   }
 
+  //
+  // [ THE SURVEY CREATOR ]
+  //
+  //
   public function create(){
     // [1] revisa que tenga el nivel de usuario necesario para
     //     crear un cuestionario.
@@ -40,8 +57,32 @@ class Surveys extends CI_Controller {
     }
   }
 
+  //
+  // [ THE SURVEY EDITOR ]
+  //
+  //
   public function update($id){
-    $this->load->view('wackyland/surveys_app_view');
+    // [ GET THE BLUEPRINT ]
+    // [1] limpia los datos
+    $id = (int)$id;
+    $creator = $this->user->level < self::ADMIN_LEVEL ? $this->user->id : false;
+    // [2] busca el blueprint. Si es admin, puede ver cualquier cuestionario.
+    //     Si no, solo los que le pertenecen.
+    $blueprint = $this->blueprint_model->get($id, $creator);
+    // [3] Si no encuentra el bluprint, lo redirecciona a la sección de cuestionarios
+    if(! $blueprint){
+      redirect('wackyland/surveys');
+      die();
+    }
+
+    // [ PREPARE THE DATA ]
+    $this->session->userdata('blueprint', $blueprint);
+    $data = [];
+    $data['blueprint'] = $blueprint;
+    $data['questions'] = $this->question_model->get($data['blueprint']->id);
+    $data['options']   = $this->question_options_model->get($data['blueprint']->id);
+
+    $this->load->view('wackyland/surveys_app_view', $data);
   }
 
   public function delete($id){

@@ -14,8 +14,10 @@ class Blueprint_model extends CI_Model{
     parent::__construct();
   }
 
-  function get($id){
-    $q = $this->db->get_where(self::TABLE, ['id' => $id]);
+  function get($id, $creator = false){
+    $where = ['id' => $id];
+    if($creator) $where['creator'] = $creator;
+    $q = $this->db->get_where(self::TABLE, $where);
     return $q->row();
   }
 
