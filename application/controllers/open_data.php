@@ -7,6 +7,8 @@
 * ya sea en archivo, en json o visualizarse como gráfica
 *
 */
+use League\Csv\Writer;
+
 class Open_data extends CI_Controller {
 
   /**
@@ -17,6 +19,9 @@ class Open_data extends CI_Controller {
   */
   function __construct(){
     parent::__construct();
+    if (! ini_get("auto_detect_line_endings")){
+      ini_set("auto_detect_line_endings", '1');
+    }
 	//$this->output->enable_profiler(TRUE);
   }
 
@@ -77,6 +82,33 @@ class Open_data extends CI_Controller {
 	 	  header('Content-Type: application/json');
 	 	  echo json_encode($r);
 	 	}
+    elseif($format == 'csv'){
+      $writer = Writer::createFromFileObject(new SplTempFileObject());
+      $writer = Writer::createFromFileObject(new SplTempFileObject()); //the CSV file will be created into a temporary File
+      $writer->setDelimiter(","); //the delimiter will be the tab character
+      $writer->setNewline("\r\n"); //use windows line endings for compatibility with some csv libraries
+      $writer->setEncodingFrom("utf-8");
+      $headers = ["pregunta" , "respuesta", "numero"];
+      $writer->insertOne($headers);
+
+      $datos = [];
+      foreach ($r['questions'] as $question){
+        $entry = [];
+        $question_text = html_entity_decode($question->question);
+        foreach ($question->options as $option){
+          $option_text = html_entity_decode($option->description);
+          $option_num  = $option->answer_num;
+          $datos[] = [$question_text, $option_text, $option_num];
+        }
+      }
+
+      $writer->insertAll($datos);
+      header("Content-type: text/csv");
+      header("Content-Disposition: attachment; filename=file.csv");
+      header("Pragma: no-cache");
+      header("Expires: 0");
+      echo $writer;
+    }
 	 	elseif($format == 'archivo'){
 	 	  $filename = "data.json";
 	 	  header("Content-type: application/octet-stream");
