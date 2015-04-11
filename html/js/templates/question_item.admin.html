@@ -1,0 +1,30 @@
+<!-- [ THE LABEL ] -->
+<p><%= question %> <a href="#">editar</a></p>
+
+<!-- [ THE UPDATE FORM: QUESTION ] -->
+<div style="display:none">
+  <!-- [0] el loader -->
+  <div class="question-loader" style="display:none"></div>
+  <!-- [1] pregunta si es ubicación -->
+  <p class="question_editor_is_location">
+    <label>
+      <input type="checkbox" name="is_location_<%= id %>" value="1">
+      Captura la ubicación (Estado, municipio, localidad)
+    </label>
+  </p>
+  <!-- [2] la pregunta -->
+  <p class="question_editor_question">
+    <label>pregunta:</label>
+    <input name="question_<%= id %>" type="text" value="<%= question %>">
+  </p>
+  <!-- [3] el tipo de pregunta -->
+  <p>
+    <label>la respuesta es:</label>
+    <label><input type="radio" name="type_<%= id %>" value="text">abierta</label>
+    <label><input type="radio" name="type_<%= id %>" value="number">numérica</label>
+    <label><input type="radio" name="type_<%= id %>" value="multiple">opción múltiple</label>
+  </p>
+  <!-- [4] el botón para guardar -->
+  <p><a href="#">guardar</a></p>
+</div>
+

@@ -26,9 +26,6 @@
   <!-- [2] lista de secciones -->
       <h3>Secciones</h3>
       <ul id="survey-navigation-menu"></ul>
-  <!-- [3] información de la sección actual -->
-      <h3>Sección Actual</h3>
-      <p id="survey-current-section">Sección <span>1</span></p>
   <!-- [4] agrega las reglas de navegación -->
       <h4>Reglas</h4>
       <p id="survey-add-navigation-rule"></p>
@@ -77,7 +74,8 @@
         blueprint : <?= json_encode($blueprint); ?>,
         sections  : <?= json_encode($sections); ?>,
         questions : <?= json_encode($questions); ?>,
-        options   : <?= json_encode($options); ?>
+        options   : <?= json_encode($options); ?>,
+        rules     : <?= json_encode($rules); ?>
       };
     </script>
     <!-- DEVELOPMENT SOURCE -->

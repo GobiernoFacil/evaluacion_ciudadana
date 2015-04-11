@@ -1,0 +1,15 @@
+<!-- [ THE LABEL ] -->
+<p><%= question %> <a href="#">editar</a></p>
+<!-- [ THE UPDATE FORM: HTML ] -->
+<div style="display:none">
+  <!-- [0] el loader -->
+  <div class="question-loader" style="display:none"></div>
+  <!-- [1] el tipo de pregunta -->
+  <p>
+    <label>Contenido:</label>
+    <textarea name="descripcion_<%= id %>"><%= question %></textarea>
+  </p>
+  <!-- [2] el botón para guardar -->
+  <p><a href="#">guardar</a></p>
+</div>
+

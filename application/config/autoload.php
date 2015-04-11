@@ -111,8 +111,8 @@ $autoload['language'] = array();
 
 $autoload['model'] = array('blueprint_model', 'question_model', 
                            'question_options_model','applicants_model', 
-                           'answers_model', 'open_data_model', 
-                           'location_model', 'admins_model', 'section_model');
+                           'answers_model', 'open_data_model', 'location_model', 
+                           'admins_model', 'section_model', 'rules_model');
 
 
 /* End of file autoload.php */
