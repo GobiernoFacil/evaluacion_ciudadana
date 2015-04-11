@@ -3,6 +3,7 @@
   <head>
     <meta charset="utf-8">
     <title>Pase usted</title>
+    <link rel="stylesheet" type="text/css" href="/css/dev.css">
   </head>
   <body>
 
@@ -11,7 +12,10 @@
 
   <!-- [ THE TITLE ] -->
     <section id="survey-app-title">
-      <input type="text" name="survey-title">
+      <p>
+        <label>Título</label>
+        <input type="text" name="survey-title">
+      </p>
     </section>
 
   <!-- [ THE NAV CREATOR ] -->
@@ -71,6 +75,7 @@
     <script>
       var SurveySettings = {
         blueprint : <?= json_encode($blueprint); ?>,
+        sections  : <?= json_encode($sections); ?>,
         questions : <?= json_encode($questions); ?>,
         options   : <?= json_encode($options); ?>
       };
