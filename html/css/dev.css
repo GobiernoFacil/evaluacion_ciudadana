@@ -11,3 +11,7 @@
 #survey-navigation-menu li.current{
   background:red;
 }
+
+#survey-add-question input:disabled{
+  background:#ccc;
+}

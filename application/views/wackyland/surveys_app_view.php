@@ -7,10 +7,10 @@
   </head>
   <body>
 
-  <!-- [ THE APP ] -->
+  <!-- [[   T H E   A P P   ]] -->
   <form name="survey-app">
 
-  <!-- [ THE TITLE ] -->
+    <!-- [ THE TITLE ] -->
     <section id="survey-app-title">
       <p>
         <label>Título</label>
@@ -18,21 +18,23 @@
       </p>
     </section>
 
-  <!-- [ THE NAV CREATOR ] -->
-    <section id="survey-app-navigation">
-  <!-- [2] lista de secciones -->
-      <ul id="survey-navigation-menu"></ul>
-  <!-- [4] agrega las reglas de navegación 
-      <h4>Reglas</h4>
-      <p id="survey-add-navigation-rule"></p>-->
-  <!-- [5] lista de reglas de navegación
-      <ul id="survey-navigation-rules"></ul>
-    </section>
-
-  <!-- [ THE CONTENT LIST ] -->
+    <!-- [ THE CONTENT CREATOR ] -->
     <section id="survey-app-questions">
       <h2>Preguntas</h2>
-      <p><a href="#">Agrega pregunta</a> | <a href="#">Agrega texto(HTML)</a></p>
+
+      <div id="survey-app-navigation" style="display:none">
+        <ul id="survey-navigation-menu"></ul>
+        <h4>Reglas</h4>
+        <p id="survey-add-navigation-rule"></p>
+        <ul id="survey-navigation-rules"></ul>
+      </div>
+
+      <p id="survey-add-buttons">
+        <a href="#" class="add-question">Agrega pregunta</a> | 
+        <a href="#" class="add-text">Agrega texto(HTML)</a>
+      </p>
+      
+      <!-- [ NEW QUESTION FORM ] -->
       <div id="survey-add-question" style="display:none">
         <p>
         <label>
@@ -50,16 +52,29 @@
           <label><input type="radio" name="type" value="number">numérica</label>
           <label><input type="radio" name="type" value="multiple">opción múltiple</label>
         </p>
-        <div>
+        <p><a id="survey-add-question-btn" href="#">agregar pregunta</a></p>
+        <div id="survey-add-options" style="display:none">
           <h5>Opciones</h5>
           <ul>
             <li><input type="text" name="survey-new-question-option"></li>
           </ul>
         </div>
       </div>
+      <!-- { NEW QUESTION FORM ENDS } -->
+
+
+      <!-- [ NEW CONTENT FORM ] -->
+      <div id="survey-add-content" style="display:none">
+        <p><label>HTML:</label></p>
+        <p><textarea name="html"></textarea></p>
+        <p><a id="survey-add-content-btn" href="#">agregar contenido</a></p>
+      </div>
+      <!-- { NEW CONTENT FORM ENS } -->
+
       <ul id="survey-question-list"></ul>
     </section>
   </form>
+  <!-- {{   T H E   A P P   E N D S   }} -->
 
     <script>
       var SurveySettings = {

@@ -27,9 +27,20 @@ define(function(require){
     // 
     //
     events :{
+      // [ SURVEY NAVIGATION ]
       'click #survey-navigation-menu a' : 'render_section',
+      // [ UPDATE TITLE ]
       'focus #survey-app-title input'   : '_enable_save',
-      'blur #survey-app-title input'    : '_disable_save'
+      'blur #survey-app-title input'    : '_disable_save',
+      // [ ADD QUESTION ]
+      'change #survey-add-question input[name="is_location"]' : '_set_is_location',
+      'change #survey-add-question input[name="type"]'        : '_set_is_type',
+      'click #survey-add-buttons a.add-question'              : 'render_question_form',
+      'click #survey-add-question-btn'                        : '_save_question',
+      // [ ADD HTML ] 
+      'click #survey-add-buttons a.add-text' : 'render_content_form',
+      'click #survey-add-content-btn'        : '_save_content'
+
     },
 
     // 
@@ -66,6 +77,12 @@ define(function(require){
       this.listenTo(this.model, 'sync', this._render_saved_title);
       this.listenTo(this.sub_collection, 'add', this._render_question);
       this.listenTo(this.sub_collection, 'remove', this._remove_question);
+      // [ FETCH SHORTCUTS ]
+      this.html = {
+        navigation_menu : this.$('#survey-navigation-menu'),
+        question_form   : this.$('#survey-add-question'),
+        content_form    : this.$('#survey-add-content')
+      };
       // [ RENDER ]
       this.render();
     },
@@ -75,9 +92,12 @@ define(function(require){
     // --------------------------------------------------------------------------------
     //
 
+    // [ THE RENDER ]
+    //
+    //
     render : function(){
       // [0] guarda referencias con nombres cortos
-      var sec_nav = this.$('#survey-navigation-menu'); // SEC-NAV #lol
+      var sec_nav = this.$('#survey-navigation-menu'); // SEC-NAV #lol // this.html_items.navigation_menu
       // [1] agrega el título
       this.$('#survey-app-title input').val(this.model.get('title'));
       // [2] crea el navegador de secciones
@@ -88,6 +108,9 @@ define(function(require){
       this.render_section(1);
     },
 
+    // [ RENDER QUESTIONS FROM A SECTION ]
+    //
+    //
     render_section : function(e){
       if(typeof e !== "number") e.preventDefault();
       // [1] obitiene la nueva sección
@@ -102,6 +125,9 @@ define(function(require){
       this.sub_collection.set(this.collection.where({section_id : section}));
     },
 
+    // [ RENDER SINGLE QUESTION ]
+    //
+    //
     _render_question : function(model, collection){
       var container = this.$('#survey-question-list'),
           question  = new Question({model : model});
@@ -109,27 +135,92 @@ define(function(require){
       this.$el.append(question.render().el);
     },
 
+    // [ SHOW THE LOADING STATUS: TITLE ]
+    //
+    //
     _render_saving_title : function(e){
 
     },
 
+    // [ SHOW THE SUCCESS STATUS: TITLE ]
+    //
+    //
     _render_saved_title : function(model, response, options){
       console.log(model, response, options);
     },
 
+    // [ SHOW THE ADD QUESTION FORM ]
     //
-    // I N T E R N A L   F U N C T I O N S 
+    //
+    render_question_form : function(e){
+      e.preventDefault();
+      this.html.question_form.find('input[name="is_location"]')[0].checked = false;
+      this.html.question_form.find('input[value="text"]')[0].checked = true;
+      this.html.content_form.hide();
+      this.html.question_form.show();
+    },
+
+    // [ SHOW THE ADD HTML FORM ]
+    //
+    //
+    render_content_form : function(e){
+      e.preventDefault();
+      this.html.content_form.show();
+      this.html.question_form.hide();
+    },
+
+    //
+    // I N T E R A C T I O N
     // --------------------------------------------------------------------------------
+    //
+
+    // [ ADD A LISTENER TO THE ENTER BTN ]
+    //
     //
     _enable_save : function(e){
       window.onkeyup = this._update_title;
     },
 
+    // [ REMOVE THE LISTENER TO THE ENTER BTN ]
+    //
+    //
     _disable_save : function(e){
       window.onkeyup = false;
       this._update_title();
     },
 
+    _set_is_location : function(e){
+      if(e.currentTarget.checked){
+        this.html.question_form.find('input[value="text"]')[0].disabled = true;
+        this.html.question_form.find('input[value="number"]')[0].disabled = true;
+        this.html.question_form.find('input[value="multiple"]')[0].checked = true;
+      }
+      else{
+        this.html.question_form.find('input[value="text"]')[0].disabled = false;
+        this.html.question_form.find('input[value="number"]')[0].disabled = false;
+      }
+    },
+
+    _set_is_type : function(e){
+      if(e.currentTarget.value === 'multiple'){
+
+      }
+      else{
+        
+      }
+    },
+
+
+
+
+    //
+    // I N T E R N A L   F U N C T I O N S 
+    // --------------------------------------------------------------------------------
+    //
+
+    // [ UPDATE TITLE ] 
+    //
+    //
     _update_title : function(e){
       if(e === void 0 || e.keyCode === 13){
         var title = this.$('#survey-app-title input').val();
@@ -138,6 +229,20 @@ define(function(require){
           this.model.save();
         }
       }
+    },
+
+    // [ SAVE QUESTION ] 
+    //
+    //
+    _save_question : function(e){
+
+    },
+
+    // [ SAVE CONTENT ] 
+    //
+    //
+    _save_content : function(e){
+
     }
 
   });
