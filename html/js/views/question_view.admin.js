@@ -48,7 +48,7 @@ define(function(require){
     // ------------------------
     //
     initialize : function(){
-   
+      this.listenTo(this.model, 'remove', this.remove);
     },
 
     //
@@ -61,13 +61,11 @@ define(function(require){
     // --------------------
     //
     render : function(){
+      this.$el.append(this.template(this.model.attributes));
+      return this;
+    }
       /*
       // [ THE QUESTION TYPES ]
-
-      // [ THE DESCRIPTION ] 
-      if(Number(this.model.get('is_description'))){
-        this._render_description();
-      }
 
       // [ THE LOCATION ]
       else if(Number(this.model.get('is_location'))){
@@ -85,10 +83,6 @@ define(function(require){
       }
 
       return this;
-    },
-
-    _render_description : function(){
-      this.$el.html(this.des_temp(this.model.attributes));
     },
 
     _render_radio : function(model){

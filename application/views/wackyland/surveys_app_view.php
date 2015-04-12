@@ -36,12 +36,8 @@
   <!-- [ THE CONTENT LIST ] -->
     <section id="survey-app-questions">
       <h2>Preguntas</h2>
-      <div>
-        <p><a href="#">Agrega pregunta</a></p>
-        <p><a href="#">Agrega texto(HTML)</a></p>
-        <p></p>
-      </div>
-      <div id="survey-add-question">
+      <p><a href="#">Agrega pregunta</a> | <a href="#">Agrega texto(HTML)</a></p>
+      <div id="survey-add-question" style="display:none">
         <p>
         <label>
           <input type="checkbox" name="is_location" value="1">

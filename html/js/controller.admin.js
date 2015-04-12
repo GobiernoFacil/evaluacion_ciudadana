@@ -12,7 +12,7 @@ define(function(require){
   // --------------------------------------------------------------------------------
   //
   var Backbone    = require('backbone'),
-      Qestion     = require('views/question_view'),
+      Question    = require('views/question_view.admin'),
       Section_nav = require('text!templates/section_selector.admin.html');
 
 
@@ -27,7 +27,7 @@ define(function(require){
     // 
     //
     events :{
-      'click #survey-navigation-menu a' : 'select_section'
+      'click #survey-navigation-menu a' : 'render_section'
     },
 
     // 
@@ -40,7 +40,7 @@ define(function(require){
     // [ THE TEMPLATES ]
     //
     //
-    sec_nav_template : _.template(Section_nav)
+    sec_nav_template : _.template(Section_nav),
 
     //
     // [ THE INITIALIZE FUNCTION ]
@@ -49,14 +49,18 @@ define(function(require){
     initialize : function(){
 
       // [ THE MODEL ]
-      this.model = new Backbone.Model(SurveySettings.blueprint);
+      this.model         = new Backbone.Model(SurveySettings.blueprint);
       // [ THE COLLECTION ]
-     this.collection = new Backbone.Collection(SurveySettings.questions);
+     this.collection     = new Backbone.Collection(SurveySettings.questions);
+     this.sub_collection = new Backbone.Collection([]);
       // [ THE OTHER COLLECTIONS ]
-      this.q_options = new Backbone.Collection(SurveySettings.options);
-      this.sections  = new Backbone.Collection(SurveySettings.sections);
-      this.rules     = new Backbone.Collection(SurveySettings.rules);
+      this.q_options     = new Backbone.Collection(SurveySettings.options);
+      this.sections      = new Backbone.Collection(SurveySettings.sections);
+      this.rules         = new Backbone.Collection(SurveySettings.rules);
 
+      // [ THE LISTENERS ]
+      this.listenTo(this.sub_collection, 'add', this._render_question);
+      this.listenTo(this.sub_collection, 'remove', this._remove_question);
       // [ RENDER ]
       this.render();
     },
@@ -76,25 +80,36 @@ define(function(require){
         sec_nav.append(this.sec_nav_template(model.attributes));
       }, this);
       // [3] muestra la información de la primera sección disponible
+      this.render_section(1);
     },
 
-    select_section : function(e){
+    render_section : function(e){
       if(typeof e !== "number") e.preventDefault();
       // [1] obitiene la nueva sección
-      var section = typeof e === "number" ? e : e.currentTarget.getAttribute('data-section');
-      // [2] obtiene las reglas
+      var section = typeof e === "number" ? String(e) : e.currentTarget.getAttribute('data-section');
+      // [2] le asigna la clase de seleccionado
+      var sec_nav = this.$('#survey-navigation-menu');
+      sec_nav.children().removeClass('current');
+      sec_nav.children().eq(Number(section)-1).addClass('current');
+      // [3] obtiene las reglas
       //
-      // [3] crea la lista de preguntas
-      this._render_questions(section);
+      // [4] crea la lista de preguntas
+      this.sub_collection.set(this.collection.where({section_id : section}));
     },
 
-    _render_questions : function(section){
-      var questions = this.collection.where({section_id : section});
-      var container = this.$('#survey-question-list');
+    _render_question : function(model, collection){
+      var container = this.$('#survey-question-list'),
+          question  = new Question({model : model});
 
-      _.each(questions, function(question){
-        // 
-      }, this);
+      this.$el.append(question.render().el);
+    },
+
+    _render_saving_title : function(e){
+
+    },
+
+    _render_saved_title : function(e){
+      
     }
 
     //
