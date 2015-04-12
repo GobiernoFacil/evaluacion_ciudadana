@@ -76,7 +76,7 @@ class Surveys extends CI_Controller {
     }
 
     // [ PREPARE THE DATA ]
-    $this->session->userdata('blueprint', $blueprint);
+    $this->session->set_userdata('blueprint', $blueprint);
     $data = [];
     $data['blueprint'] = $blueprint;
     $data['sections']  = $this->section_model->get($data['blueprint']->id);
@@ -89,5 +89,16 @@ class Surveys extends CI_Controller {
 
   public function delete($id){
 
+  }
+
+  public function update_title(){
+    $bp        = $this->session->userdata('blueprint');
+    $blueprint = json_decode(file_get_contents('php://input'), true);
+    $title     = filter_var($blueprint['title'],FILTER_SANITIZE_STRING,FILTER_FLAG_STRIP_LOW|FILTER_FLAG_ENCODE_HIGH);
+    $success   = $this->blueprint_model->update($bp->id, ['title' => $title]);
+    $blueprint['success'] = $success;
+    $blueprint['title']   = $title;
+    header('Content-type: application/json');
+    echo json_encode($blueprint);
   }
 }

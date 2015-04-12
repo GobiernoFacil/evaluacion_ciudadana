@@ -20,16 +20,12 @@
 
   <!-- [ THE NAV CREATOR ] -->
     <section id="survey-app-navigation">
-      <h2>Navegación</h2>
-  <!-- [1] agregar sección -->
-      <p id="survey-add-section"><a href="#">Agregar sección</a></p>
   <!-- [2] lista de secciones -->
-      <h3>Secciones</h3>
       <ul id="survey-navigation-menu"></ul>
-  <!-- [4] agrega las reglas de navegación -->
+  <!-- [4] agrega las reglas de navegación 
       <h4>Reglas</h4>
-      <p id="survey-add-navigation-rule"></p>
-  <!-- [5] lista de reglas de navegación -->
+      <p id="survey-add-navigation-rule"></p>-->
+  <!-- [5] lista de reglas de navegación
       <ul id="survey-navigation-rules"></ul>
     </section>
 

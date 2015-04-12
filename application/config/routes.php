@@ -54,5 +54,8 @@ $route['terminos']             = 'home/terms';
 $route['privacidad']           = 'home/privacy';
 $route['contacto']             = 'home/contact';
 
+// SURVEY APP
+$route['surveys/title/update']  = 'wackyland/surveys/update_title';
+
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

@@ -27,7 +27,9 @@ define(function(require){
     // 
     //
     events :{
-      'click #survey-navigation-menu a' : 'render_section'
+      'click #survey-navigation-menu a' : 'render_section',
+      'focus #survey-app-title input'   : '_enable_save',
+      'blur #survey-app-title input'    : '_disable_save'
     },
 
     // 
@@ -50,6 +52,7 @@ define(function(require){
 
       // [ THE MODEL ]
       this.model         = new Backbone.Model(SurveySettings.blueprint);
+      this.model.url     = "/index.php/surveys/title/update";
       // [ THE COLLECTION ]
      this.collection     = new Backbone.Collection(SurveySettings.questions);
      this.sub_collection = new Backbone.Collection([]);
@@ -57,8 +60,10 @@ define(function(require){
       this.q_options     = new Backbone.Collection(SurveySettings.options);
       this.sections      = new Backbone.Collection(SurveySettings.sections);
       this.rules         = new Backbone.Collection(SurveySettings.rules);
-
+      // [ FIX THE SCOPES ]
+      this._update_title = $.proxy(this._update_title, this);
       // [ THE LISTENERS ]
+      this.listenTo(this.model, 'sync', this._render_saved_title);
       this.listenTo(this.sub_collection, 'add', this._render_question);
       this.listenTo(this.sub_collection, 'remove', this._remove_question);
       // [ RENDER ]
@@ -108,14 +113,32 @@ define(function(require){
 
     },
 
-    _render_saved_title : function(e){
-      
-    }
+    _render_saved_title : function(model, response, options){
+      console.log(model, response, options);
+    },
 
     //
     // I N T E R N A L   F U N C T I O N S 
     // --------------------------------------------------------------------------------
     //
+    _enable_save : function(e){
+      window.onkeyup = this._update_title;
+    },
+
+    _disable_save : function(e){
+      window.onkeyup = false;
+      this._update_title();
+    },
+
+    _update_title : function(e){
+      if(e === void 0 || e.keyCode === 13){
+        var title = this.$('#survey-app-title input').val();
+        if(title){
+          this.model.set({title : title});
+          this.model.save();
+        }
+      }
+    }
 
   });
 
