@@ -128,8 +128,8 @@ class Surveys extends CI_Controller {
       $value = 1;
       foreach($options as $option){
         $option_obj = [
-          'blueprint_id' =>  $question->blueprint_id,
-          'question_id'  =>  $question->id,
+          'blueprint_id' =>  $question['blueprint_id'],
+          'question_id'  =>  $question['id'],
           'description'  => $this->sanitize_string($option),
           'value'        => $value,
           'name'         => uniqid('opt')

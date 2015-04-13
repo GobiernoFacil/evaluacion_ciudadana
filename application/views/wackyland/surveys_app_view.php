@@ -60,7 +60,7 @@
         </div>
         <!-- [4] -->
         <!-- [5] salva la pregunta -->
-        <p><a id="survey-add-question-btn" href="#">agregar pregunta</a></p>
+        <p><a id="survey-add-question-btn" href="#">agregar</a></p>
         <!-- [5] -->
       </div>
       <!-- { NEW QUESTION FORM ENDS } -->
