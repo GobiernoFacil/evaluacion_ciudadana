@@ -34,7 +34,6 @@ define(function(require){
       'focus #survey-app-title input'   : '_enable_save',
       'blur #survey-app-title input'    : '_disable_save',
       // [ ADD QUESTION ]
-      'change #survey-add-question input[name="is_location"]' : '_set_is_location',
       'change #survey-add-question input[name="type"]'        : '_set_is_type',
       'click #survey-add-buttons a.add-question'              : 'render_question_form',
       'click #survey-add-question-btn'                        : '_save_question',
@@ -78,6 +77,7 @@ define(function(require){
       this.rules         = new Backbone.Collection(SurveySettings.rules);
       // [ FIX THE SCOPES ]
       this._update_title = $.proxy(this._update_title, this);
+      this._render_new_option = $.proxy(this._render_new_option, this);
       // [ THE LISTENERS ]
       this.listenTo(this.model, 'sync', this._render_saved_title);
       this.listenTo(this.sub_collection, 'add', this._render_question);
@@ -160,7 +160,6 @@ define(function(require){
     //
     render_question_form : function(e){
       e.preventDefault();
-      this.html.question_form.find('input[name="is_location"]')[0].checked = false;
       this.html.question_form.find('input[value="text"]')[0].checked = true;
       this.html.content_form.hide();
       this.html.question_form.show();
@@ -174,6 +173,21 @@ define(function(require){
       this.html.content_form.show();
       this.html.answers_form.hide();
       this.html.question_form.hide();
+    },
+
+    // [ ADD NEW ANSWER OPTION ]
+    //
+    //
+    _render_new_option : function(e){
+      if(e.keyCode === 13 && e.target.value){
+        var name = _.uniqueId('lp');
+        this.html.answers_form.children('ul').append(this.answer_template({
+          name     : name, 
+          value    : '',
+          is_first : false
+        }));
+        this.html.answers_form.find('input[name="' + name + '"]')[0].focus();
+      }
     },
 
     //
@@ -197,29 +211,15 @@ define(function(require){
     },
 
     _enable_save_option : function(e){
-
+      window.onkeyup = this._render_new_option;
     },
 
     _disable_save_option : function(e){
-
+      window.onkeyup = false;
     },
 
     _remove_option : function(e){
 
-    },
-
-    _set_is_location : function(e){
-      if(e.currentTarget.checked){
-        this.html.question_form.find('input[value="text"]')[0].disabled = true;
-        this.html.question_form.find('input[value="number"]')[0].disabled = true;
-        this.html.question_form.find('input[value="multiple"]')[0].checked = true;
-        this.html.answers_form.hide();
-      }
-      else{
-        this.html.question_form.find('input[value="text"]')[0].disabled = false;
-        this.html.question_form.find('input[value="number"]')[0].disabled = false;
-        this.html.answers_form.show();
-      }
     },
 
     _set_is_type : function(e){

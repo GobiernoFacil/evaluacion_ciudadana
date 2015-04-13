@@ -37,13 +37,6 @@
       <!-- [ NEW QUESTION FORM ] -->
       <div id="survey-add-question" style="display:none">
         <p>
-          <label>
-            <input type="checkbox" name="is_location" value="1">
-            Captura la ubicación (Estado, municipio, localidad)
-          </label>
-        </p>
-        
-        <p>
           <label>pregunta:</label>
           <input name="question" type="text">
         </p>
@@ -53,6 +46,7 @@
           <label><input type="radio" name="type" value="text">abierta</label>
           <label><input type="radio" name="type" value="number">numérica</label>
           <label><input type="radio" name="type" value="multiple">opción múltiple</label>
+          <label><input type="radio" name="type" value="location">ubicación</label>
         </p>
 
         <div id="survey-add-options" style="display:none">
