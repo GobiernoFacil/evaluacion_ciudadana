@@ -219,7 +219,8 @@ define(function(require){
     },
 
     _remove_option : function(e){
-
+      e.preventDefault();
+      this.$(e.currentTarget).parent().remove();
     },
 
     _set_is_type : function(e){
