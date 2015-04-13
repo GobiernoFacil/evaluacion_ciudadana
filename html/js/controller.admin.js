@@ -13,6 +13,7 @@ define(function(require){
   //
   var Backbone    = require('backbone'),
       Question    = require('views/question_view.admin'),
+      Option      = require('text!templates/option_item.admin.html'),
       Section_nav = require('text!templates/section_selector.admin.html');
 
 
@@ -23,7 +24,7 @@ define(function(require){
   var controller = Backbone.View.extend({
     
     // 
-    // [ DEFINE THE EVENTS ]
+    // [   DEFINE THE EVENTS   ]
     // 
     //
     events :{
@@ -37,10 +38,13 @@ define(function(require){
       'change #survey-add-question input[name="type"]'        : '_set_is_type',
       'click #survey-add-buttons a.add-question'              : 'render_question_form',
       'click #survey-add-question-btn'                        : '_save_question',
+      // [ ADD OPTION ]
+      'click #survey-add-options li a'  : '_remove_option',
+      'focus #survey-add-options input' : '_enable_save_option',
+      'blur #survey-add-options input'  : '_disable_save_option',
       // [ ADD HTML ] 
       'click #survey-add-buttons a.add-text' : 'render_content_form',
       'click #survey-add-content-btn'        : '_save_content'
-
     },
 
     // 
@@ -54,6 +58,7 @@ define(function(require){
     //
     //
     sec_nav_template : _.template(Section_nav),
+    answer_template  : _.template(Option),
 
     //
     // [ THE INITIALIZE FUNCTION ]
@@ -81,7 +86,8 @@ define(function(require){
       this.html = {
         navigation_menu : this.$('#survey-navigation-menu'),
         question_form   : this.$('#survey-add-question'),
-        content_form    : this.$('#survey-add-content')
+        content_form    : this.$('#survey-add-content'),
+        answers_form    : this.$('#survey-add-options')
       };
       // [ RENDER ]
       this.render();
@@ -166,6 +172,7 @@ define(function(require){
     render_content_form : function(e){
       e.preventDefault();
       this.html.content_form.show();
+      this.html.answers_form.hide();
       this.html.question_form.hide();
     },
 
@@ -189,24 +196,46 @@ define(function(require){
       this._update_title();
     },
 
+    _enable_save_option : function(e){
+
+    },
+
+    _disable_save_option : function(e){
+
+    },
+
+    _remove_option : function(e){
+
+    },
+
     _set_is_location : function(e){
       if(e.currentTarget.checked){
         this.html.question_form.find('input[value="text"]')[0].disabled = true;
         this.html.question_form.find('input[value="number"]')[0].disabled = true;
         this.html.question_form.find('input[value="multiple"]')[0].checked = true;
+        this.html.answers_form.hide();
       }
       else{
         this.html.question_form.find('input[value="text"]')[0].disabled = false;
         this.html.question_form.find('input[value="number"]')[0].disabled = false;
+        this.html.answers_form.show();
       }
     },
 
     _set_is_type : function(e){
+      var container = this.html.answers_form.children('ul')[0];
       if(e.currentTarget.value === 'multiple'){
-
+        if(! container.getElementsByTagName('li').length){
+          this.$(container).append(this.answer_template({
+            name     : _.uniqueId('lp'), 
+            value    : '',
+            is_first : 1
+          }));
+        }
+        this.html.answers_form.show();
       }
       else{
-        
+        this.html.answers_form.hide();
       }
     },
 
