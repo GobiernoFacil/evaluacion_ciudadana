@@ -71,6 +71,7 @@ define(function(require){
       this.model.set({current_section : 1});
       // [ THE COLLECTION ]
      this.collection     = new Backbone.Collection(SurveySettings.questions);
+     this.collection.url = '/index.php/surveys/question';
      this.sub_collection = new Backbone.Collection([]);
       // [ THE OTHER COLLECTIONS ]
       this.q_options     = new Backbone.Collection(SurveySettings.options);
@@ -271,7 +272,7 @@ define(function(require){
           title_input = this.html.question_form.find('input[name="question"]'),
           title       = title_input.val(),
           section     = this.$('#survey-section-selector select').val(),
-          question    = new Backbone.Model(),
+          question    = new Backbone.Model(null, {collection : this.collection}),
           that        = this;
       if(! title){
         title_input.addClass('error');

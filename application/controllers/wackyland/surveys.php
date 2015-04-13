@@ -104,6 +104,47 @@ class Surveys extends CI_Controller {
 
   public function add_question(){
     $bp        = $this->session->userdata('blueprint');
-    $blueprint =s json_decode(file_get_contents('php://input'), true);
+    $response  = json_decode(file_get_contents('php://input'), true);
+
+    $question_obj = [
+      'blueprint_id'   =>  $bp->id,
+      'section_id'     => (int)$response['section_id'],
+      'question'       => $this->sanitize_string($response['question']),
+      'is_description' => (bool)$response['is_description'],
+      'type'           => $response['type'] == 'number' ? 'number' : 'text'
+    ];
+
+    $new_id    = $this->question_model->add($question_obj);
+    $question_obj['id'] = $new_id;
+    $question_obj['options'] = $this->add_options($response['options'], $question_obj);
+
+    header('Content-type: application/json');
+    echo json_encode($question_obj);
+  }
+
+  private function add_options($options, $question){
+    $response = [];
+    if(!empty($options)){
+      $value = 1;
+      foreach($options as $option){
+        $option_obj = [
+          'blueprint_id' =>  $question->blueprint_id,
+          'question_id'  =>  $question->id,
+          'description'  => $this->sanitize_string($option),
+          'value'        => $value,
+          'name'         => uniqid('opt')
+        ];
+        $new_id = $this->question_options_model->add($option_obj);
+        $option_obj['id'] = $new_id;
+        $response[] = $option_obj;
+        $value++;
+      }
+    }
+
+    return $response;
+  }
+
+  private function sanitize_string($string){
+    return filter_var($string,FILTER_SANITIZE_STRING,FILTER_FLAG_STRIP_LOW|FILTER_FLAG_ENCODE_HIGH);
   }
 }

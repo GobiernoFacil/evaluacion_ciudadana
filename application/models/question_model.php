@@ -23,4 +23,9 @@ class Question_model extends CI_Model{
     $q = $this->db->get_where(self::TABLE, ['id' => $id, 'blueprint_id' => $blueprint_id]);
     return $q->row();
   }
+
+  function add($question){
+    $this->db->insert(self::TABLE, $question);
+    return $this->db->insert_id();
+  }
 }

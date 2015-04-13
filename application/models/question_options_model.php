@@ -19,7 +19,7 @@ class Question_options_model extends CI_Model{
     return $q->result();
   }
 
-  function save($option){
+  function add($option){
     $this->db->insert(self::TABLE, $option);
     return $this->db->insert_id();
   }
