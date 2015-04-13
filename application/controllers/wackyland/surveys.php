@@ -101,4 +101,9 @@ class Surveys extends CI_Controller {
     header('Content-type: application/json');
     echo json_encode($blueprint);
   }
+
+  public function add_question(){
+    $bp        = $this->session->userdata('blueprint');
+    $blueprint =s json_decode(file_get_contents('php://input'), true);
+  }
 }

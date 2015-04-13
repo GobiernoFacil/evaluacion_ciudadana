@@ -20,15 +20,7 @@
 
     <!-- [ THE CONTENT CREATOR ] -->
     <section id="survey-app-questions">
-      <h2>Preguntas</h2>
-
-      <div id="survey-app-navigation" style="display:none">
-        <ul id="survey-navigation-menu"></ul>
-        <h4>Reglas</h4>
-        <p id="survey-add-navigation-rule"></p>
-        <ul id="survey-navigation-rules"></ul>
-      </div>
-
+      <!-- [ ADD CONTENT BUTTONS ] -->
       <p id="survey-add-buttons">
         <a href="#" class="add-question">Agrega pregunta</a> | 
         <a href="#" class="add-text">Agrega texto(HTML)</a>
@@ -36,11 +28,13 @@
       
       <!-- [ NEW QUESTION FORM ] -->
       <div id="survey-add-question" style="display:none">
+        <!-- [1] agrega el título -->
         <p>
           <label>pregunta:</label>
           <input name="question" type="text">
         </p>
-
+        <!-- [1] --> 
+        <!-- [2] define el tipo de pregunta -->
         <p>
           <label>la respuesta es:</label>
           <label><input type="radio" name="type" value="text">abierta</label>
@@ -48,14 +42,26 @@
           <label><input type="radio" name="type" value="multiple">opción múltiple</label>
           <label><input type="radio" name="type" value="location">ubicación</label>
         </p>
-
+        <!-- [2] -->
+        <!-- [3] define a la sección a la que pertenece la pregunta -->
+        <p id="survey-section-selector" style="display:none">
+          <label>sección</label>
+          <select name="section_id">
+            <option value="1" selected>sección 1</option>
+            <option value="0">nueva sección</option>
+          </select>
+        </p>
+        <!-- [3] -->
+        <!-- [4] agrega las respuestas para opción múltiple -->
         <div id="survey-add-options" style="display:none">
           <h5>Respuestas:</h5>
           <ul>
           </ul>
         </div>
-
+        <!-- [4] -->
+        <!-- [5] salva la pregunta -->
         <p><a id="survey-add-question-btn" href="#">agregar pregunta</a></p>
+        <!-- [5] -->
       </div>
       <!-- { NEW QUESTION FORM ENDS } -->
 
@@ -66,10 +72,22 @@
         <p><textarea name="html"></textarea></p>
         <p><a id="survey-add-content-btn" href="#">agregar contenido</a></p>
       </div>
-      <!-- { NEW CONTENT FORM ENS } -->
-
-      <ul id="survey-question-list"></ul>
+      <!-- { NEW CONTENT FORM ENDS } -->
     </section>
+    <!-- { THE CONTENT CREATOR ENDS } -->
+
+    <!-- [ THE SURVEY ] -->
+    <section id="the-survey">
+      <div id="survey-app-navigation" style="display:none">
+        <ul id="survey-navigation-menu"></ul>
+        <h4>Reglas</h4>
+        <p id="survey-add-navigation-rule"></p>
+        <ul id="survey-navigation-rules"></ul>
+      </div>
+      <ul id="survey-question-list"></ul> 
+    </section>
+    <!-- { THE SURVEY ENDS } -->
+
   </form>
   <!-- {{   T H E   A P P   E N D S   }} -->
 

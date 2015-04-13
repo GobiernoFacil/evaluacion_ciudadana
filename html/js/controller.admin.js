@@ -68,6 +68,7 @@ define(function(require){
       // [ THE MODEL ]
       this.model         = new Backbone.Model(SurveySettings.blueprint);
       this.model.url     = "/index.php/surveys/title/update";
+      this.model.set({current_section : 1});
       // [ THE COLLECTION ]
      this.collection     = new Backbone.Collection(SurveySettings.questions);
      this.sub_collection = new Backbone.Collection([]);
@@ -265,7 +266,32 @@ define(function(require){
     //
     //
     _save_question : function(e){
+      e.preventDefault();
+      var type        = this.html.question_form.find('input[name="type"]:checked').val(),
+          title_input = this.html.question_form.find('input[name="question"]'),
+          title       = title_input.val(),
+          section     = this.$('#survey-section-selector select').val(),
+          question    = new Backbone.Model(),
+          that        = this;
+      if(! title){
+        title_input.addClass('error');
+        return;
+      }
+      question.set({
+        section_id     : section,
+        blueprint_id   : this.model.id,
+        question       : title, 
+        is_description : 0,
+        is_location    : type === 'location',
+        type           : type === 'text' || type === 'location' ? 'text' : 'number',
+        options        : type !== 'multiple' ? [] : this._get_options()
+      });
 
+      question.save(null, {
+        success : function(model, response, options){
+          that.collection.add(model);
+        }
+      });
     },
 
     // [ SAVE CONTENT ] 
@@ -273,6 +299,16 @@ define(function(require){
     //
     _save_content : function(e){
 
+    },
+
+    _get_options : function(){
+      var inputs = this.$('#survey-add-options input'),
+          options = [];
+      _.each(inputs, function(op){
+        if(op.value) options.push(op.value);
+      }, this);
+
+      return options;
     }
 
   });
