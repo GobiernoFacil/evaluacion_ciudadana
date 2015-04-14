@@ -25,10 +25,7 @@ define(function(require){
     // ------------------
     //
     events : {
-      // [ GENERAL QUESTIONS]
-    
-
-      // [ LOCATION QUESTIONS]
+      'click a.update' : 'open_editor'
     },
 
     // -----------------
@@ -63,59 +60,17 @@ define(function(require){
     render : function(){
       this.$el.append(this.template(this.model.attributes));
       return this;
+    },
+
+    //
+    // I N T E R A C T I O N
+    // --------------------------------------------------------------------------------
+    //
+    open_editor : function(e){
+      e.preventDefault();
+      this.$('div').show();
     }
-      /*
-      // [ THE QUESTION TYPES ]
 
-      // [ THE LOCATION ]
-      else if(Number(this.model.get('is_location'))){
-        this._render_location();
-      }
-
-      // [ THE MULTIPLE OPTION ] 
-      else if(this.opt.length){
-        this._render_radio();
-      }
-
-      // [ THE OPEN QUESTION ]
-      else{
-        this._render_input();
-      }
-
-      return this;
-    },
-
-    _render_radio : function(model){
-      this.$el.html(this.template(this.model.attributes));
-      // [ THE OPTIONS ]
-      this.opt.each(function(option){
-        // [ A.1 ] le pasa a cada opción el valor del servidor para
-        //         la pregunta a la que pertenece. Si ya fue respondida,
-        //         le agrega el atributo "checked"; si no, no pasa nada. 
-        option.set({default_value : this.model.get('default_value')});
-        this.$el.append(this.opt_temp(option.attributes));
-      }, this);
-    },
-
-    _render_location : function(){
-      this.$el.html(this.loc_temp(this.model.attributes));
-      if(this.model.get('default_value')){
-        var location = this.model.get('default_value');
-        var state    = location.slice(0,2);
-        var city     = location.slice(2,5);
-        var locality = location.slice(5);
-        
-        this.$('select.estado').val(state);
-        this._set_cities(state, city);
-        this._set_localities(state, city, locality);
-      }
-    },
-
-    _render_input : function(){
-      this.$el.html(this.template(this.model.attributes));
-      this.$el.append(this.inp_temp(this.model.attributes));
-    },
-    */
 
     //
     // I N T E R N A L   F U N C T I O N S 

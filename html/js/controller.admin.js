@@ -34,9 +34,9 @@ define(function(require){
       'focus #survey-app-title input'   : '_enable_save',
       'blur #survey-app-title input'    : '_disable_save',
       // [ ADD QUESTION ]
-      'change #survey-add-question input[name="type"]'        : '_set_is_type',
-      'click #survey-add-buttons a.add-question'              : 'render_question_form',
-      'click #survey-add-question-btn'                        : '_save_question',
+      'change #survey-add-question input[name="type"]' : '_set_is_type',
+      'click #survey-add-buttons a.add-question'       : 'render_question_form',
+      'click #survey-add-question-btn'                 : '_save_question',
       // [ ADD OPTION ]
       'click #survey-add-options li a'  : '_remove_option',
       'focus #survey-add-options input' : '_enable_save_option',
@@ -291,6 +291,7 @@ define(function(require){
       question.save(null, {
         success : function(model, response, options){
           that.collection.add(model);
+          that.render_section(that.model.get('current_section'));
         }
       });
     },

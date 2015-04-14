@@ -94,7 +94,7 @@ class Surveys extends CI_Controller {
   public function update_title(){
     $bp        = $this->session->userdata('blueprint');
     $blueprint = json_decode(file_get_contents('php://input'), true);
-    $title     = filter_var($blueprint['title'],FILTER_SANITIZE_STRING,FILTER_FLAG_STRIP_LOW|FILTER_FLAG_ENCODE_HIGH);
+    $title     = $this->sanitize_string($blueprint['title']);
     $success   = $this->blueprint_model->update($bp->id, ['title' => $title]);
     $blueprint['success'] = $success;
     $blueprint['title']   = $title;
@@ -108,18 +108,22 @@ class Surveys extends CI_Controller {
 
     $question_obj = [
       'blueprint_id'   =>  $bp->id,
-      'section_id'     => (int)$response['section_id'],
+      'section_id'     => (string)((int)$response['section_id']),
       'question'       => $this->sanitize_string($response['question']),
       'is_description' => (bool)$response['is_description'],
       'type'           => $response['type'] == 'number' ? 'number' : 'text'
     ];
 
     $new_id    = $this->question_model->add($question_obj);
-    $question_obj['id'] = $new_id;
+    $question_obj['id'] = (string)$new_id;
     $question_obj['options'] = $this->add_options($response['options'], $question_obj);
 
     header('Content-type: application/json');
     echo json_encode($question_obj);
+  }
+
+  public function update_question(){
+
   }
 
   private function add_options($options, $question){
@@ -145,6 +149,6 @@ class Surveys extends CI_Controller {
   }
 
   private function sanitize_string($string){
-    return filter_var($string,FILTER_SANITIZE_STRING,FILTER_FLAG_STRIP_LOW|FILTER_FLAG_ENCODE_HIGH);
+    return filter_var($string,FILTER_SANITIZE_STRING/*,FILTER_FLAG_STRIP_LOW|FILTER_FLAG_ENCODE_HIGH*/);
   }
 }
