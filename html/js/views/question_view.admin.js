@@ -68,7 +68,8 @@ define(function(require){
     //
     open_editor : function(e){
       e.preventDefault();
-      this.$('div').show();
+      this.$('div.question-panel-editor').show();
+      console.log(this.model.attributes);
     }
 
 

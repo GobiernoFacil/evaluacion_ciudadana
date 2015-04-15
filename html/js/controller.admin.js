@@ -77,6 +77,12 @@ define(function(require){
       this.q_options     = new Backbone.Collection(SurveySettings.options);
       this.sections      = new Backbone.Collection(SurveySettings.sections);
       this.rules         = new Backbone.Collection(SurveySettings.rules);
+      // [ MAP THE OPTIONS ]
+      this.collection.each(function(el, ind, col){
+        el.set({
+          options : this.q_options.where({question_id : el.id})
+        });
+      }, this);
       // [ FIX THE SCOPES ]
       this._update_title = $.proxy(this._update_title, this);
       this._render_new_option = $.proxy(this._render_new_option, this);
