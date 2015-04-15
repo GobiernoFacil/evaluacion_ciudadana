@@ -1,11 +1,6 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Pase usted</title>
-  </head>
-  <body>
-    <h1>Encuestas</h1>
+<div class="container">
+	<div class="row">
+    <h1 class="title">Encuestas</h1>
 
     <form name="add-survey" method="post" action="<?= site_url("wackyland/surveys/create"); ?>">
       <h2>Crear encuesta</h2>
@@ -27,5 +22,5 @@
       <?php endforeach; ?>
       </ul>
     </section>
-  </body>
-</html>
+	</div>
+</div>

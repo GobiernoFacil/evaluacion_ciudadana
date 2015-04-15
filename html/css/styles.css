@@ -1171,7 +1171,8 @@ article {
 .title {
   border-bottom: 1px solid #999;
   color: #999;
-  font-size: 21px; }
+  font-size: 21px;
+  margin-bottom: 40px; }
 
 /* Footer
 -------------------------------------------------------------- */

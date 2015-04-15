@@ -27,8 +27,14 @@ class Surveys extends CI_Controller {
   //
   //
   public function index(){
+	 $data['title'] 			= 'Encuestas Tú Evalúas';
+	 $data['description'] 		= '';
+	  
     $surveys = $this->blueprint_model->all();
+    
+    $this->load->view('wackyland/templates/header_view', $data);
     $this->load->view('wackyland/surveys_view', ['surveys' => $surveys]);
+    $this->load->view('wackyland/templates/footer_view');	  
   }
 
   //
