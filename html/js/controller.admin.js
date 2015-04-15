@@ -105,7 +105,7 @@ define(function(require){
     //
     render : function(){
       // [0] guarda referencias con nombres cortos
-      var sec_nav = this.$('#survey-navigation-menu'); // SEC-NAV #lol // this.html_items.navigation_menu
+      var sec_nav = this.$('#survey-navigation-menu'); // SEC-NAV #lol
       // [1] agrega el título
       this.$('#survey-app-title input').val(this.model.get('title'));
       // [2] crea el navegador de secciones
@@ -140,7 +140,7 @@ define(function(require){
       var container = this.$('#survey-question-list'),
           question  = new Question({model : model});
 
-      this.$el.append(question.render().el);
+      container.append(question.render().el);
     },
 
     // [ SHOW THE LOADING STATUS: TITLE ]

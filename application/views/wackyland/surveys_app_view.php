@@ -84,6 +84,7 @@
         <p id="survey-add-navigation-rule"></p>
         <ul id="survey-navigation-rules"></ul>
       </div>
+      
       <ul id="survey-question-list"></ul> 
     </section>
     <!-- { THE SURVEY ENDS } -->
