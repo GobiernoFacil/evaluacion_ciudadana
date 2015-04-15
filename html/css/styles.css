@@ -961,6 +961,13 @@ header.pg {
     header.pg nav + nav {
       background: #FF6F69; }
 
+.backend header.pg {
+  background: white; }
+
+.nav_back {
+  background: #011C26;
+  margin: 0; }
+
 nav {
   margin-top: 30px;
   padding: 15px 0;

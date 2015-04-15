@@ -14,6 +14,10 @@ class Tuevaluas extends CI_Controller {
   }
 
   public function index(){
+	  $data['title'] 			= 'Dashboard Tú Evalúas';
+	  $data['description'] 		= '';
+	  
+    $this->load->view('wackyland/templates/header_view', $data);	  
     $this->load->view('wackyland/tuevaluas_view');
   }
 }
