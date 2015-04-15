@@ -19,5 +19,6 @@ class Tuevaluas extends CI_Controller {
 	  
     $this->load->view('wackyland/templates/header_view', $data);	  
     $this->load->view('wackyland/tuevaluas_view');
+    $this->load->view('wackyland/templates/footer_view');	  
   }
 }

@@ -33,12 +33,14 @@
 <nav class="nav_back">
 	<div class="container">
 		<div class="row">
-	    <ul>
-      <li><a href="<?= site_url("wackyland/surveys"); ?>">Encuestas</a></li>
-      <li><a href="<?= site_url("wackyland/admins"); ?>">usuarios</a></li>
-      <li><a href="<?= site_url("wackyland/opendata"); ?>">Datos abiertos</a></li>
-      <li><a href="<?= site_url("wackyland/lists"); ?>">Correos</a></li>
-    </ul>
+	    	<ul>
+		 		<li><a href="<?= site_url("wackyland/tuevaluas"); ?>">Dashboard</a></li>
+
+    		  <li><a href="<?= site_url("wackyland/surveys"); ?>">Encuestas</a></li>
+    		  <li><a href="<?= site_url("wackyland/admins"); ?>">usuarios</a></li>
+    		  <li><a href="<?= site_url("wackyland/opendata"); ?>">Datos abiertos</a></li>
+    		  <li><a href="<?= site_url("wackyland/lists"); ?>">Correos</a></li>
+    		</ul>
 		</div>
 	</div>
 </nav>
