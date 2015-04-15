@@ -21,16 +21,16 @@
     <label><input type="radio" name="type" value="location">ubicación</label>
   </p>
   <!-- [2] define a la sección a la que pertenece la pregunta -->
-  <p id="survey-section-selector" style="display:none">
+  <p id="survey-section-selector-<%= id %>" class="section-container" style="display:none">
     <label>sección</label>
-    <select name="section_id">
+    <select name="section_id-<%= id %>">
       <option value="1" selected>sección 1</option>
       <option value="0">nueva sección</option>
     </select>
   </p>
   <!-- [2] -->
   <!-- [3] agrega las respuestas para opción múltiple -->
-  <div id="survey-add-options" style="display:none">
+  <div id="survey-add-options-<%= id %>" class="options-container" style="display:none">
     <h5>Respuestas:</h5>
     <ul></ul>
   </div>

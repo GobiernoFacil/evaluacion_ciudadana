@@ -111,7 +111,8 @@ class Surveys extends CI_Controller {
       'section_id'     => (string)((int)$response['section_id']),
       'question'       => $this->sanitize_string($response['question']),
       'is_description' => (bool)$response['is_description'],
-      'type'           => $response['type'] == 'number' ? 'number' : 'text'
+      'type'           => $response['type'] == 'number' ? 'number' : 'text',
+      'is_location'    => (int)$response['is_location']
     ];
 
     $new_id    = $this->question_model->add($question_obj);

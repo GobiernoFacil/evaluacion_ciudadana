@@ -12,7 +12,8 @@ define(function(require){
   // --------------------------------------------------------------------------------
   //
   var Backbone  = require('backbone'),
-      Container = require('text!templates/question_item.admin.html');
+      Container = require('text!templates/question_item.admin.html'),
+      Option    = require('text!templates/option_item.admin.html');
 
   //
   // I N I T I A L I Z E   T H E   B A C K B O N E   V I E W
@@ -39,6 +40,7 @@ define(function(require){
     // -----------------
     //
     template : _.template(Container),
+    option   : _.template(Option),
 
     // ------------------------
     // THE INITIALIZE FUNCTION
@@ -58,8 +60,54 @@ define(function(require){
     // --------------------
     //
     render : function(){
+      // [0] configura algunas variables
+      var options = this.model.get('options');
+      // [1] usa el template
       this.$el.append(this.template(this.model.attributes));
+      // [2] selecciona el tipo de pregunta
+      if(Number(this.model.get('is_location'))){
+        this.$('input[value="location"]')[0].checked = 1;
+      }
+      else if(this.model.get('type') === 'text'){
+        this.$('input[value="text"]')[0].checked = 1;
+      }
+      else if(options.length){
+        this.$('input[value="multiple"]')[0].checked = 1;
+      }
+      else{
+        this.$('input[value="number"]')[0].checked = 1;
+      }
+
+      // [3] agrega las secciones, si se necesita
+      if(options.length){
+        this._render_options(options);
+      }
+
       return this;
+    },
+
+    _render_options : function(options){
+      this.$('.options-container').show();
+      _.each(options, function(option){
+        var name = _.uniqueId('lp');
+        this.$('.options-container ul').append(this.option({
+          name     : name, 
+          value    : option.get('description'),
+          is_first : false
+        }));
+      }, this);
+    },
+
+    _render_new_option : function(e){
+      if(e.keyCode === 13 && e.target.value){
+        var name = _.uniqueId('lp');
+        this.html.answers_form.children('ul').append(this.answer_template({
+          name     : name, 
+          value    : '',
+          is_first : false
+        }));
+        this.html.answers_form.find('input[name="' + name + '"]')[0].focus();
+      }
     },
 
     //
