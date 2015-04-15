@@ -1,12 +1,6 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Pase usted</title>
-    <link rel="stylesheet" type="text/css" href="/css/dev.css">
-  </head>
-  <body>
 
+<div class="container">
+	<div class="row">
   <!-- [[   T H E   A P P   ]] -->
   <form name="survey-app">
 
@@ -91,7 +85,8 @@
 
   </form>
   <!-- {{   T H E   A P P   E N D S   }} -->
-
+	</div>
+</div>
     <!-- THE INITIAL DATA -->
     <script>
       var SurveySettings = {
@@ -105,5 +100,3 @@
     </script>
     <!-- DEVELOPMENT SOURCE -->
     <script data-main="/js/main.admin" src="/js/bower_components/requirejs/require.js"></script>
-  </body>
-</html>
