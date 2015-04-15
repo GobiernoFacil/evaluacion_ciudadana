@@ -1,11 +1,6 @@
-<!doctype html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>Pase usted</title>
-  </head>
-  <body>
-    <h1>Administradores</h1>
+<div class="container">
+	<div class="row">
+    <h1 class="title">Administradores</h1>
 
     <form name="add-admin" method="post">
       <h2>Crear administrador</h2>
@@ -34,5 +29,5 @@
       <?php endforeach; ?>
       </ul>
     </section>
-  </body>
-</html>
+	</div>
+</div>
