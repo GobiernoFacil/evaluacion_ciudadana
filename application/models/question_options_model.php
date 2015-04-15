@@ -27,4 +27,13 @@ class Question_options_model extends CI_Model{
   function delete($id){
     $this->db->delete(self::TABLE, ['id' => $id]);
   }
+
+  function delete_group($blueprint_id, $question_id){
+    $this->db->delete(self::TABLE, [
+      'question_id'  => $question_id, 
+      'blueprint_id' => $blueprint_id
+    ]);
+
+    return $this->db->affected_rows();
+  }
 }

@@ -1,5 +1,5 @@
-<!-- [ THE LABEL ] -->
-<p><%= question %> <a class="update" href="#">editar</a></p>
+<!-- [ THE CLOSE BTN ] -->
+<p><a class="close-editor" href="#">cerrar</a></p>
 
 <!-- [ THE UPDATE FORM: QUESTION ] -->
 <div class="question-panel-editor" style="display:none">
@@ -18,7 +18,7 @@
     <label><input type="radio" name="type_<%= id %>" value="text">abierta</label>
     <label><input type="radio" name="type_<%= id %>" value="number">numérica</label>
     <label><input type="radio" name="type_<%= id %>" value="multiple">opción múltiple</label>
-    <label><input type="radio" name="type" value="location">ubicación</label>
+    <label><input type="radio" name="type_<%= id %>" value="location">ubicación</label>
   </p>
   <!-- [2] define a la sección a la que pertenece la pregunta -->
   <p id="survey-section-selector-<%= id %>" class="section-container" style="display:none">
@@ -36,7 +36,11 @@
   </div>
   <!-- [3] -->
   <!-- [4] el botón para guardar -->
-  <p><a href="#">actualizar</a></p>
+  <p>
+    <a class="delete" href="#">eliminar</a> | 
+    <a class="cancel" href="#">cancelar</a> | 
+    <a class="save" href="#">actualizar</a>
+  </p>
   <!-- [4] -->
 </div>
 

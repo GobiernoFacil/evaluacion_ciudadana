@@ -28,4 +28,13 @@ class Question_model extends CI_Model{
     $this->db->insert(self::TABLE, $question);
     return $this->db->insert_id();
   }
+
+  function delete($blueprint_id, $id){
+    $this->db->delete(self::TABLE, [
+      'id'           => $id, 
+      'blueprint_id' => $blueprint_id
+    ]);
+
+    return $this->db->affected_rows();
+  }
 }

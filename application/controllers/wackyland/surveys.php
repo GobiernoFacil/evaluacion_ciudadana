@@ -123,8 +123,27 @@ class Surveys extends CI_Controller {
     echo json_encode($question_obj);
   }
 
-  public function update_question(){
-
+  public function update_question($id = 0){
+    $bp     = $this->session->userdata('blueprint');
+    $action = $_SERVER['REQUEST_METHOD'];
+    
+    if($action == "PUT"){
+      // update question
+      // update options
+    }
+    else if($action == "DELETE"){
+      // delete options
+      $options = $this->question_options_model->delete_group($bp->id, $id);
+      // delete question
+      $question = $this->question_model->delete($bp->id, $id);
+      // json response
+      header('Content-type: application/json');
+      echo json_encode(['options' => $options, 'question' => $question]);
+    }
+    else{
+      // return 404
+      show_404();
+    }
   }
 
   private function add_options($options, $question){

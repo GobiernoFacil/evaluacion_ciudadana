@@ -12,7 +12,8 @@ define(function(require){
   // --------------------------------------------------------------------------------
   //
   var Backbone  = require('backbone'),
-      Container = require('text!templates/question_item.admin.html'),
+      Container = require('text!templates/question_item_list.admin.html'),
+      Editor    = require('text!templates/question_item.admin.html'),
       Option    = require('text!templates/option_item.admin.html');
 
   //
@@ -26,7 +27,11 @@ define(function(require){
     // ------------------
     //
     events : {
-      'click a.update' : 'open_editor'
+      'click a.update'       : 'render_editor',
+      'click a.close-editor' : 'render',
+      'click a.cancel'       : 'render_editor',
+      'click a.save'       : '_save',
+      'click a.delete'       : '_suicide'
     },
 
     // -----------------
@@ -40,6 +45,7 @@ define(function(require){
     // -----------------
     //
     template : _.template(Container),
+    editor   : _.template(Editor),
     option   : _.template(Option),
 
     // ------------------------
@@ -48,6 +54,7 @@ define(function(require){
     //
     initialize : function(){
       this.listenTo(this.model, 'remove', this.remove);
+      this.listenTo(this.model, 'destroy', this.remove);
     },
 
     //
@@ -59,11 +66,19 @@ define(function(require){
     // CALL THE MAIN RENDER
     // --------------------
     //
-    render : function(){
+    render : function(e){
+      if(e !== void 0) e.preventDefault();
+      this.$el.html(this.template(this.model.attributes));
+      return this;
+    },
+
+    render_editor : function(e){
+      e.preventDefault();
       // [0] configura algunas variables
       var options = this.model.get('options');
       // [1] usa el template
-      this.$el.append(this.template(this.model.attributes));
+      this.$el.html(this.editor(this.model.attributes));
+      this.$('.question-panel-editor').show();
       // [2] selecciona el tipo de pregunta
       if(Number(this.model.get('is_location'))){
         this.$('input[value="location"]')[0].checked = 1;
@@ -114,17 +129,21 @@ define(function(require){
     // I N T E R A C T I O N
     // --------------------------------------------------------------------------------
     //
-    open_editor : function(e){
-      e.preventDefault();
-      this.$('div.question-panel-editor').show();
-      console.log(this.model.attributes);
-    }
 
 
     //
     // I N T E R N A L   F U N C T I O N S 
     // --------------------------------------------------------------------------------
     //
+    _save : function(e){
+      e.preventDefault();
+      this.model.save();
+    },
+
+    _suicide : function(e){
+      e.preventDefault();
+      this.model.destroy({wait: true});
+    }
    
 
   });
