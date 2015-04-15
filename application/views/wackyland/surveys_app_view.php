@@ -91,14 +91,16 @@
   </form>
   <!-- {{   T H E   A P P   E N D S   }} -->
 
+    <!-- THE INITIAL DATA -->
     <script>
       var SurveySettings = {
         blueprint : <?= json_encode($blueprint); ?>,
         sections  : <?= json_encode($sections); ?>,
         questions : <?= json_encode($questions); ?>,
         options   : <?= json_encode($options); ?>,
-        rules     : <?= json_encode($rules); ?>
+        rules     : []<?php /* json_encode($rules); */ ?>
       };
+
     </script>
     <!-- DEVELOPMENT SOURCE -->
     <script data-main="/js/main.admin" src="/js/bower_components/requirejs/require.js"></script>
