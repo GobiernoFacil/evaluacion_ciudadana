@@ -1,30 +1,40 @@
-
 <div class="container">
 	<div class="row">
+		<div class="col-md-12">
+		<h1 class="title">Editar Encuesta</h1>
+		</div>
+	</div>
   <!-- [[   T H E   A P P   ]] -->
   <form name="survey-app">
 
     <!-- [ THE TITLE ] -->
-    <section id="survey-app-title">
-      <p>
-        <label>Título</label>
-        <input type="text" name="survey-title">
-      </p>
+    <section id="survey-app-title" class="box">
+    	<h2>Título</h2>
+		<div class="row">
+			<div class="col-sm-10 col-sm-offset-1">
+				<p>
+				  <input type="text" name="survey-title">
+				</p>
+      		</div>
+        </div>
     </section>
 
     <!-- [ THE CONTENT CREATOR ] -->
-    <section id="survey-app-questions">
-      <!-- [ ADD CONTENT BUTTONS ] -->
-      <p id="survey-add-buttons">
-        <a href="#" class="add-question">Agrega pregunta</a> | 
-        <a href="#" class="add-text">Agrega texto(HTML)</a>
-      </p>
+    <section id="survey-app-questions" class="box">
+    	<h2>Agregar preguntas</h2>
+		<!-- [ ADD CONTENT BUTTONS ] -->
+		<div class="row">
+			<div class="col-sm-10 col-sm-offset-1">
+		<p id="survey-add-buttons">
+		  <a href="#" class="add-question">Agrega pregunta</a> | 
+		  <a href="#" class="add-text">Agrega texto(HTML)</a>
+		</p>
       
       <!-- [ NEW QUESTION FORM ] -->
-      <div id="survey-add-question" style="display:none">
+      <div id="survey-add-question" class="new_question" style="display:none">
         <!-- [1] agrega el título -->
         <p>
-          <label>pregunta:</label>
+          <label>Pregunta:</label>
           <input name="question" type="text">
         </p>
         <!-- [1] --> 
@@ -54,7 +64,7 @@
         </div>
         <!-- [4] -->
         <!-- [5] salva la pregunta -->
-        <p><a id="survey-add-question-btn" href="#">agregar</a></p>
+        <p><a id="survey-add-question-btn" href="#" class="btn_add">agregar</a></p>
         <!-- [5] -->
       </div>
       <!-- { NEW QUESTION FORM ENDS } -->
@@ -67,11 +77,16 @@
         <p><a id="survey-add-content-btn" href="#">agregar contenido</a></p>
       </div>
       <!-- { NEW CONTENT FORM ENDS } -->
+      		</div>
+        </div>
     </section>
     <!-- { THE CONTENT CREATOR ENDS } -->
 
     <!-- [ THE SURVEY ] -->
-    <section id="the-survey">
+    <section id="the-survey" class="box">
+	    <h2>Preguntas agregadas</h2>
+	    <div class="row">
+			<div class="col-sm-10 col-sm-offset-1">
       <div id="survey-app-navigation" style="display:none">
         <ul id="survey-navigation-menu"></ul>
         <h4>Reglas</h4>
@@ -79,13 +94,15 @@
         <ul id="survey-navigation-rules"></ul>
       </div>
       
-      <ul id="survey-question-list"></ul> 
+      	<ol id="survey-question-list" ></ol> 
+			</div>
+	    </div>
     </section>
     <!-- { THE SURVEY ENDS } -->
 
   </form>
   <!-- {{   T H E   A P P   E N D S   }} -->
-	</div>
+	
 </div>
     <!-- THE INITIAL DATA -->
     <script>
