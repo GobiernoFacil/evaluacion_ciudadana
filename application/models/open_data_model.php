@@ -43,7 +43,7 @@ class Open_data_model extends CI_Model{
 
   public function get_blueprints(){
     $pb = $this->db->get(self::BLUEPRINTS);
-    return $bp->result();
+    return $pb->result();
   }
 
   private function _get_blueprint($id){
