@@ -5,9 +5,9 @@
 				<h1>Resultados de Cuestionario: 
 					<strong><?php echo $response['survey']->id ==1 ? "Jóvenes Prospera" : $response['survey']->title ;?></strong></h1>
 				<section class="row">
-					<div class="col-sm-12">
+					<!--<div class="col-sm-12">
 						<h3 class="col-sm-6" >Participantes: <strong><?php echo $response['applicants'];?></strong></h3>
-					</div>
+					</div>-->
 					<?php echo anchor("resultados/". $response['survey']->id ."/csv", 'Descargar datos en CSV', array("class"=>"btn col-sm-5"));?>
 					<?php echo anchor("resultados/". $response['survey']->id ."/archivo", 'Descargar datos en JSON', array("class"=>"btn col-sm-5 col-sm-offset-1"));?>
 				</section>
