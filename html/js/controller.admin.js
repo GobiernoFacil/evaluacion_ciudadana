@@ -13,6 +13,7 @@ define(function(require){
   //
   var Backbone    = require('backbone'),
       Question    = require('views/question_view.admin'),
+      Description = require('views/description_view.admin'),
       Option      = require('text!templates/option_item.admin.html'),
       Section_nav = require('text!templates/section_selector.admin.html');
 
@@ -144,9 +145,9 @@ define(function(require){
     //
     _render_question : function(model, collection){
       var container = this.$('#survey-question-list'),
-          question  = new Question({model : model});
-
-      container.append(question.render().el);
+          is_description = Number(model.get('is_description')),
+          item = ! is_description ? new Question({model : model}) : new Description({model : model});
+      container.append(item.render().el);
     },
 
     // [ SHOW THE LOADING STATUS: TITLE ]
@@ -306,7 +307,33 @@ define(function(require){
     //
     //
     _save_content : function(e){
+      e.preventDefault();
+      var html    = this.html.content_form.find('textarea').val(),
+          section = this.$('#survey-section-selector select').val(),
+          content = new Backbone.Model(null, {collection : this.collection}),
+          that    = this;
 
+      if(! html){
+        this.html.content_form.find('textarea').addClass('error');
+        return;
+      }
+
+      content.set({
+        section_id     : section,
+        blueprint_id   : this.model.id,
+        question       : html, 
+        is_description : 1,
+        is_location    : 0,
+        type           : 'text',
+        options        : []
+      });
+
+      content.save(null, {
+        success : function(model, response, options){
+          that.collection.add(model);
+          that.render_section(that.model.get('current_section'));
+        }
+      });
     },
 
     _get_options : function(){

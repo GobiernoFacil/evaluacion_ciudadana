@@ -1,7 +1,7 @@
 // AGENTES DE INNOVACIÓN - TÚ EVALÚAS APP CREATOR
 // @package  : agentes
 // @location : /js/views
-// @file     : question_view.admin.js
+// @file     : description_view.admin.js
 // @author  : Gobierno fácil <howdy@gobiernofacil.com>
 // @url     : http://gobiernofacil.com
 
@@ -12,9 +12,8 @@ define(function(require){
   // --------------------------------------------------------------------------------
   //
   var Backbone  = require('backbone'),
-      Container = require('text!templates/question_item_list.admin.html'),
-      Editor    = require('text!templates/question_item.admin.html'),
-      Option    = require('text!templates/option_item.admin.html');
+      Container = require('text!templates/description_item_list.admin.html'),
+      Editor    = require('text!templates/description_item.admin.html');
 
   //
   // I N I T I A L I Z E   T H E   B A C K B O N E   V I E W
@@ -22,9 +21,9 @@ define(function(require){
   //
   var question = Backbone.View.extend({
 
-    // ------------------
-    // DEFINE THE EVENTS
-    // ------------------
+    // 
+    // [ DEFINE THE EVENTS ]
+    // 
     //
     events : {
       'click a.update'       : 'render_editor',
@@ -34,23 +33,22 @@ define(function(require){
       'click a.delete'       : '_suicide'
     },
 
-    // -----------------
-    // SET THE CONTAINER
-    // -----------------
+    // 
+    // [ SET THE CONTAINER ]
+    // 
     //
     tagName : 'li',
 
-    // -----------------
-    // SET THE TEMPLATES
-    // -----------------
+    // 
+    // [ SET THE TEMPLATES ]
+    // 
     //
     template : _.template(Container),
     editor   : _.template(Editor),
-    option   : _.template(Option),
 
-    // ------------------------
-    // THE INITIALIZE FUNCTION
-    // ------------------------
+    //
+    // [ THE INITIALIZE FUNCTION ]
+    //
     //
     initialize : function(){
       this.listenTo(this.model, 'remove', this.remove);
@@ -62,9 +60,9 @@ define(function(require){
     // --------------------------------------------------------------------------------
     //
 
-    // --------------------
-    // CALL THE MAIN RENDER
-    // --------------------
+    // 
+    // [ CALL THE MAIN RENDER ]
+    // 
     //
     render : function(e){
       if(e !== void 0) e.preventDefault();
@@ -73,9 +71,9 @@ define(function(require){
     },
 
     render_editor : function(e){
+      /*
       e.preventDefault();
-      // [0] configura algunas variables
-      var options = this.model.get('options');
+
       // [1] usa el template
       this.$el.html(this.editor(this.model.attributes));
       this.$('.question-panel-editor').show();
@@ -97,32 +95,9 @@ define(function(require){
       if(options.length){
         this._render_options(options);
       }
+      */
 
       return this;
-    },
-
-    _render_options : function(options){
-      this.$('.options-container').show();
-      _.each(options, function(option){
-        var name = _.uniqueId('lp');
-        this.$('.options-container ul').append(this.option({
-          name     : name, 
-          value    : option.cid ? option.get('description') : option.description,
-          is_first : false
-        }));
-      }, this);
-    },
-
-    _render_new_option : function(e){
-      if(e.keyCode === 13 && e.target.value){
-        var name = _.uniqueId('lp');
-        this.html.answers_form.children('ul').append(this.answer_template({
-          name     : name, 
-          value    : '',
-          is_first : false
-        }));
-        this.html.answers_form.find('input[name="' + name + '"]')[0].focus();
-      }
     },
 
     //

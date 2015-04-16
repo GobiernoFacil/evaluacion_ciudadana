@@ -1,5 +1,8 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+// use Ezyang\HTMLPurifier;
+require_once __DIR__ . '/../../../vendor/ezyang/htmlpurifier/library/HTMLPurifier.auto.php';
+
 class Surveys extends CI_Controller {
 
   //
@@ -114,6 +117,14 @@ class Surveys extends CI_Controller {
       'type'           => $response['type'] == 'number' ? 'number' : 'text',
       'is_location'    => (int)$response['is_location']
     ];
+
+    // weird hack
+    if($question_obj['is_description']){
+      $config     = HTMLPurifier_Config::createDefault();
+      $purifier   = new HTMLPurifier($config);
+      $clean_html = $purifier->purify($response['question']);
+      $question_obj['question'] = $clean_html;
+    }
 
     $new_id    = $this->question_model->add($question_obj);
     $question_obj['id'] = (string)$new_id;
