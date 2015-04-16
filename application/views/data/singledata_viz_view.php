@@ -2,12 +2,16 @@
 	<div class="row">
 		<article class="data_hm">
 			<div class="col-sm-8 col-sm-offset-2">
-				<h1>Resultados de Cuestionario <strong>Jóvenes Prospera</strong></h1>
+				<h1>Resultados de Cuestionario: 
+					<strong><?php echo $response['survey']->id ==1 ? "Jóvenes Prospera" : $response['survey']->title ;?></strong></h1>
 				<section class="row">
-			<!--	<h3 class="col-sm-6" >Participantes: <strong><?php echo $response['applicants'];?></strong></h3>-->
-					<?php echo anchor("resultados/1/csv", 'Descargar datos en CSV', array("class"=>"btn col-sm-5"));?>
-					<?php echo anchor("resultados/1/archivo", 'Descargar datos en JSON', array("class"=>"btn col-sm-5 col-sm-offset-1"));?>
+					<div class="col-sm-12">
+						<h3 class="col-sm-6" >Participantes: <strong><?php echo $response['applicants'];?></strong></h3>
+					</div>
+					<?php echo anchor("resultados/". $response['survey']->id ."/csv", 'Descargar datos en CSV', array("class"=>"btn col-sm-5"));?>
+					<?php echo anchor("resultados/". $response['survey']->id ."/archivo", 'Descargar datos en JSON', array("class"=>"btn col-sm-5 col-sm-offset-1"));?>
 				</section>
+				
 				<div class="answers">
 					<h2>Respuestas</h2>
 					<?php 
