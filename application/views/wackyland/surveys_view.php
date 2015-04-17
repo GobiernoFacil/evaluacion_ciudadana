@@ -19,6 +19,10 @@
 			
 			<section class="box">
 			  <h2>Encuestas</h2>
+			  <h3>Total de Encuestas
+				  <strong><?php echo count($surveys);?></strong>
+			  </h3>
+			  
 			  <ul class="list">
 				  <li class="row los_titles">
 				  	 <div class="col-sm-10">
