@@ -5,7 +5,10 @@ class Login extends CI_Controller {
   function __construct(){
     parent::__construct();
   }
-
+  //
+  // [ LOGIN ]
+  //
+  //
   public function index()
   {
     $errors = [];
@@ -13,7 +16,7 @@ class Login extends CI_Controller {
       $validation = $this->validate();
       if($validation['valid']){
         $this->log_user($validation['user']);
-        redirect('wackyland/tuevaluas', 'refresh');
+        redirect('bienvenido/tuevaluas', 'refresh');
         die();
       }
       else{
@@ -21,9 +24,13 @@ class Login extends CI_Controller {
         $errors['password'] = $validation['valid'];
       }
     }
-    $this->load->view('wackyland/login_view');
+    $this->load->view('wackyland/login_view', ['errors' => $errors]);
   }
 
+  //
+  // [ VALIDATE USER ]
+  //
+  //
   private function validate(){
     $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
     $pass  = filter_input(INPUT_POST, 'pass');
@@ -33,6 +40,10 @@ class Login extends CI_Controller {
     return ['email' => $email, 'pass'  => $pass, 'user'  => $user, 'valid' => $valid];
   }
 
+  //
+  // [ LOG USER ] 
+  //
+  //
   private function log_user($user){
     $user->password = null;
     $this->session->set_userdata(['user' => $user]);
