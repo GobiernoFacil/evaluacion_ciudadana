@@ -1183,11 +1183,20 @@ article {
   background: #f2f2f2;
   margin: 0 0 40px;
   padding: 0; }
+  .nav_back ul {
+    float: left;
+    margin: 0; }
   .nav_back a:link, .nav_back a:visited {
     color: #555;
-    border-bottom: none; }
+    border-bottom: none;
+    padding: 25px 10px 25px;
+    display: inline-block; }
     .nav_back a:link:hover, .nav_back a:visited:hover {
       color: #011C26; }
+  .nav_back li {
+    padding: 0; }
+    .nav_back li.current {
+      background: #f9f9f9; }
 
 .title {
   border-bottom: 1px solid #ccc;
@@ -1205,6 +1214,12 @@ article {
     font-size: 16px;
     margin-bottom: 30px;
     padding: 20px; }
+  .box h3 {
+    padding: 0 30px 20px;
+    font-size: 15px; }
+    .box h3 strong {
+      display: block;
+      font-size: 28px; }
   .box a:link {
     color: #FF6F69; }
   .box a:visited {
@@ -1222,6 +1237,32 @@ article {
     padding: 10px 30px; }
     .box a:link.btn_add:hover, .box a:visited.btn_add:hover {
       background: #23272d; }
+  .box .options li {
+    list-style: none; }
+
+.dashboard .box {
+  padding-bottom: 0; }
+.dashboard h3 {
+  padding: 20px 0 10px;
+  text-align: center; }
+  .dashboard h3 strong {
+    display: block;
+    font-size: 43px; }
+  .dashboard h3 a:link, .dashboard h3 a:visited {
+    color: #011C26; }
+    .dashboard h3 a:link:hover, .dashboard h3 a:visited:hover {
+      color: #FF6F69; }
+.dashboard p {
+  background: #eee;
+  text-align: center;
+  margin: 20px 0 0;
+  padding: 20px 0; }
+  .dashboard p a:link, .dashboard p a:visited {
+    background: #FF6F69;
+    color: white;
+    padding: 10px; }
+    .dashboard p a:link:hover, .dashboard p a:visited:hover {
+      background: #011C26; }
 
 .new_question {
   border-top: 1px solid #eee;

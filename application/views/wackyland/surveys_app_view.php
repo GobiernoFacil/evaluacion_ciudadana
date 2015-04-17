@@ -6,8 +6,10 @@
 	</div>
   <!-- [[   T H E   A P P   ]] -->
   <form name="survey-app">
-
+  <div class="row">
+  	
     <!-- [ THE TITLE ] -->
+    <div class="col-sm-4">
     <section id="survey-app-title" class="box">
     	<h2>Título</h2>
 		<div class="row">
@@ -18,7 +20,10 @@
       		</div>
         </div>
     </section>
-
+  	</div>
+  	
+  	<div class="col-sm-8">
+	  	
     <!-- [ THE CONTENT CREATOR ] -->
     <section id="survey-app-questions" class="box">
     	<h2>Agregar preguntas</h2>
@@ -99,7 +104,9 @@
 	    </div>
     </section>
     <!-- { THE SURVEY ENDS } -->
-
+    
+  	</div>
+  	</div>
   </form>
   <!-- {{   T H E   A P P   E N D S   }} -->
 	
