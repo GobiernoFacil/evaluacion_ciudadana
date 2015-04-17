@@ -1237,6 +1237,8 @@ article {
     padding: 10px 30px; }
     .box a:link.btn_add:hover, .box a:visited.btn_add:hover {
       background: #23272d; }
+  .box .options li {
+    list-style: none; }
 
 .dashboard .box {
   padding-bottom: 0; }
