@@ -90,10 +90,18 @@ class Surveys extends CI_Controller {
     $this->load->view('wackyland/surveys_app_view', $data);
   }
 
+  //
+  //
+  //
+  //
   public function delete($id){
 
   }
 
+  //
+  //
+  //
+  //
   public function update_title(){
     $bp        = $this->session->userdata('blueprint');
     $blueprint = json_decode(file_get_contents('php://input'), true);
@@ -105,6 +113,10 @@ class Surveys extends CI_Controller {
     echo json_encode($blueprint);
   }
 
+  //
+  //
+  //
+  //
   public function add_question(){
     $bp        = $this->session->userdata('blueprint');
     $response  = json_decode(file_get_contents('php://input'), true);
@@ -134,19 +146,50 @@ class Surveys extends CI_Controller {
     echo json_encode($question_obj);
   }
 
+  //
+  // [ UPDATE / DELETE QUESTION ]
+  //
+  //
   public function update_question($id = 0){
     $bp     = $this->session->userdata('blueprint');
     $action = $_SERVER['REQUEST_METHOD'];
-    
+
+    // [ UPDATE]
     if($action == "PUT"){
-      // update question
-      // update options
+      $response = false;
+      
+      $bp        = $this->session->userdata('blueprint');
+      $response  = json_decode(file_get_contents('php://input'), true);
+      $question  = $this->question_model->validate((int)$id, $bp->id);
+
+      $question_obj = [
+        'blueprint_id'   =>  $bp->id,
+        'section_id'     => (string)((int)$response['section_id']),
+        'question'       => $this->sanitize_string($response['question']),
+        'is_description' => (bool)$response['is_description'],
+        'type'           => $response['type'] == 'number' ? 'number' : 'text',
+        'is_location'    => (int)$response['is_location']
+      ];
+
+      if($question){
+        // update question
+        $success = $this->question_model->update($question->id, $question_obj);
+        // update options
+        $question_obj['id']      = $question->id;
+        $options = $this->question_options_model->delete_group($bp->id, $id);
+        $question_obj['options'] = $this->add_options($response['options'], $question_obj);
+      }
+      
+      header('Content-type: application/json');
+      echo json_encode($question_obj);
     }
+
+    // [ DELETE ]
     else if($action == "DELETE"){
       // delete options
-      $options = $this->question_options_model->delete_group($bp->id, $id);
+      $options = $this->question_options_model->delete_group($bp->id, (int)$id);
       // delete question
-      $question = $this->question_model->delete($bp->id, $id);
+      $question = $this->question_model->delete($bp->id, (int)$id);
       // json response
       header('Content-type: application/json');
       echo json_encode(['options' => $options, 'question' => $question]);
@@ -157,6 +200,10 @@ class Surveys extends CI_Controller {
     }
   }
 
+  //
+  //
+  //
+  //
   private function add_options($options, $question){
     $response = [];
     if(!empty($options)){
@@ -179,6 +226,10 @@ class Surveys extends CI_Controller {
     return $response;
   }
 
+  //
+  //
+  //
+  //
   private function sanitize_string($string){
     return filter_var($string,FILTER_SANITIZE_STRING/*,FILTER_FLAG_STRIP_LOW|FILTER_FLAG_ENCODE_HIGH*/);
   }

@@ -22,21 +22,25 @@ define(function(require){
   //
   var question = Backbone.View.extend({
 
-    // ------------------
-    // DEFINE THE EVENTS
-    // ------------------
+    // 
+    // [ DEFINE THE EVENTS ]
+    // 
     //
     events : {
-      'click a.update'       : 'render_editor',
-      'click a.close-editor' : 'render',
-      'click a.cancel'       : 'render_editor',
-      'click a.save'         : '_save',
-      'click a.delete'       : '_suicide'
+      'click a.update'             : 'render_editor',
+      'click a.close-editor'       : 'render', // render list view
+      'click a.cancel'             : 'render_editor',
+      'click li a'                 : 'remove_option',
+      'click a.save'               : '_save',
+      'click a.delete'             : '_suicide',
+      'focus ul li input'          : '_enable_save_option',
+      'blur ul li input'           : '_disable_save_option',
+      'change input[type="radio"]' : 'toggle_options'
     },
 
-    // -----------------
-    // SET THE CONTAINER
-    // -----------------
+    // 
+    // [ SET THE CONTAINER ]
+    // 
     //
     tagName : 'li',
 
@@ -73,7 +77,7 @@ define(function(require){
     },
 
     render_editor : function(e){
-      e.preventDefault();
+      if(e !== void 0) e.preventDefault();
       // [0] configura algunas variables
       var options = this.model.get('options');
       // [1] usa el template
@@ -114,14 +118,36 @@ define(function(require){
     },
 
     _render_new_option : function(e){
-      if(e.keyCode === 13 && e.target.value){
+      var is_first = e === void 0;
+      if(is_first || (e.keyCode === 13 && e.target.value)){
         var name = _.uniqueId('lp');
-        this.html.answers_form.children('ul').append(this.answer_template({
+        this.$('ul').append(this.option({
           name     : name, 
           value    : '',
-          is_first : false
+          is_first : 0 // O___o
         }));
-        this.html.answers_form.find('input[name="' + name + '"]')[0].focus();
+
+        if(! is_first) this.$('input[name="' + name + '"]')[0].focus();
+      }
+    },
+
+    remove_option : function(e){
+      e.preventDefault();
+      this.$(e.target.parentNode).remove();
+      if(! this.el.getElementsByTagName('ul')[0].children.length){
+        this._render_new_option();
+      }
+    },
+
+    toggle_options : function(e){
+      var el = this.el.querySelectorAll('.options-container')[0];
+      if(e.target.value === 'multiple'){
+        el.style.display = '';
+        if(! this.el.getElementsByTagName('ul')[0].children.length){
+          this._render_new_option();
+        }
+      }else{
+        el.style.display = 'none';
       }
     },
 
@@ -129,7 +155,13 @@ define(function(require){
     // I N T E R A C T I O N
     // --------------------------------------------------------------------------------
     //
+    _enable_save_option : function(e){
+       window.onkeyup = this._render_new_option.bind(this);
+    },
 
+    _disable_save_option : function(e){
+      window.onkeyup = false;
+    },
 
     //
     // I N T E R N A L   F U N C T I O N S 
@@ -137,12 +169,46 @@ define(function(require){
     //
     _save : function(e){
       e.preventDefault();
-      this.model.save();
+      var type        = this.$el.find('input[name^="type"]:checked').val(),
+          title_input = this.$el.find('input[name="question"]'),
+          title       = this.$('.question_editor_question input').val(),
+          // section     = this.$('#survey-section-selector select').val(),
+          that        = this;
+      if(! title){
+        title_input.addClass('error');
+        return;
+      }
+      this.model.set({
+        //section_id     : section,
+        // blueprint_id   : this.model.id,
+        question       : title, 
+        // is_description : 0,
+        is_location    : type === 'location',
+        type           : type === 'text' || type === 'location' ? 'text' : 'number',
+        options        : type !== 'multiple' ? [] : this._get_options()
+      });
+      
+      this.model.save(null, {
+        success : function(model, response, options){
+          that.render_editor();
+        }
+      });
+      
     },
 
     _suicide : function(e){
       e.preventDefault();
       this.model.destroy({wait: true});
+    },
+
+    _get_options : function(){
+      var inputs = this.$('.options-container input'),
+          options = [];
+      _.each(inputs, function(op){
+        if(op.value) options.push(op.value);
+      }, this);
+
+      return options;
     }
    
 
