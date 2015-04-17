@@ -1183,11 +1183,19 @@ article {
   background: #f2f2f2;
   margin: 0 0 40px;
   padding: 0; }
+  .nav_back ul {
+    margin: 0; }
   .nav_back a:link, .nav_back a:visited {
     color: #555;
-    border-bottom: none; }
+    border-bottom: none;
+    padding: 25px 10px 25px;
+    display: inline-block; }
     .nav_back a:link:hover, .nav_back a:visited:hover {
       color: #011C26; }
+  .nav_back li {
+    padding: 0; }
+    .nav_back li.current {
+      background: #f9f9f9; }
 
 .title {
   border-bottom: 1px solid #ccc;

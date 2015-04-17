@@ -35,10 +35,16 @@
 	<div class="container">
 		<div class="row">
 	    	<ul>
-		 		<li><a href="<?= site_url("wackyland/tuevaluas"); ?>">Dashboard</a></li>
+		 	  <li <?php echo (isset($body_class) && ($body_class == "dash")) ? 'class="current"' : '';?>>
+		 	  	<a href="<?= site_url("wackyland/tuevaluas"); ?>">Dashboard</a>
+		 	  </li>
 
-    		  <li><a href="<?= site_url("wackyland/surveys"); ?>">Encuestas</a></li>
-    		  <li><a href="<?= site_url("wackyland/admins"); ?>">usuarios</a></li>
+    		  <li <?php echo (isset($body_class) && ($body_class == "surveys")) ? 'class="current"' : '';?>>
+    		  	<a href="<?= site_url("wackyland/surveys"); ?>">Encuestas</a>
+    		  </li>
+    		  <li <?php echo (isset($body_class) && ($body_class == "users")) ? 'class="current"' : '';?>>
+    		  	<a href="<?= site_url("wackyland/admins"); ?>">Usuarios</a>
+    		  </li>
     		  <li><a href="<?= site_url("wackyland/opendata"); ?>">Datos abiertos</a></li>
     		  <li><a href="<?= site_url("wackyland/lists"); ?>">Correos</a></li>
     		</ul>
