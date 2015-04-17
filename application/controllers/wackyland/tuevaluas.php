@@ -7,9 +7,9 @@ class Tuevaluas extends CI_Controller {
 
   function __construct(){
     parent::__construct();
-    $this->user = $this->session->userdata('user');
-    if(! $this->user || self::MIN_LEVEL > $this->user->level){
-      redirect('wackyland/login', 'refresh');
+    	$this->user = $this->session->userdata('user');
+		if(! $this->user || self::MIN_LEVEL > $this->user->level){
+		redirect('wackyland/login', 'refresh');
     }
   }
 
@@ -18,8 +18,11 @@ class Tuevaluas extends CI_Controller {
 	  $data['description'] 		= '';
 	  $data['body_class'] 		= 'dash';
 	  
-    $this->load->view('wackyland/templates/header_view', $data);	  
-    $this->load->view('wackyland/tuevaluas_view');
-    $this->load->view('wackyland/templates/footer_view');	  
+	  $admins = $this->admins_model->all();
+      $surveys = $this->blueprint_model->all();
+	  
+	  $this->load->view('wackyland/templates/header_view', $data);	  
+	  $this->load->view('wackyland/tuevaluas_view', ['admins' => $admins, 'surveys' => $surveys]);
+	  $this->load->view('wackyland/templates/footer_view');	  
   }
 }
