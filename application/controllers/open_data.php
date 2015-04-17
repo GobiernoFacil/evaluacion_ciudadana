@@ -35,10 +35,15 @@ class Open_data extends CI_Controller {
   *
   */
   public function index($form_id = false, $format = false){
-	if  ( $form_id == false) {
+	if  ( $form_id == false) 
+	{
+		
+		$blueprints				=  $this->open_data_model->get_blueprints();
+		
 		$data['title'] 			= 'Resultados de las encuestas Tú Evalúas';
 		$data['description'] 	= 'Resultados de las encuestas Tú Evalúas';
 		$data['body_class'] 	= 'data';
+		$data['response'] 				= $blueprints;
 		
 		$this->load->view('/templates/header_view', $data);
 		$this->load->view('/data/data_view');

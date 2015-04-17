@@ -25,7 +25,13 @@ class Admins extends CI_Controller {
       $report = $this->create();
     }
     $admins = $this->admins_model->all();
+    
+    $data['title'] 			= 'Admins Tú Evalúas';
+	 $data['description'] 		= '';
+    
+    $this->load->view('wackyland/templates/header_view', $data);
     $this->load->view('wackyland/admins_view', ['admins' => $admins, 'report' => $report]);
+    $this->load->view('wackyland/templates/footer_view');	  
   }
 
   //

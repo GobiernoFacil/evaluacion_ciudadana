@@ -16,9 +16,7 @@
   background:#ccc;
 }
 
-#survey-question-list > li{
-  border: 1px solid gold;
-}
+
 input.error{
   border:1px solid red;
 }
