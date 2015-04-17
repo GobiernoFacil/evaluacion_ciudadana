@@ -1,7 +1,7 @@
 <!-- [ THE LABEL ] -->
-<p><%= question %> <a href="#">editar</a></p>
+<p><a class="close-editor" href="#">cerrar</a></p>
 <!-- [ THE UPDATE FORM: HTML ] -->
-<div style="display:none">
+<div>
   <!-- [0] el loader -->
   <div class="question-loader" style="display:none"></div>
   <!-- [1] el tipo de pregunta -->
@@ -10,6 +10,10 @@
     <textarea name="descripcion_<%= id %>"><%= question %></textarea>
   </p>
   <!-- [2] el botón para guardar -->
-  <p><a href="#">guardar</a></p>
+  <p>
+    <a class="delete" href="#">eliminar</a> | 
+    <a class="cancel" href="#">cancelar</a> | 
+    <a class="save" href="#">actualizar</a>
+  </p>
 </div>
 

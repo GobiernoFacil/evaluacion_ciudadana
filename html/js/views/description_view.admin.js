@@ -71,32 +71,8 @@ define(function(require){
     },
 
     render_editor : function(e){
-      /*
-      e.preventDefault();
-
-      // [1] usa el template
-      this.$el.html(this.editor(this.model.attributes));
-      this.$('.question-panel-editor').show();
-      // [2] selecciona el tipo de pregunta
-      if(Number(this.model.get('is_location'))){
-        this.$('input[value="location"]')[0].checked = 1;
-      }
-      else if(this.model.get('type') === 'text'){
-        this.$('input[value="text"]')[0].checked = 1;
-      }
-      else if(options.length){
-        this.$('input[value="multiple"]')[0].checked = 1;
-      }
-      else{
-        this.$('input[value="number"]')[0].checked = 1;
-      }
-
-      // [3] agrega las secciones, si se necesita
-      if(options.length){
-        this._render_options(options);
-      }
-      */
-
+      if(e !== void 0) e.preventDefault();
+      this.el.innerHTML = this.editor(this.model.attributes);
       return this;
     },
 
@@ -112,7 +88,26 @@ define(function(require){
     //
     _save : function(e){
       e.preventDefault();
-      this.model.save();
+      var content = this.el.getElementsByTagName('textarea')[0],
+          that    = this;
+      if(! content.value){
+        if (content.classList){
+          el.classList.add('error');
+        }
+        else{
+          el.className += ' ' + 'error';
+        }
+        return;
+      }
+
+      this.model.set({
+        question : content.value
+      });
+      this.model.save(null, {
+        success : function(model, response, options){
+          that.render_editor();
+        }
+      });
     },
 
     _suicide : function(e){

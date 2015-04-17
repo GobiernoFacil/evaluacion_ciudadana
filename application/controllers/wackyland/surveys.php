@@ -171,6 +171,14 @@ class Surveys extends CI_Controller {
         'is_location'    => (int)$response['is_location']
       ];
 
+      // weird hack
+      if($question_obj['is_description']){
+        $config     = HTMLPurifier_Config::createDefault();
+        $purifier   = new HTMLPurifier($config);
+        $clean_html = $purifier->purify($response['question']);
+        $question_obj['question'] = $clean_html;
+      }
+
       if($question){
         // update question
         $success = $this->question_model->update($question->id, $question_obj);
