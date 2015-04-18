@@ -16,10 +16,21 @@
 			</div>
 		  	<div class="col-sm-6 col-sm-offset-3">
 		  		<form name="nock-nock" method="post">
+            <!-- [ ERROR MESSAGE ] -->
+            <?php if(isset($errors['email']) && $errors['email']): ?>
+            <p>El usuario y la contraseña no coinciden</p>
+            <?php elseif(isset($errors['email']) && ! $errors['email']): ?>
+            <p>El correo no es válido :/</p>
+            <?php endif; ?>
+
+            <!-- [ THE EMAIL ] -->
     			  <p><label>Email</label>
-	    			  <input type="text" name="email"></p>
-    			  <p><label>Contraseña</label>
-	    			  <input type="password" name="pass"></p>
+	    			  <input type="text" name="email" id="the-email"
+              value="<?php if(isset($errors['email']) && $errors['email']) echo $errors['email']; ?>"></p>
+    			  
+            <!-- [ THE PASSWORD ] -->
+            <p><label>Contraseña</label>
+	    			  <input type="password" name="pass" id="the-pass"></p>
     			  <p><input type="submit" value="acceder"></p>
     			</form>
 		  	</div>
@@ -34,6 +45,32 @@
   ga('create', 'UA-45473222-7', 'auto');
   ga('send', 'pageview');
 
+</script>
+<script>
+  // [ CRAPY VALIDATION ]
+  var form = document.getElementsByTagName('form')[0];
+
+  form.onsubmit = function(e){
+    e.preventDefault();
+    var email = document.getElementById('the-email'),
+        pass  = document.getElementById('the-pass');
+
+    email.className = '';
+    pass.className = '';
+
+    if(! email.value){
+      email.className += ' ' + 'error'; 
+      console.log(email.value);
+      return;
+    }
+    if(! pass.value){
+      pass.className += ' ' + 'error'; 
+      console.log(pass.value);
+      return;
+    } 
+   
+    this.submit();
+  }
 </script>
   </body>
 </html>

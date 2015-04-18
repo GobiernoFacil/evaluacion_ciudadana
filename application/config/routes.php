@@ -54,6 +54,10 @@ $route['terminos']             = 'home/terms';
 $route['privacidad']           = 'home/privacy';
 $route['contacto']             = 'home/contact';
 
+// ADMIN AMIGO
+$route['bienvenido']             = 'wackyland/login';
+$route['bienvenido/tuevaluas']   = 'wackyland/tuevaluas';
+
 // SURVEY APP
 $route['surveys/title/update']    = 'wackyland/surveys/update_title';
 $route['surveys/question/(:num)'] = 'wackyland/surveys/update_question/$1';
