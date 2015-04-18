@@ -99,8 +99,8 @@
 					<?php endforeach;?>
 					</ol>
 	 			</div>
-				<p><?php echo anchor("resultados/1/csv", 'Descargar datos en CSV', array("class"=>"btn"));?></p>
-				<p><?php echo anchor("resultados/1/archivo", 'Descargar datos en JSON', array("class"=>"btn"));?></p>
+				<p><?php echo anchor("resultados/". $response['survey']->id ."/csv", 'Descargar datos en CSV', array("class"=>"btn"));?></p>
+				<p><?php echo anchor("resultados/". $response['survey']->id ."/archivo", 'Descargar datos en JSON', array("class"=>"btn"));?></p>
 			</div>			
 		</article>
 	</div>
