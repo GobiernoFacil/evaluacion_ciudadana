@@ -14,9 +14,10 @@ class Home extends CI_Controller {
 		$data['title'] 			= 'Tú Evalúas';
 		$data['description'] 	= 'Tu opinión sobre los programas públicos federales ayuda a mejorarlos.';
 		$data['body_class'] 	= 'home';
+		$surveys = $this->blueprint_model->all();
 		
 		$this->load->view('/templates/header_view', $data);
-		$this->load->view('/home/home_view');
+		$this->load->view('/home/home_view',['surveys' => $surveys]);
 		$this->load->view('/templates/footer_view');
 	}
 	
