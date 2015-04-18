@@ -1,12 +1,24 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/*
+| --------------------------------------------------------------------------------
+| THE USERS PANEL
+| --------------------------------------------------------------------------------
+*/
 class Admins extends CI_Controller {
 
+  //
+  // [ SETTINGS ]
+  //
+  //
   const MIN_LEVEL     = 5;
   const CREATE_LEVEL  = 5;
   const PASSWORD_MIN  = 8;
   const DEFAULT_LEVEL = 1;
 
+  //
+  // [ CONSTRUCTOR ]
+  //
+  //
   function __construct(){
     parent::__construct();
     $this->user = $this->session->userdata('user');
@@ -16,7 +28,7 @@ class Admins extends CI_Controller {
   }
 
   //
-  // [ ADMINS PANEL ]
+  // [ USERS PANEL ]
   //
   //
   public function index(){
@@ -75,7 +87,7 @@ class Admins extends CI_Controller {
   //
   //
   public function update($id = false){
-
+    echo "n_____n";
   }
 
   //

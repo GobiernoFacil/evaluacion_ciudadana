@@ -60,12 +60,10 @@
 
     if(! email.value){
       email.className += ' ' + 'error'; 
-      console.log(email.value);
       return;
     }
     if(! pass.value){
       pass.className += ' ' + 'error'; 
-      console.log(pass.value);
       return;
     } 
    

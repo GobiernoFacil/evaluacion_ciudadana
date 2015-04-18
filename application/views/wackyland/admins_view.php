@@ -5,22 +5,23 @@
 			<!-- add users-->
 			<div class="col-sm-4">	
 				<section class="box">
-					<form name="add-admin" method="post" class="row">
+
+					<form name="add-admin" method="post" class="row" id="add-admin-form">
 					  <h2>Crear administrador</h2>
 					  <div class="col-sm-12">
-					  <p><label>correo</label><input type="text" name="email"></p>
-					  <p><label>contraseña</label><input type="password" name="password"></p>
+					  <p><strong id="error-message"></strong></p>
+					  <p><label>correo</label><input id="the-new-email" type="text" name="email" value=""></p>
+					  <p><label>contraseña</label><input id="the-new-pass" type="password" name="password" value=""></p>
 					  <p>Tipo de administrador</p>
 					  <ul class="options">
-					    <li><label><input type="radio" name="level" value="1">nivel 1</label></li>
-					    <li><label><input type="radio" name="level" value="2">nivel 2</label></li>
-					    <li><label><input type="radio" name="level" value="3">nivel 3</label></li>
-					    <li><label><input type="radio" name="level" value="4">nivel 5</label></li>
-					    <li><label><input type="radio" name="level" value="5">jefe de jefes</label></li>
+					    <li><label><input type="radio" name="level" value="1" checked="checked">curioso</label></li>
+					    <li><label><input type="radio" name="level" value="3">funcionario</label></li>
+					    <li><label><input type="radio" name="level" value="5">administrador</label></li>
 					  </ul>
 					  <p><input type="submit" value="crear administrador"></p>
 					  </div>
 					</form>
+
 				</section>
 			</div>
 			<!--  users list-->
@@ -43,7 +44,7 @@
 				  <?php foreach($admins as $admin): ?>
 				    <li class="row">
 				    	<div class="col-sm-8">
-				    	 <a href="<?= site_url("wackyland/admins/" . $admin->id); ?>">
+				    	 <a href="<?= site_url("administradores/" . $admin->id); ?>">
 				    	   <?php echo $admin->email; ?>
 				    	 </a>
 				    	</div>
@@ -58,3 +59,37 @@
 		</div>
 	</div>
 </div>
+<script>
+  // more crapy validation
+  var form = document.getElementById('add-admin-form'),
+      error = document.getElementById('error-message');
+
+  form.onsubmit = function(e){
+    e.preventDefault();
+    var email = document.getElementById('the-new-email'),
+        pass  = document.getElementById('the-new-pass');
+
+    email.className = '';
+    pass.className = '';
+    error.innerHTML = "";
+
+    if(! email.value){
+      email.className = 'error'; 
+      error.innerHTML = "el campo de correo está vacío :(";
+      return;
+    }
+    if(pass.value.length < 8){
+      pass.className = 'error'; 
+      error.innerHTML = "mínimo 8 caracteres para la contraseña por favor!";
+      return;
+    } 
+   
+    this.submit();
+  }
+
+
+
+
+
+
+</script>

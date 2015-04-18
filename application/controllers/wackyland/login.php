@@ -1,7 +1,15 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
-
+/*
+| --------------------------------------------------------------------------------
+| THE LOGIN 
+| --------------------------------------------------------------------------------
+*/
 class Login extends CI_Controller {
 
+  //
+  // [ CONSTRUCTOR ]
+  //
+  //
   function __construct(){
     parent::__construct();
   }

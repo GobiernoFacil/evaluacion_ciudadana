@@ -10,10 +10,10 @@
 			<p> <a href="<?= site_url("wackyland/surveys"); ?>">Crear Encuesta</a></p>
 		</div>
 		<div class="col-sm-4 col-sm-offset-1 box">
-			<h3><a href="<?= site_url("wackyland/admins"); ?>"><strong><?php echo count($admins);?></strong> 
+			<h3><a href="<?= site_url("administradores"); ?>"><strong><?php echo count($admins);?></strong> 
 				<?php echo count($admins) == 1 ? 'Usuario' :'Usuarios';?> &gt;</a>
 			</h3>
-			<p> <a href="<?= site_url("wackyland/admins"); ?>">Crear Usuario</a></p>
+			<p> <a href="<?= site_url("administradores"); ?>">Crear Usuario</a></p>
 		</div>
 	</div>
 	</div>
