@@ -9,10 +9,12 @@
 require.config({
   baseUrl : '/js',
   paths : {
-    jquery     : 'bower_components/jquery/dist/jquery',
+    jquery     : 'bower_components/jquery/dist/jquery.min',
     backbone   : "bower_components/backbone/backbone",
-    underscore : "bower_components/underscore/underscore",
-    text       : "bower_components/requirejs-text/text"
+    underscore : "bower_components/underscore/underscore-min",
+    text       : "bower_components/requirejs-text/text",
+    velocity   : 'bower_components/velocity/velocity.min',
+    d3         : 'bower_components/d3/d3.min',
   },
   shim : {
     backbone : {

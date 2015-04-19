@@ -53,7 +53,7 @@
         </p>
         <!-- [2] -->
         <!-- [3] define a la sección a la que pertenece la pregunta -->
-        <p id="survey-section-selector" style="display:none">
+        <p class="survey-section-selector" style="display:none">
           <label>sección</label>
           <select name="section_id">
             <option value="1" selected>sección 1</option>

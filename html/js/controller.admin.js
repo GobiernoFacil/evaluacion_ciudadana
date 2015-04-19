@@ -12,6 +12,8 @@ define(function(require){
   // --------------------------------------------------------------------------------
   //
   var Backbone    = require('backbone'),
+      Velocity    = require('velocity'),
+      d3          = require('d3'),
       Question    = require('views/question_view.admin'),
       Description = require('views/description_view.admin'),
       Option      = require('text!templates/option_item.admin.html'),
@@ -172,6 +174,10 @@ define(function(require){
       this.html.question_form.find('input[value="text"]')[0].checked = true;
       this.html.content_form.hide();
       this.html.question_form.show();
+
+      if(this.collection.length){
+        this.html.question_form[0].querySelector('.survey-section-selector').style.display = "";
+      }
     },
 
     // [ SHOW THE ADD HTML FORM ]
