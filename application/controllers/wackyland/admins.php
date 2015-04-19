@@ -95,6 +95,20 @@ class Admins extends CI_Controller {
   //
   //
   public function delete($id){
+    // [1] revisa que tenga el nivel de usuario necesario para
+    //     eliminar otro administrador. Nomás por si las flys
+    if(self::CREATE_LEVEL > $this->session->userdata('user')->level){
+      redirect('administradores', 'refresh');
+    }
 
+    // revisa que exista y que no se elimine a sí mismo
+    $user = $this->admins_model->get((int)$id);
+    if(!empty($user) && (int)$user->id != (int)($this->user->id){
+      $this->admins_model->delete($user->id);
+      redirect('administradores', 'refresh');
+    }
+    else{
+      redirect('administradores', 'refresh');
+    }
   }
 }
