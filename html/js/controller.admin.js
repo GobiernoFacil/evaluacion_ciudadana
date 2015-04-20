@@ -92,7 +92,7 @@ define(function(require){
       // [ THE LISTENERS ]
       this.listenTo(this.model, 'sync', this._render_saved_title);
       this.listenTo(this.sub_collection, 'add', this._render_question);
-      this.listenTo(this.sub_collection, 'remove', this._remove_question);
+      this.listenTo(this.collection, 'remove', this._remove_question);
       // [ FETCH SHORTCUTS ]
       this.html = {
         navigation_menu : this.$('#survey-navigation-menu'),
@@ -122,7 +122,8 @@ define(function(require){
         sec_nav.append(this.sec_nav_template(model.attributes));
       }, this);
       // [3] muestra la información de la primera sección disponible
-      this.render_section(1);
+      //this.render_section(1);
+      this.render_all_sections();
     },
 
     // [ RENDER QUESTIONS FROM A SECTION ]
@@ -140,6 +141,10 @@ define(function(require){
       //
       // [4] crea la lista de preguntas
       this.sub_collection.set(this.collection.where({section_id : section}));
+    },
+
+    render_all_sections : function(){
+      this.sub_collection.set(this.collection.models);
     },
 
     // [ RENDER SINGLE QUESTION ]
@@ -163,7 +168,6 @@ define(function(require){
     //
     //
     _render_saved_title : function(model, response, options){
-      console.log(model, response, options);
     },
 
     // [ SHOW THE ADD QUESTION FORM ]
@@ -176,8 +180,40 @@ define(function(require){
       this.html.question_form.show();
 
       if(this.collection.length){
-        this.html.question_form[0].querySelector('.survey-section-selector').style.display = "";
+        this.render_section_selector();
       }
+    },
+
+    // [ SHOW THE SECTION SELECTOR ]
+    //
+    //
+    render_section_selector : function(){
+      var sections = _.uniq(this.collection.pluck('section_id')),
+          data     = [],
+          box      = this.html.question_form[0].querySelector('.survey-section-selector'),
+          el       = box.querySelector('select'),
+          content  = '',
+          i;
+          box.style.display = '';
+      if(!sections){
+        data.push({text : 'sección 1', value : 1});
+      }
+      else{
+        if(sections.length >= 2){
+          sections = sections.sort(function(a,b){
+            return a-b;
+          });
+        }
+        for(i = 1; i<= sections.length; i++){
+          data.push({text : 'sección ' + sections[i-1], value : sections[i-1]});
+        }
+      }
+      data.push({text : 'nueva sección', value : Number(sections[sections.length-1]) + 1});
+
+      for(i = 0; i < data.length; i++){
+        content +="<option value='" + data[i].value + "'>" + data[i].text + "</option>";
+      }
+      el.innerHTML = content;
     },
 
     // [ SHOW THE ADD HTML FORM ]
@@ -284,7 +320,7 @@ define(function(require){
       var type        = this.html.question_form.find('input[name="type"]:checked').val(),
           title_input = this.html.question_form.find('input[name="question"]'),
           title       = title_input.val(),
-          section     = this.$('#survey-section-selector select').val(),
+          section     = this.$('.survey-section-selector select').val(),
           question    = new Backbone.Model(null, {collection : this.collection}),
           that        = this;
       if(! title){
@@ -304,7 +340,9 @@ define(function(require){
       question.save(null, {
         success : function(model, response, options){
           that.collection.add(model);
-          that.render_section(that.model.get('current_section'));
+          that.render_section_selector();
+          // that.render_section(that.model.get('current_section'));
+          that.render_all_sections();
         }
       });
     },
@@ -315,7 +353,7 @@ define(function(require){
     _save_content : function(e){
       e.preventDefault();
       var html    = this.html.content_form.find('textarea').val(),
-          section = this.$('#survey-section-selector select').val(),
+          section = this.$('.survey-section-selector select').val(),
           content = new Backbone.Model(null, {collection : this.collection}),
           that    = this;
 
@@ -337,9 +375,15 @@ define(function(require){
       content.save(null, {
         success : function(model, response, options){
           that.collection.add(model);
-          that.render_section(that.model.get('current_section'));
+          that.render_section_selector();
+          //that.render_section(that.model.get('current_section'));
+          that.render_all_sections();
         }
       });
+    },
+
+    _remove_question : function(){
+      this.render_section_selector();
     },
 
     _get_options : function(){
