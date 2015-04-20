@@ -88,7 +88,6 @@ class Open_data extends CI_Controller {
 	 	  echo json_encode($r);
 	 	}
     elseif($format == 'csv'){
-      $writer = Writer::createFromFileObject(new SplTempFileObject());
       $writer = Writer::createFromFileObject(new SplTempFileObject()); //the CSV file will be created into a temporary File
       $writer->setDelimiter(","); //the delimiter will be the tab character
       $writer->setNewline("\r\n"); //use windows line endings for compatibility with some csv libraries
@@ -114,7 +113,48 @@ class Open_data extends CI_Controller {
       header("Expires: 0");
       echo $writer;
     }
-	 	elseif($format == 'archivo'){
+    
+
+    /*
+    ***
+    ***
+    */
+    elseif($format == 'fullcsv'){
+      // get the base data
+      $questions = $this->question_model->get($blueprint_id);
+      $options   = $this->question_options_model->get($blueprint_id);
+
+      $writer = Writer::createFromFileObject(new SplTempFileObject()); //the CSV file will be created into a temporary File
+      $writer->setDelimiter(","); //the delimiter will be the tab character
+      $writer->setNewline("\r\n"); //use windows line endings for compatibility with some csv libraries
+      $writer->setEncodingFrom("utf-8");
+      $headers = $this->get_csv_header($questions);
+      $writer->insertOne($headers);
+
+      $datos = [];
+      foreach ($r['questions'] as $question){
+        $entry = [];
+        $question_text = html_entity_decode($question->question);
+        foreach ($question->options as $option){
+          $option_text = html_entity_decode($option->description);
+          $option_num  = $option->answer_num;
+          $datos[] = [$question_text, $option_text, $option_num];
+        }
+      }
+
+      $writer->insertAll($datos);
+      header("Content-type: text/csv");
+      header("Content-Disposition: attachment; filename=file.csv");
+      header("Pragma: no-cache");
+      header("Expires: 0");
+      echo $writer;
+    }
+    /*
+    ***
+    ***
+    */
+	 	
+    elseif($format == 'archivo'){
 	 	  $filename = "data.json";
 	 	  header("Content-type: application/octet-stream");
 	 	  header("Content-disposition: attachment;filename=$filename");
@@ -138,4 +178,31 @@ class Open_data extends CI_Controller {
 	 }	
 	 	
   }
+
+  //
+  // [ HEADER CONTRUCTOR ]
+  //
+  //
+  private function get_csv_header($questions){
+    $columns = array_map(function($question){
+      return $question->question;
+    },$questions);
+
+    return $columns;
+  }
+
+  //
+  // [ CSV ROW CONTRUCTOR ]
+  //
+  //
+  private function get_csv_rows($blueprint_id, $questions, $options){
+    $answers = $this->answers_model->get_by_blueprint($blueprint_id);
+
+    foreach ($answer as $key => $value) {
+      # code...
+    }
+  }
+
+
+
 }

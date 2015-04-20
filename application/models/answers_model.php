@@ -37,4 +37,9 @@ class Answers_model extends CI_Model{
     $q = $this->db->get_where(self::TABLE, ['form_key' => $form_key]);
     return $q->result();
   }
+
+  function get_by_blueprint($blueprint_id){
+    $q = $this->db->get_where(self::TABLE, ['blueprint_id' => $blueprint_id]);
+    return $q->result();
+  }
 }
