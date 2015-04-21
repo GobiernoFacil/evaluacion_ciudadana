@@ -124,28 +124,7 @@ class Open_data extends CI_Controller {
       $questions  = $this->question_model->get($blueprint_id, false, true);
       $options    = $this->question_options_model->get($blueprint_id);
       $applicants = array_column($this->answers_model->get_applicant_list($blueprint_id), 'form_key');
-      $first_row = [];
-
-      $answers = $this->answers_model->get($applicants[0], true);
-      $answers_id = array_column($answers, 'question_id');
-    
-      foreach($questions as $q){
-        $q->options = array_filter($options, function($opt) use($q){
-          return $opt->question_id == $q->id;
-        });
-        $q_id = array_search($q->id, $answers_id);
-        $res  = $q->type == 'text' ? $answers[$q_id]['text_value'] : $answers[$q_id]['num_value'];
-        if(! empty($q->options) && $q->type == 'number'){
-          $res = array_filter($q->options, function($opt) use($res){
-            return $opt->value == $res;
-          });
-          $res = empty($res) ? false : array_shift($res)->description;
-        }
-        $first_row[] = $res;
-      }
-      var_dump($first_row);
-      die();
-
+  
       $writer = Writer::createFromFileObject(new SplTempFileObject()); //the CSV file will be created into a temporary File
       $writer->setDelimiter(","); //the delimiter will be the tab character
       $writer->setNewline("\r\n"); //use windows line endings for compatibility with some csv libraries
@@ -154,14 +133,27 @@ class Open_data extends CI_Controller {
       $writer->insertOne($headers);
 
       $datos = [];
-      foreach ($r['questions'] as $question){
-        $entry = [];
-        $question_text = html_entity_decode($question->question);
-        foreach ($question->options as $option){
-          $option_text = html_entity_decode($option->description);
-          $option_num  = $option->answer_num;
-          $datos[] = [$question_text, $option_text, $option_num];
+
+      foreach($applicants as $applicant){
+        $answers    = $this->answers_model->get($applicant, true);
+        $answers_id = array_column($answers, 'question_id');
+
+        $row = [];
+        foreach($questions as $q){
+          $q->options = array_filter($options, function($opt) use($q){
+            return $opt->question_id == $q->id;
+          });
+          $q_id = array_search($q->id, $answers_id);
+          $res  = $q->type == 'text' ? $answers[$q_id]['text_value'] : $answers[$q_id]['num_value'];
+          if(! empty($q->options) && $q->type == 'number'){
+            $res = array_filter($q->options, function($opt) use($res){
+              return $opt->value == $res;
+            });
+            $res = empty($res) ? false : array_shift($res)->description;
+          }
+          $row[] = $res;
         }
+        $datos[] = $row;
       }
 
       $writer->insertAll($datos);
