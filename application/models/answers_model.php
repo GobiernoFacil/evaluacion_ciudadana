@@ -33,13 +33,22 @@ class Answers_model extends CI_Model{
     return $this->db->affected_rows();
   }
 
-  function get($form_key){
+  function get($form_key, $array = false){
     $q = $this->db->get_where(self::TABLE, ['form_key' => $form_key]);
-    return $q->result();
+    return $array ? $q->result_array() : $q->result();
   }
 
   function get_by_blueprint($blueprint_id){
     $q = $this->db->get_where(self::TABLE, ['blueprint_id' => $blueprint_id]);
-    return $q->result();
+    return $q->result_array();
+  }
+
+  function get_applicant_list($blueprint_id){
+    $this->db->select('form_key');
+    $this->db->from(self::TABLE);
+    $this->db->where('blueprint_id', $blueprint_id);
+    $this->db->group_by("form_key");
+    $q = $this->db->get();
+    return $q->result_array();
   }
 }

@@ -14,9 +14,13 @@ class Question_model extends CI_Model{
     parent::__construct();
   }
 
-  function get($id){
-    $q = $this->db->get_where(self::TABLE, ['blueprint_id' => $id]);
-    return $q->result();
+  function get($id, $array = false, $remove_descriptions = false){
+    $where = ['blueprint_id' => $id];
+    if($remove_descriptions){
+      $where['is_description'] = 0;
+    }
+    $q = $this->db->get_where(self::TABLE, $where);
+    return $array ? $q->result_array() : $q->result();
   }
 
   function validate($id, $blueprint_id){

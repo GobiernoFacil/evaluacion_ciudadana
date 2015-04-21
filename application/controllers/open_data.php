@@ -121,8 +121,30 @@ class Open_data extends CI_Controller {
     */
     elseif($format == 'fullcsv'){
       // get the base data
-      $questions = $this->question_model->get($blueprint_id);
-      $options   = $this->question_options_model->get($blueprint_id);
+      $questions  = $this->question_model->get($blueprint_id, false, true);
+      $options    = $this->question_options_model->get($blueprint_id);
+      $applicants = array_column($this->answers_model->get_applicant_list($blueprint_id), 'form_key');
+      $first_row = [];
+
+      $answers = $this->answers_model->get($applicants[0], true);
+      $answers_id = array_column($answers, 'question_id');
+    
+      foreach($questions as $q){
+        $q->options = array_filter($options, function($opt) use($q){
+          return $opt->question_id == $q->id;
+        });
+        $q_id = array_search($q->id, $answers_id);
+        $res  = $q->type == 'text' ? $answers[$q_id]['text_value'] : $answers[$q_id]['num_value'];
+        if(! empty($q->options) && $q->type == 'number'){
+          $res = array_filter($q->options, function($opt) use($res){
+            return $opt->value == $res;
+          });
+          $res = empty($res) ? false : array_shift($res)->description;
+        }
+        $first_row[] = $res;
+      }
+      var_dump($first_row);
+      die();
 
       $writer = Writer::createFromFileObject(new SplTempFileObject()); //the CSV file will be created into a temporary File
       $writer->setDelimiter(","); //the delimiter will be the tab character
@@ -166,7 +188,7 @@ class Open_data extends CI_Controller {
 	 	$data['response'] 				= $r;
   
 	 	  
-	 	$data['title'] 			= 'Resultados de las encuestas Tú Evalúas';
+	 	$data['title'] 			 = 'Resultados de las encuestas Tú Evalúas';
 		$data['description'] 	= 'Resultados de las encuestas Tú Evalúas';
 		$data['body_class'] 	= 'data';
 		$this->load->view('/templates/header_view', $data);
