@@ -46,7 +46,7 @@
 					<!-- comienza lista de preguntas-->
 					<ol>
 					<?php foreach($response['questions'] as $question):?>
-						<li >
+						<li <?php echo empty($question->options) ? "class='hide'" :'' ;?>>
 							<h3><?php	echo $question->question;?></h3>
 							<?php 
 								// si no hay opciones
