@@ -96,11 +96,12 @@ define(function(require){
       else{
         this.$('input[value="number"]')[0].checked = 1;
       }
-
       // [3] agrega las secciones, si se necesita
       if(options.length){
         this._render_options(options);
       }
+      // [4] agrega el selector de sección
+      this.render_section_selector();
 
       return this;
     },
@@ -149,6 +150,38 @@ define(function(require){
       }else{
         el.style.display = 'none';
       }
+    },
+
+    // [ SHOW THE SECTION SELECTOR ]
+    //
+    //
+    render_section_selector : function(){
+      var sections = _.uniq(this.model.collection.pluck('section_id')),
+          data     = [],
+          box      = this.el.querySelector('.section-container'),
+          el       = box.querySelector('select'),
+          content  = '',
+          i;
+          box.style.display = '';
+      if(!sections){
+        data.push({text : 'sección 1', value : 1});
+      }
+      else{
+        if(sections.length >= 2){
+          sections = sections.sort(function(a,b){
+            return a-b;
+          });
+        }
+        for(i = 1; i<= sections.length; i++){
+          data.push({text : 'sección ' + sections[i-1], value : sections[i-1]});
+        }
+      }
+      data.push({text : 'nueva sección', value : Number(sections[sections.length-1]) + 1});
+
+      for(i = 0; i < data.length; i++){
+        content +="<option value='" + data[i].value + "'>" + data[i].text + "</option>";
+      }
+      el.innerHTML = content;
     },
 
     //

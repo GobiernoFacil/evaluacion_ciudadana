@@ -53,6 +53,8 @@
         </p>
         <!-- [2] -->
         <!-- [3] define a la sección a la que pertenece la pregunta -->
+        
+        <div class="survey-section-selector-container"><!-- weird hack -->
         <p class="survey-section-selector" style="display:none">
           <label>sección</label>
           <select name="section_id">
@@ -60,12 +62,19 @@
             <option value="0">nueva sección</option>
           </select>
         </p>
+        </div><!-- weird hack ends -->
         <!-- [3] -->
         <!-- [4] agrega las respuestas para opción múltiple -->
         <div id="survey-add-options" style="display:none">
           <h5>Respuestas:</h5>
           <ul>
           </ul>
+          <p>
+            <label>
+              <input type="checkbox" id="keep-options" value="1">
+              conservar respuestas
+            </label>
+          </p>
         </div>
         <!-- [4] -->
         <!-- [5] salva la pregunta -->
@@ -79,6 +88,8 @@
       <div id="survey-add-content" style="display:none">
         <p><label>HTML:</label></p>
         <p><textarea name="html"></textarea></p>
+        <div class="survey-section-selector-container"><!-- weird hack -->
+        </div><!-- weird hack ends -->
         <p><a id="survey-add-content-btn" href="#">agregar contenido</a></p>
       </div>
       <!-- { NEW CONTENT FORM ENDS } -->

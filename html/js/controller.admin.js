@@ -143,6 +143,9 @@ define(function(require){
       this.sub_collection.set(this.collection.where({section_id : section}));
     },
 
+    // [ RENDER ALL QUESTIONS ]
+    //
+    //
     render_all_sections : function(){
       this.sub_collection.set(this.collection.models);
     },
@@ -175,6 +178,14 @@ define(function(require){
     //
     render_question_form : function(e){
       e.preventDefault();
+      var q_form = this.html.question_form[0].querySelector('.survey-section-selector-container'),
+          c_form = this.html.content_form[0].querySelector('.survey-section-selector-container');
+
+      var selector = c_form.querySelector('.survey-section-selector');
+      if(selector){
+        q_form.appendChild(c_form.removeChild(selector));
+      }
+
       this.html.question_form.find('input[value="text"]')[0].checked = true;
       this.html.content_form.hide();
       this.html.question_form.show();
@@ -190,7 +201,7 @@ define(function(require){
     render_section_selector : function(){
       var sections = _.uniq(this.collection.pluck('section_id')),
           data     = [],
-          box      = this.html.question_form[0].querySelector('.survey-section-selector'),
+          box      = this.el.querySelector('.survey-section-selector'),
           el       = box.querySelector('select'),
           content  = '',
           i;
@@ -221,9 +232,21 @@ define(function(require){
     //
     render_content_form : function(e){
       e.preventDefault();
+      var q_form = this.html.question_form[0].querySelector('.survey-section-selector-container'),
+          c_form = this.html.content_form[0].querySelector('.survey-section-selector-container');
+
+      var selector = q_form.querySelector('.survey-section-selector');
+      if(selector){
+        c_form.appendChild(q_form.removeChild(selector));
+      }
+
       this.html.content_form.show();
       this.html.answers_form.hide();
       this.html.question_form.hide();
+
+      if(this.collection.length){
+        this.render_section_selector();
+      }
     },
 
     // [ ADD NEW ANSWER OPTION ]
@@ -239,6 +262,25 @@ define(function(require){
         }));
         this.html.answers_form.find('input[name="' + name + '"]')[0].focus();
       }
+    },
+
+    // [ RESTORE DEFAULT LOOKS TO THE ADD QUESTION FORM ]
+    //
+    //
+    clear_question_form : function(){
+      var form    = this.html.question_form[0],
+          options = document.getElementById('survey-add-options'),
+          keep_op = document.getElementById('keep-options'),
+          ul      = options.querySelector('ul');
+      
+      if(! keep_op.checked){
+         while(ul.children.length > 1){
+          ul.removeChild(ul.children[1]);
+        }
+      }
+      
+      ul.children[0].querySelector('input').value = "";
+      form.querySelector('input[name="question"]').value = "";
     },
 
     //
@@ -317,10 +359,11 @@ define(function(require){
     //
     _save_question : function(e){
       e.preventDefault();
-      var type        = this.html.question_form.find('input[name="type"]:checked').val(),
-          title_input = this.html.question_form.find('input[name="question"]'),
-          title       = title_input.val(),
-          section     = this.$('.survey-section-selector select').val(),
+      var form        = this.html.question_form[0],
+          type        = form.querySelector('input[name="type"]:checked').value,
+          title_input = form.querySelector('input[name="question"]'),
+          title       = title_input.value,
+          section     = this.el.querySelector('.survey-section-selector select').value,
           question    = new Backbone.Model(null, {collection : this.collection}),
           that        = this;
       if(! title){
@@ -341,7 +384,7 @@ define(function(require){
         success : function(model, response, options){
           that.collection.add(model);
           that.render_section_selector();
-          // that.render_section(that.model.get('current_section'));
+          that.clear_question_form();
           that.render_all_sections();
         }
       });
