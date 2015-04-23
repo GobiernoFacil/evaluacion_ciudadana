@@ -1164,7 +1164,7 @@ article {
       padding-top: 20px; }
       article.data_hm .answers ol li h3 {
         margin-bottom: 20px; }
-      article.data_hm .answers ol li:first-child {
+      article.data_hm .answers ol li.hide {
         display: none; }
       article.data_hm .answers ol li strong {
         color: #FF6F69; }
