@@ -73,8 +73,9 @@ define(function(require){
       this.model.url     = "/index.php/surveys/title/update";
       this.model.set({current_section : 1});
       // [ THE COLLECTION ]
-     this.collection     = new Backbone.Collection(SurveySettings.questions);
-     this.collection.url = '/index.php/surveys/question';
+     this.collection            = new Backbone.Collection(SurveySettings.questions);
+     this.collection.url        = '/index.php/surveys/question';
+     this.collection.comparator = function(m){ return Number(m.get('section_id'));};
      this.sub_collection = new Backbone.Collection([]);
       // [ THE OTHER COLLECTIONS ]
       this.q_options     = new Backbone.Collection(SurveySettings.options);
@@ -147,6 +148,7 @@ define(function(require){
     //
     //
     render_all_sections : function(){
+      this.collection.sort();
       this.sub_collection.set(this.collection.models);
     },
 
@@ -279,7 +281,9 @@ define(function(require){
         }
       }
       
-      ul.children[0].querySelector('input').value = "";
+      if(ul.children.length){
+        ul.children[0].querySelector('input').value = "";
+      }
       form.querySelector('input[name="question"]').value = "";
     },
 

@@ -73,6 +73,8 @@ define(function(require){
     render : function(e){
       if(e !== void 0) e.preventDefault();
       this.$el.html(this.template(this.model.attributes));
+      var color = this.model.get('section_id') * 15;
+      this.el.style.borderRight = "5px solid hsl(" + color + ", 100%, 50%)";
       return this;
     },
 
@@ -102,7 +104,8 @@ define(function(require){
       }
       // [4] agrega el selector de sección
       this.render_section_selector();
-
+      var color = this.model.get('section_id') * 15;
+      this.el.style.borderRight = "5px solid hsl(" + color + ", 100%, 50%)";
       return this;
     },
 
