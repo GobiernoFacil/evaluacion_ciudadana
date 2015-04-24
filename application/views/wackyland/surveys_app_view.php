@@ -99,21 +99,25 @@
     <!-- { THE CONTENT CREATOR ENDS } -->
 
     <!-- [ THE SURVEY ] -->
-    <section id="the-survey" class="box">
-	    <h2>Preguntas agregadas</h2>
-	    <div class="row">
-			<div class="col-sm-10 col-sm-offset-1">
+<section id="the-survey" class="box">
+  <h2>Preguntas agregadas</h2>
+  <div class="row">
+    <div class="col-sm-10 col-sm-offset-1">
+      
+      <!-- [ THE SECTION NAVIGATION ] -->
       <div id="survey-app-navigation" style="display:none">
         <ul id="survey-navigation-menu"></ul>
+        <!--
         <h4>Reglas</h4>
         <p id="survey-add-navigation-rule"></p>
         <ul id="survey-navigation-rules"></ul>
+        -->
       </div>
       
-      	<ol id="survey-question-list" ></ol> 
-			</div>
-	    </div>
-    </section>
+      <ol id="survey-question-list" ></ol> 
+    </div>
+  </div>
+</section>
     <!-- { THE SURVEY ENDS } -->
     
   	</div>
