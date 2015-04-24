@@ -182,7 +182,9 @@ define(function(require){
       data.push({text : 'nueva sección', value : Number(sections[sections.length-1]) + 1});
 
       for(i = 0; i < data.length; i++){
-        content +="<option value='" + data[i].value + "'>" + data[i].text + "</option>";
+        content +="<option value='" + data[i].value + "' " 
+                + (this.model.get('section_id') == data[i].value ? 'selected' : '') 
+                + ">" + data[i].text + "</option>";
       }
       el.innerHTML = content;
     },
@@ -208,7 +210,7 @@ define(function(require){
       var type        = this.$el.find('input[name^="type"]:checked').val(),
           title_input = this.$el.find('input[name="question"]'),
           title       = this.$('.question_editor_question input').val(),
-          // section     = this.$('#survey-section-selector select').val(),
+          section     = this.el.querySelector('.section-container select').value,
           that        = this;
       if(! title){
         title_input.addClass('error');
@@ -217,11 +219,11 @@ define(function(require){
       this.model.set({
         //section_id     : section,
         // blueprint_id   : this.model.id,
-        question       : title, 
-        // is_description : 0,
-        is_location    : type === 'location',
-        type           : type === 'text' || type === 'location' ? 'text' : 'number',
-        options        : type !== 'multiple' ? [] : this._get_options()
+        question    : title, 
+        section_id  : section,
+        is_location : type === 'location',
+        type        : type === 'text' || type === 'location' ? 'text' : 'number',
+        options     : type !== 'multiple' ? [] : this._get_options()
       });
       
       this.model.save(null, {

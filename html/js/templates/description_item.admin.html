@@ -9,11 +9,20 @@
     <label>Contenido:</label>
     <textarea name="descripcion_<%= id %>"><%= question %></textarea>
   </p>
-  <!-- [2] el botón para guardar -->
+
+  <!-- [2] define a la sección a la que pertenece la pregunta -->
+  <p id="survey-section-selector-<%= id %>" class="section-container" style="display:none">
+    <label>sección</label>
+    <select name="section_id-<%= id %>">
+      <option value="1" selected>sección 1</option>
+      <option value="0">nueva sección</option>
+    </select>
+  </p>
+
+  <!-- [3] el botón para guardar -->
   <p>
     <a class="delete" href="#">eliminar</a> | 
     <a class="cancel" href="#">cancelar</a> | 
     <a class="save" href="#">actualizar</a>
   </p>
 </div>
-

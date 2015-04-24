@@ -77,9 +77,45 @@ define(function(require){
       if(e !== void 0) e.preventDefault();
       this.el.innerHTML = this.editor(this.model.attributes);
 
+      this.render_section_selector();
+
       var color = this.model.get('section_id') * 15;
       this.el.style.borderRight = "5px solid hsl(" + color + ", 100%, 50%)";
       return this;
+    },
+
+    // [ SHOW THE SECTION SELECTOR ]
+    //
+    //
+    render_section_selector : function(){
+      var sections = _.uniq(this.model.collection.pluck('section_id')),
+          data     = [],
+          box      = this.el.querySelector('.section-container'),
+          el       = box.querySelector('select'),
+          content  = '',
+          i;
+          box.style.display = '';
+      if(!sections){
+        data.push({text : 'sección 1', value : 1});
+      }
+      else{
+        if(sections.length >= 2){
+          sections = sections.sort(function(a,b){
+            return a-b;
+          });
+        }
+        for(i = 1; i<= sections.length; i++){
+          data.push({text : 'sección ' + sections[i-1], value : sections[i-1]});
+        }
+      }
+      data.push({text : 'nueva sección', value : Number(sections[sections.length-1]) + 1});
+
+      for(i = 0; i < data.length; i++){
+        content +="<option value='" + data[i].value + "' " 
+                + (this.model.get('section_id') == data[i].value ? 'selected' : '') 
+                + ">" + data[i].text + "</option>";
+      }
+      el.innerHTML = content;
     },
 
     //
@@ -95,6 +131,7 @@ define(function(require){
     _save : function(e){
       e.preventDefault();
       var content = this.el.getElementsByTagName('textarea')[0],
+          section = this.el.querySelector('.section-container select').value,
           that    = this;
       if(! content.value){
         if (content.classList){
@@ -107,7 +144,8 @@ define(function(require){
       }
 
       this.model.set({
-        question : content.value
+        question   : content.value,
+        section_id : section 
       });
       this.model.save(null, {
         success : function(model, response, options){
