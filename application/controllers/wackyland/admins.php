@@ -21,6 +21,7 @@ class Admins extends CI_Controller {
   //
   function __construct(){
     parent::__construct();
+    $this->load->library('email');
     $this->user = $this->session->userdata('user');
     if(! $this->user || self::MIN_LEVEL > $this->user->level){
       redirect('wackyland/login', 'refresh');
@@ -38,9 +39,9 @@ class Admins extends CI_Controller {
     }
     $admins = $this->admins_model->all();
     
-    $data['title'] 			= 'Admins Tú Evalúas';
-	$data['description'] 	= '';
-	$data['body_class'] 	= 'users';
+    $data['title']       = 'Admins Tú Evalúas';
+    $data['description'] = '';
+    $data['body_class']  = 'users';
     
     $this->load->view('wackyland/templates/header_view', $data);
     $this->load->view('wackyland/admins_view', ['admins' => $admins, 'report' => $report]);
@@ -78,8 +79,20 @@ class Admins extends CI_Controller {
     else{
       $hash    = password_hash($password, PASSWORD_DEFAULT, ['cost' => 12]);
       $user_id = $this->admins_model->add(['email' => $email, 'password' => $hash, 'level'=>$level]);
+      $this->send_welcome_email($email);
       return ['success' => true, 'user' => ['id' => $user_id, 'email' => $email, 'level'=>$level]];
     }
+  }
+
+  private function send_welcome_email($email){
+    $this->email->from('welcome.robot@tuevaluas.com.mx', 'un robot de tú evalúas');
+    $this->email->to($email); 
+
+    $this->email->subject('Bienvenido a tú evalúas!');
+    $this->email->message('Hola, bienvenido a tú evaluas, puedes acceder al 
+      admin desde este link: http://tuevaluas.com.mx/bienvenido');  
+
+    $this->email->send();
   }
 
   //
@@ -103,7 +116,7 @@ class Admins extends CI_Controller {
 
     // revisa que exista y que no se elimine a sí mismo
     $user = $this->admins_model->get((int)$id);
-    if(!empty($user) && (int)$user->id != (int)($this->user->id){
+    if( !empty($user) && (int)$user->id != (int)$this->user->id ){
       $this->admins_model->delete($user->id);
       redirect('administradores', 'refresh');
     }

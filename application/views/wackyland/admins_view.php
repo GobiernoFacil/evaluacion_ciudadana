@@ -9,7 +9,28 @@
 					<form name="add-admin" method="post" class="row" id="add-admin-form">
 					  <h2>Crear administrador</h2>
 					  <div class="col-sm-12">
-					  <p><strong id="error-message"></strong></p>
+					  <p>
+            <!--
+            return ['success'  => false, 
+              'email'    => $email, 
+              'password' => $password, 
+              'exist'    => $exist, 
+              'level'    => $level];
+            -->
+              <!-- [ ERROR MESSAGE ] -->
+              <strong id="error-message">
+              <?php if($report && !$report['success']): ?>
+                <?php if(! $report['email']) : ?>
+                  el correo no es válido O___O
+                <?php elseif(! $report['password']) : ?>
+                  la contraseña debe contener por lo menos ocho caracteres
+                <?php elseif($report['exist']) : ?>
+                  El usuario ya existe :/
+                <?php endif; ?>
+              <?php endif; ?>
+              </strong>
+
+            </p>
 					  <p><label>correo</label><input id="the-new-email" type="text" name="email" value=""></p>
 					  <p><label>contraseña</label><input id="the-new-pass" type="password" name="password" value=""></p>
 					  <p>Tipo de administrador</p>

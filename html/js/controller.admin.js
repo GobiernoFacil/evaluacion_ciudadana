@@ -123,8 +123,7 @@ define(function(require){
         sec_nav.append(this.sec_nav_template(model.attributes));
       }, this);
       // [3] muestra la información de la primera sección disponible
-      //this.render_section(1);
-      this.render_all_sections();
+      this.render_section(0);
     },
 
     // [ RENDER QUESTIONS FROM A SECTION ]
@@ -132,15 +131,21 @@ define(function(require){
     //
     render_section : function(e){
       if(typeof e !== "number") e.preventDefault();
+
       // [1] obitiene la nueva sección
       var section = typeof e === "number" ? String(e) : e.currentTarget.getAttribute('data-section');
-      // [2] le asigna la clase de seleccionado
+      // [2] revisa si hay que mostrar todas las preguntas
+      if(section === "0"){
+        this.render_all_sections();
+        return;
+      }
+      // [3] le asigna la clase de seleccionado
       var sec_nav = this.$('#survey-navigation-menu');
       sec_nav.children().removeClass('current');
       sec_nav.children().eq(Number(section)-1).addClass('current');
-      // [3] obtiene las reglas
+      // [4] obtiene las reglas
       //
-      // [4] crea la lista de preguntas
+      // [5] crea la lista de preguntas
       this.sub_collection.set(this.collection.where({section_id : section}));
     },
 
@@ -160,6 +165,7 @@ define(function(require){
           is_description = Number(model.get('is_description')),
           item = ! is_description ? new Question({model : model}) : new Description({model : model});
       container.append(item.render().el);
+      this.render_section_menu();
     },
 
     // [ SHOW THE LOADING STATUS: TITLE ]
@@ -195,6 +201,33 @@ define(function(require){
       if(this.collection.length){
         this.render_section_selector();
       }
+    },
+
+    //
+    //
+    //
+    render_section_menu : function(){
+      var menu     = document.getElementById('survey-navigation-menu'),
+          nav      = document.getElementById('survey-app-navigation'),
+          sections = _.uniq(this.collection.pluck('section_id')),
+          content  = '';
+
+      if(sections.length < 2){
+        nav.style.display = "none";
+        return;
+      }
+      
+      nav.style.display = "";
+      sections.unshift(0);
+      menu.innerHTML = "";
+
+      for(var  i = 0; i < sections.length; i++){
+        content += "<li><a href='#' data-section='" 
+                + sections[i] +"'>" 
+                + (sections[i] ? sections[i] : 'todas') + "</a></li>"
+      }
+
+      menu.innerHTML = content;
     },
 
     // [ SHOW THE SECTION SELECTOR ]
