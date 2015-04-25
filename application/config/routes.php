@@ -55,10 +55,12 @@ $route['privacidad']           = 'home/privacy';
 $route['contacto']             = 'home/contact';
 
 // ADMIN AMIGO
-$route['bienvenido']             = 'wackyland/login';
-$route['bienvenido/tuevaluas']   = 'wackyland/tuevaluas';
-$route['administradores/(:num)'] = 'wackyland/admins/update/$1';
-$route['administradores']        = 'wackyland/admins';
+$route['bienvenido']                 = 'wackyland/login';
+$route['adios']                      = 'wackyland/login/logout';
+$route['bienvenido/tuevaluas']       = 'wackyland/tuevaluas';
+$route['bienvenido/encuestas']       = 'wackyland/surveys';
+$route['bienvenido/usuarios/(:num)'] = 'wackyland/admins/update/$1';
+$route['bienvenido/usuarios']        = 'wackyland/admins';
 
 // SURVEY APP
 $route['surveys/title/update']    = 'wackyland/surveys/update_title';

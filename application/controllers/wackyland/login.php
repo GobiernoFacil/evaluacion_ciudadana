@@ -57,6 +57,15 @@ class Login extends CI_Controller {
     $this->session->set_userdata(['user' => $user]);
   }
 
+  //
+  // [ LOG USER ] 
+  //
+  //
+  public function logout(){
+    $this->session->unset_userdata('user');
+    redirect('bienvenido', 'refresh');
+  }
+
 
 }
 

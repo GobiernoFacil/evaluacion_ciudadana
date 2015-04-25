@@ -25,7 +25,7 @@
 		<nav class="col-sm-1 col-sm-offset-7">
 			<ul>
 				<li>
-					<?php echo anchor('#','Salir');?>
+					<?php echo anchor('adios','Salir');?>
 				</li>
 			</ul>
 		</nav>
@@ -36,14 +36,14 @@
 		<div class="row">
 	    	<ul>
 		 	  <li <?php echo (isset($body_class) && ($body_class == "dash")) ? 'class="current"' : '';?>>
-		 	  	<a href="<?= site_url("wackyland/tuevaluas"); ?>">Dashboard</a>
+		 	  	<a href="<?= site_url("bienvenido/tuevaluas"); ?>">Dashboard</a>
 		 	  </li>
 
     		  <li <?php echo (isset($body_class) && ($body_class == "surveys")) ? 'class="current"' : '';?>>
-    		  	<a href="<?= site_url("wackyland/surveys"); ?>">Encuestas</a>
+    		  	<a href="<?= site_url("bienvenido/encuestas"); ?>">Encuestas</a>
     		  </li>
     		  <li <?php echo (isset($body_class) && ($body_class == "users")) ? 'class="current"' : '';?>>
-    		  	<a href="<?= site_url("wackyland/admins"); ?>">Usuarios</a>
+    		  	<a href="<?= site_url("bienvenido/usuarios"); ?>">Usuarios</a>
     		  </li>
     		  <li><a href="<?= site_url("wackyland/opendata"); ?>">Datos abiertos</a></li>
     		  <li><a href="<?= site_url("wackyland/lists"); ?>">Correos</a></li>
