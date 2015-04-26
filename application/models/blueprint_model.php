@@ -26,6 +26,11 @@ class Blueprint_model extends CI_Model{
     return $q->result();
   }
 
+  function all_from($user_id){
+    $q = $this->db->get_where(self::TABLE, ['creator' => $user_id]);
+    return $q->result();
+  }
+
   function add($blueprint){
     $this->db->insert(self::TABLE, $blueprint);
     return $this->db->insert_id();

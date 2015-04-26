@@ -34,12 +34,13 @@ class Tuevaluas extends CI_Controller {
 	  $data['title'] 			 = 'Dashboard Tú Evalúas';
 	  $data['description'] = '';
 	  $data['body_class']  = 'dash';
+    $data['user']        = $this->user;
 	  
-	  $admins = $this->admins_model->all();
-    $surveys = $this->blueprint_model->all();
+	  $admins  = $this->user->level >= 5 ? $this->admins_model->all() : [];
+    $surveys = $this->user->level >= 5 ? $this->blueprint_model->all() : $this->blueprint_model->all_from($this->user->id);
 	  
 	  $this->load->view('wackyland/templates/header_view', $data);	  
-	  $this->load->view('wackyland/tuevaluas_view', ['admins' => $admins, 'surveys' => $surveys]);
+	  $this->load->view('wackyland/tuevaluas_view', ['admins' => $admins, 'surveys' => $surveys, 'data' => $data]);
 	  $this->load->view('wackyland/templates/footer_view');	  
   }
 }
