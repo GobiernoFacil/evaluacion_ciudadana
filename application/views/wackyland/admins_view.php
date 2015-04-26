@@ -65,7 +65,7 @@
 				  <?php foreach($admins as $admin): ?>
 				    <li class="row">
 				    	<div class="col-sm-8">
-				    	 <a href="<?= site_url("administradores/" . $admin->id); ?>">
+				    	 <a href="<?= site_url("bienvenido/usuarios/" . $admin->id); ?>">
 				    	   <?php echo $admin->email; ?>
 				    	 </a>
 				    	</div>

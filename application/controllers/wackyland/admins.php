@@ -10,7 +10,7 @@ class Admins extends CI_Controller {
   // [ SETTINGS ]
   //
   //
-  const MIN_LEVEL     = 5;
+  const MIN_LEVEL     = 3;
   const CREATE_LEVEL  = 5;
   const PASSWORD_MIN  = 8;
   const DEFAULT_LEVEL = 1;
@@ -33,6 +33,10 @@ class Admins extends CI_Controller {
   //
   //
   public function index(){
+    if($this->user->level < self::CREATE_LEVEL){
+      redirect('bienvenido/usuarios/' . $user->id,  'refresh');
+    }
+
     $report = false;
     if(!empty($_POST)){
       $report = $this->create();
@@ -42,9 +46,12 @@ class Admins extends CI_Controller {
     $data['title']       = 'Admins Tú Evalúas';
     $data['description'] = '';
     $data['body_class']  = 'users';
+    $data['user']        = $this->user;
+    $data['report']      = $report;
+    $data['admins']      = $admins;
     
     $this->load->view('wackyland/templates/header_view', $data);
-    $this->load->view('wackyland/admins_view', ['admins' => $admins, 'report' => $report]);
+    $this->load->view('wackyland/admins_view', $data);
     $this->load->view('wackyland/templates/footer_view');	  
   }
 
@@ -100,7 +107,21 @@ class Admins extends CI_Controller {
   //
   //
   public function update($id = false){
-    echo "n_____n";
+    $id = $id ? (int)$id : $this->user->id;
+
+    if($id != $this->user->id && self::CREATE_LEVEL > $this->session->userdata('user')->level){
+      $id = $this->user->id;
+    }
+
+    $report = false;
+    if(!empty($_POST)){
+      $report = $this->create();
+    }
+    $data = [];
+    $data['user'] = $this->admins_model->get($id);
+    $data['report'] = $report;
+
+    $this->load->view('wackyland/update_admin_view', $data);
   }
 
   //
