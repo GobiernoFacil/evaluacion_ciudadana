@@ -49,8 +49,8 @@
             <a href="<?= site_url("bienvenido/usuarios/" . $user->id); ?>">Cuenta</a>
             <?php endif; ?>
     		  </li>
-    		  <li><a href="<?= site_url("wackyland/opendata"); ?>">Datos abiertos</a></li>
-    		  <li><a href="<?= site_url("wackyland/lists"); ?>">Correos</a></li>
+    		 <!-- <li><a href="<?= site_url("wackyland/opendata"); ?>">Datos abiertos</a></li>
+    		  <li><a href="<?= site_url("wackyland/lists"); ?>">Correos</a></li>-->
     		</ul>
 		</div>
 	</div>
