@@ -34,7 +34,7 @@ class Admins extends CI_Controller {
   //
   public function index(){
     if($this->user->level < self::CREATE_LEVEL){
-      redirect('bienvenido/usuarios/' . $user->id,  'refresh');
+      redirect('bienvenido/usuarios/' . $this->user->id,  'refresh');
     }
 
     $report = false;
@@ -56,7 +56,7 @@ class Admins extends CI_Controller {
   }
 
   //
-  // [ NEW ADMIN ]
+  // [ NEW USER ]
   //
   //
   private function create(){
@@ -91,6 +91,10 @@ class Admins extends CI_Controller {
     }
   }
 
+  //
+  // [ THE WELCOME EMAIL ] <-- out of service -->
+  //
+  //
   private function send_welcome_email($email){
     $this->email->from('welcome.robot@tuevaluas.com.mx', 'un robot de tú evalúas');
     $this->email->to($email); 
@@ -103,7 +107,7 @@ class Admins extends CI_Controller {
   }
 
   //
-  // [ UPDATE ADMIN ]
+  // [ UPDATE USER ]
   //
   //
   public function update($id = false){
@@ -114,8 +118,9 @@ class Admins extends CI_Controller {
     }
 
     $report = false;
+
     if(!empty($_POST)){
-      $report = $this->create();
+      $report = $this->update_user($id);
     }
     $data = [];
     $data['user'] = $this->admins_model->get($id);
@@ -125,7 +130,55 @@ class Admins extends CI_Controller {
   }
 
   //
-  // [ DELETE ADMIN ]
+  // UPDATE USER
+  //
+  //
+  private function update_user($id){
+    $success = false;
+    // [1] limpia el nivel y revisa que no llegue con algún valor raro
+    $level    = isset($_POST['level']) ? (int)$_POST['level'] : $this->user->level;
+    $level    = $level < 6 ? $level : self::DEFAULT_LEVEL;
+
+    // [2] limpia  el password y revisa que tenga por lo menos ocho caracteres
+    $password = filter_input(INPUT_POST, 'password');
+    $pass_len = mb_strlen($password) >= self::PASSWORD_MIN;
+
+    // [3] limpia la clave para mailgun
+    $mailgun  = filter_input(INPUT_POST, 'mailgun');
+
+    // [4] valida el password. Es en el único lugar donde puede haber errores
+    if( ! empty($password) && !$pass_len){
+      return ['success'  => $success, 'password' => $password, 'pass_len' => $pass_len];
+    }
+    // [5] si pasa la validación, prepara los datos para el update
+    else{
+      // [5.1] inicia la variable del usuario
+      $user = [];
+      // [5.2] si es admin, puede cambiar el tipo de usuario
+      if($this->user->level >= self::CREATE_LEVEL){
+        $user['level'] = $level;
+      }
+      // [5.3] si el campo del password no está vacío, agrega el nuevo pass
+      if(! empty($password)){
+        $user['password'] = password_hash($password, PASSWORD_DEFAULT, ['cost' => 12]);
+      }
+      // [5.4] si no está vacío el campo de mailgun, también lo agrega
+      if(! empty($mailgun)){
+        $user['mailgun'] = $mailgun;
+      }
+
+      // [5.5] si hay algo que actualizar, pues lo actualiza
+      if(!empty($user)){
+        $success = $this->admins_model->update($id, $user);
+      }
+
+      // [5.6] quién sabe por qué regresa esto, pero por si las flys
+      return ['success' => $success];
+    }
+  }
+
+  //
+  // [ DELETE USER ]
   //
   //
   public function delete($id){
