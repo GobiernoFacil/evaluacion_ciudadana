@@ -93,6 +93,7 @@ class Surveys extends CI_Controller {
     $data['title'] 				= 'Editar encuesta Tú Evalúas';
 	$data['description'] 		= '';
     	 $data['body_class'] 		= 'surveys';
+    	 $data['user']        = $this->user;
 
     $data['blueprint'] = $blueprint;
     $data['sections']  = $this->section_model->get($data['blueprint']->id);
