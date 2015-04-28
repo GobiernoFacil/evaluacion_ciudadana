@@ -117,7 +117,7 @@
               <option value="">Selecciona una pregunta</option>
             </select>
 
-            <select class="select-answer">
+            <select class="select-answer" style="display:none">
               <option value="">Selecciona una respuesta</option>
             </select>
 

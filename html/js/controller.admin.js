@@ -46,7 +46,9 @@ define(function(require){
       'blur #survey-add-options input'  : '_disable_save_option',
       // [ ADD HTML ] 
       'click #survey-add-buttons a.add-text' : 'render_content_form',
-      'click #survey-add-content-btn'        : '_save_content'
+      'click #survey-add-content-btn'        : '_save_content',
+      // [ ADD RULE ]
+      'change #survey-navigation-rules-container .select-question' : '_render_rules_panel_answers'
     },
 
     // 
@@ -164,21 +166,41 @@ define(function(require){
       // survey-navigation-rules-container
       var section  = Number(value),
           menu     = document.getElementById('survey-navigation-rules-container'),
+          q_select = menu.querySelector('.select-question'),
+          a_select = menu.querySelector('.select-answer'),
           sections = _.uniq(this.collection.pluck('section_id')),
-          low_sections;
+          low_sections,
+          q_select_content = "";
 
       low_sections = _.filter(sections, function(sec){
         return Number(sec) < section;
       }, this);
 
-      console.log(low_sections);
+      low_questions = [];
+      _.each(low_sections, function(section_id){
+        questions = this.collection.where({
+          is_description : '0', 
+          section_id     : section_id, 
+          type           : "number"
+        });
+        Array.prototype.push.apply(low_questions, questions);
+      }, this);
 
-      if(section){
+      if(low_questions.length){
+        this.$('.rule-answer').remove();
+        _.each(low_questions, function(q){
+          q_select_content += "<option class='rule-answer' value='" + q.id +"'>" + q.get('question') + "</option>";
+        },this);
+        this.$(q_select).append(q_select_content);
         menu.style.display = "";
       }
       else{
         menu.style.display = "none";
       }
+    },
+
+    _render_rules_panel_answers : function(e){
+      console.log(':d');
     },
 
     // [ RENDER SINGLE QUESTION ]
@@ -284,6 +306,7 @@ define(function(require){
         content +="<option value='" + data[i].value + "'>" + data[i].text + "</option>";
       }
       el.innerHTML = content;
+      el.children[el.children.length - 2].selected = true;
     },
 
     // [ SHOW THE ADD HTML FORM ]
@@ -481,6 +504,7 @@ define(function(require){
           that.collection.add(model);
           that.render_section_selector();
           //that.render_section(that.model.get('current_section'));
+          that.html.content_form[0].querySelector('textarea').value = "";
           that.render_all_sections();
         }
       });

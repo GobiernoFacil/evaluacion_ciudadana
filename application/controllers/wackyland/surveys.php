@@ -54,7 +54,7 @@ class Surveys extends CI_Controller {
       redirect('wackyland/surveys', 'refresh');
     }
 
-    $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW|FILTER_FLAG_ENCODE_HIGH);
+    $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
     if($title){
       $blueprint = ['title' => $title, 'creator' => $this->user->id];
       $new_id    = $this->blueprint_model->add($blueprint);
@@ -255,6 +255,6 @@ class Surveys extends CI_Controller {
   //
   //
   private function sanitize_string($string){
-    return filter_var($string,FILTER_SANITIZE_STRING/*,FILTER_FLAG_STRIP_LOW|FILTER_FLAG_ENCODE_HIGH*/);
+    return filter_var($string,FILTER_SANITIZE_STRING);
   }
 }
