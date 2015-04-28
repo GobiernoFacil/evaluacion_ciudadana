@@ -107,11 +107,26 @@
       <!-- [ THE SECTION NAVIGATION ] -->
       <div id="survey-app-navigation" style="display:none">
         <ul id="survey-navigation-menu"></ul>
-        <!--
-        <h4>Reglas</h4>
-        <p id="survey-add-navigation-rule"></p>
-        <ul id="survey-navigation-rules"></ul>
-        -->
+        
+
+        <!-- [ THE RULES NAVIGATION ] -->
+        <div id="survey-navigation-rules-container" style="display:none">
+          <h5>Reglas</h5>
+          <p id="survey-add-navigation-rule">
+            <select class="select-question">
+              <option value="">Selecciona una pregunta</option>
+            </select>
+
+            <select class="select-answer">
+              <option value="">Selecciona una respuesta</option>
+            </select>
+
+            <a href="#" class="add-rule-btn">agregar</a>
+          </p>
+          <ul id="survey-navigation-rules"></ul>
+        </div>
+
+
       </div>
       
       <ol id="survey-question-list" ></ol> 
@@ -133,7 +148,7 @@
         sections  : <?= json_encode($sections); ?>,
         questions : <?= json_encode($questions); ?>,
         options   : <?= json_encode($options); ?>,
-        rules     : []<?php /* json_encode($rules); */ ?>
+        rules     : <?= json_encode($rules); ?>
       };
 
     </script>

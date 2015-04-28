@@ -98,7 +98,7 @@ class Surveys extends CI_Controller {
     $data['blueprint'] = $blueprint;
     $data['sections']  = $this->section_model->get($data['blueprint']->id);
     $data['questions'] = $this->question_model->get($data['blueprint']->id);
-    // $data['rules']     = $this->rules_model->get($data['blueprint']->id);
+    $data['rules']     = $this->rules_model->get($data['blueprint']->id);
     $data['options']   = $this->question_options_model->get($data['blueprint']->id);
     
     $this->load->view('wackyland/templates/header_view', $data);
