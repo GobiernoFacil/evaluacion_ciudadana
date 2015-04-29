@@ -18,4 +18,9 @@ class Rules_model extends CI_Model{
     $q = $this->db->get_where(self::TABLE, ['blueprint_id' => $id]);
     return $q->result();
   }
+
+  function add($rule){
+    $this->db->insert(self::TABLE, $rule);
+    return $this->db->insert_id();
+  }
 }

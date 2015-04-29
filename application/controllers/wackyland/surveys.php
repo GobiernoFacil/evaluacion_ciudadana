@@ -228,6 +228,28 @@ class Surveys extends CI_Controller {
   //
   //
   //
+  public function add_rule(){
+    $bp        = $this->session->userdata('blueprint');
+    $response  = json_decode(file_get_contents('php://input'), true);
+
+    $rule_obj = [
+      'blueprint_id' =>  $bp->id,
+      'section_id'   => (int)$response['section_id'],
+      'question_id'  => (int)$response['question_id'],
+      'value'        => (int)$response['value'],
+    ];
+
+    $new_id    = $this->rules_model->add($rule_obj);
+    $rule_obj['id'] = (string)$new_id;
+
+    header('Content-type: application/json');
+    echo json_encode($rule_obj);
+  }
+
+  //
+  //
+  //
+  //
   private function add_options($options, $question){
     $response = [];
     if(!empty($options)){

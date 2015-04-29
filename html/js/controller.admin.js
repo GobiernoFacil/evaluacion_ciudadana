@@ -84,7 +84,8 @@ define(function(require){
       this.q_options      = new Backbone.Collection(SurveySettings.options);
       this.sections       = new Backbone.Collection(SurveySettings.sections);
       this.rules          = new Backbone.Collection(SurveySettings.rules);
-      // [ MAP THE OPTIONS ]
+      this.rules.url      = '/index.php/surveys/rule';
+      // [ MAP THE OPTIONS FOR EACH QUESTION ]
       this.collection.each(function(el, ind, col){
         el.set({
           options : this.q_options.where({question_id : el.id})
@@ -164,7 +165,6 @@ define(function(require){
     },
 
     _render_rules_panel : function(model, value, options){
-      // survey-navigation-rules-container
       var section  = Number(value),
           menu     = document.getElementById('survey-navigation-rules-container'),
           q_select = menu.querySelector('.select-question'),
@@ -459,6 +459,26 @@ define(function(require){
 
     _save_rule : function(e){
       e.preventDefault();
+      var container   = document.querySelector('#survey-add-navigation-rule'),
+          question_id = container.querySelector('.select-question').value,
+          value       = container.querySelector('.select-answer').value,
+          section_id  = this.model.get('current_section'),
+          rule        = new Backbone.Model(null, {collection : this.rules});
+
+      rule.set({
+        section_id  : section_id,
+        question_id : question_id,
+        value       : value
+      });
+
+      rule.save(null, {
+        success : function(model, response, options){
+          console.log(model, response);
+        }
+      });
+
+
+
     },
 
     // [ SAVE QUESTION ] 
