@@ -54,7 +54,7 @@ class Surveys extends CI_Controller {
       redirect('wackyland/surveys', 'refresh');
     }
 
-    $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING, FILTER_FLAG_STRIP_LOW|FILTER_FLAG_ENCODE_HIGH);
+    $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
     if($title){
       $blueprint = ['title' => $title, 'creator' => $this->user->id];
       $new_id    = $this->blueprint_model->add($blueprint);
@@ -98,7 +98,7 @@ class Surveys extends CI_Controller {
     $data['blueprint'] = $blueprint;
     $data['sections']  = $this->section_model->get($data['blueprint']->id);
     $data['questions'] = $this->question_model->get($data['blueprint']->id);
-    // $data['rules']     = $this->rules_model->get($data['blueprint']->id);
+    $data['rules']     = $this->rules_model->get($data['blueprint']->id);
     $data['options']   = $this->question_options_model->get($data['blueprint']->id);
     
     $this->load->view('wackyland/templates/header_view', $data);
@@ -228,6 +228,28 @@ class Surveys extends CI_Controller {
   //
   //
   //
+  public function add_rule(){
+    $bp        = $this->session->userdata('blueprint');
+    $response  = json_decode(file_get_contents('php://input'), true);
+
+    $rule_obj = [
+      'blueprint_id' =>  $bp->id,
+      'section_id'   => (int)$response['section_id'],
+      'question_id'  => (int)$response['question_id'],
+      'value'        => (int)$response['value'],
+    ];
+
+    $new_id    = $this->rules_model->add($rule_obj);
+    $rule_obj['id'] = (string)$new_id;
+
+    header('Content-type: application/json');
+    echo json_encode($rule_obj);
+  }
+
+  //
+  //
+  //
+  //
   private function add_options($options, $question){
     $response = [];
     if(!empty($options)){
@@ -255,6 +277,6 @@ class Surveys extends CI_Controller {
   //
   //
   private function sanitize_string($string){
-    return filter_var($string,FILTER_SANITIZE_STRING/*,FILTER_FLAG_STRIP_LOW|FILTER_FLAG_ENCODE_HIGH*/);
+    return filter_var($string,FILTER_SANITIZE_STRING);
   }
 }

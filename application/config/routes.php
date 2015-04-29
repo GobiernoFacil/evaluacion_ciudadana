@@ -66,6 +66,8 @@ $route['bienvenido/usuarios']        = 'wackyland/admins';
 $route['surveys/title/update']    = 'wackyland/surveys/update_title';
 $route['surveys/question/(:num)'] = 'wackyland/surveys/update_question/$1';
 $route['surveys/question']        = 'wackyland/surveys/add_question';
+$route['surveys/rule/(:num)']    = 'wackyland/surveys/update_rule/$1';
+$route['surveys/rule']           = 'wackyland/surveys/add_rule';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

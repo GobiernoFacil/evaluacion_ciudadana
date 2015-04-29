@@ -46,7 +46,10 @@ define(function(require){
       'blur #survey-add-options input'  : '_disable_save_option',
       // [ ADD HTML ] 
       'click #survey-add-buttons a.add-text' : 'render_content_form',
-      'click #survey-add-content-btn'        : '_save_content'
+      'click #survey-add-content-btn'        : '_save_content',
+      // [ ADD RULE ]
+      'change #survey-navigation-rules-container .select-question' : '_render_rules_panel_answers',
+      'click #survey-navigation-rules-container .add-rule-btn'     : '_save_rule'
     },
 
     // 
@@ -71,29 +74,31 @@ define(function(require){
       // [ THE MODEL ]
       this.model         = new Backbone.Model(SurveySettings.blueprint);
       this.model.url     = "/index.php/surveys/title/update";
-      this.model.set({current_section : 1});
+      this.model.set({current_section : 0}); // show all
       // [ THE COLLECTION ]
      this.collection            = new Backbone.Collection(SurveySettings.questions);
      this.collection.url        = '/index.php/surveys/question';
      this.collection.comparator = function(m){ return Number(m.get('section_id'));};
-     this.sub_collection = new Backbone.Collection([]);
       // [ THE OTHER COLLECTIONS ]
-      this.q_options     = new Backbone.Collection(SurveySettings.options);
-      this.sections      = new Backbone.Collection(SurveySettings.sections);
-      this.rules         = new Backbone.Collection(SurveySettings.rules);
-      // [ MAP THE OPTIONS ]
+      this.sub_collection = new Backbone.Collection([]);
+      this.q_options      = new Backbone.Collection(SurveySettings.options);
+      this.sections       = new Backbone.Collection(SurveySettings.sections);
+      this.rules          = new Backbone.Collection(SurveySettings.rules);
+      this.rules.url      = '/index.php/surveys/rule';
+      // [ MAP THE OPTIONS FOR EACH QUESTION ]
       this.collection.each(function(el, ind, col){
         el.set({
           options : this.q_options.where({question_id : el.id})
         });
       }, this);
       // [ FIX THE SCOPES ]
-      this._update_title = $.proxy(this._update_title, this);
+      this._update_title      = $.proxy(this._update_title, this);
       this._render_new_option = $.proxy(this._render_new_option, this);
       // [ THE LISTENERS ]
       this.listenTo(this.model, 'sync', this._render_saved_title);
       this.listenTo(this.sub_collection, 'add', this._render_question);
       this.listenTo(this.collection, 'remove', this._remove_question);
+      this.listenTo(this.model, 'change:current_section', this._render_rules_panel);
       // [ FETCH SHORTCUTS ]
       this.html = {
         navigation_menu : this.$('#survey-navigation-menu'),
@@ -132,7 +137,7 @@ define(function(require){
     render_section : function(e){
       if(typeof e !== "number") e.preventDefault();
 
-      // [1] obitiene la nueva sección
+      // [1] obtiene la nueva sección
       var section = typeof e === "number" ? String(e) : e.currentTarget.getAttribute('data-section');
       // [2] revisa si hay que mostrar todas las preguntas
       if(section === "0"){
@@ -144,8 +149,9 @@ define(function(require){
       sec_nav.children().removeClass('current');
       sec_nav.children().eq(Number(section)-1).addClass('current');
       // [4] obtiene las reglas
-      //
-      // [5] crea la lista de preguntas
+      // [5] actualiza la sección en el modelo de la app
+      this.model.set({current_section : section});
+      // [6] crea la lista de preguntas
       this.sub_collection.set(this.collection.where({section_id : section}));
     },
 
@@ -155,6 +161,65 @@ define(function(require){
     render_all_sections : function(){
       this.collection.sort();
       this.sub_collection.set(this.collection.models);
+      this.model.set({current_section : 0});
+    },
+
+    _render_rules_panel : function(model, value, options){
+      var section  = Number(value),
+          menu     = document.getElementById('survey-navigation-rules-container'),
+          q_select = menu.querySelector('.select-question'),
+          a_select = menu.querySelector('.select-answer'),
+          sections = _.uniq(this.collection.pluck('section_id')),
+          low_sections,
+          q_select_content = "";
+
+      low_sections = _.filter(sections, function(sec){
+        return Number(sec) < section;
+      }, this);
+
+      low_questions = [];
+      _.each(low_sections, function(section_id){
+        questions = this.collection.where({
+          is_description : '0', 
+          section_id     : section_id, 
+          type           : "number"
+        });
+        Array.prototype.push.apply(low_questions, questions);
+      }, this);
+
+      if(low_questions.length){
+        this.$('.rule-answer').remove();
+        _.each(low_questions, function(q){
+          q_select_content += "<option class='rule-answer' value='" + q.id +"'>" + q.get('question') + "</option>";
+        },this);
+        this.$(q_select).append(q_select_content);
+        menu.style.display = "";
+      }
+      else{
+        menu.style.display = "none";
+      }
+    },
+
+    _render_rules_panel_answers : function(e){
+      var question_id  = e.target.value,
+          question     = this.collection.get(question_id),
+          answers      = document.querySelector('#survey-add-navigation-rule .select-answer'),
+          answers_list = '';
+      if(question){
+        if(question.attributes.options.length){
+          _.each(question.attributes.options, function(option){
+            answers_list += "<option class='rule-answer-option' value='" 
+                         + option.get('value') +"'>" 
+                         + option.get('description') + "</option>";
+          }, this);
+          console.log(answers);
+          answers.innerHTML = answers_list;
+          answers.style.display = "";
+        }
+      }
+      else{
+        answers.style.display = "none";
+      }
     },
 
     // [ RENDER SINGLE QUESTION ]
@@ -260,6 +325,7 @@ define(function(require){
         content +="<option value='" + data[i].value + "'>" + data[i].text + "</option>";
       }
       el.innerHTML = content;
+      el.children[el.children.length - 2].selected = true;
     },
 
     // [ SHOW THE ADD HTML FORM ]
@@ -391,6 +457,30 @@ define(function(require){
       }
     },
 
+    _save_rule : function(e){
+      e.preventDefault();
+      var container   = document.querySelector('#survey-add-navigation-rule'),
+          question_id = container.querySelector('.select-question').value,
+          value       = container.querySelector('.select-answer').value,
+          section_id  = this.model.get('current_section'),
+          rule        = new Backbone.Model(null, {collection : this.rules});
+
+      rule.set({
+        section_id  : section_id,
+        question_id : question_id,
+        value       : value
+      });
+
+      rule.save(null, {
+        success : function(model, response, options){
+          console.log(model, response);
+        }
+      });
+
+
+
+    },
+
     // [ SAVE QUESTION ] 
     //
     //
@@ -457,6 +547,7 @@ define(function(require){
           that.collection.add(model);
           that.render_section_selector();
           //that.render_section(that.model.get('current_section'));
+          that.html.content_form[0].querySelector('textarea').value = "";
           that.render_all_sections();
         }
       });
