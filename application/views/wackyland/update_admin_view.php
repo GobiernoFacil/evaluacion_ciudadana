@@ -1,13 +1,11 @@
-<!doctype html>
-<html>
-<head>
-  <meta charset="utf-8">
-  <title>usuario</title>
-</head>
-<body>
-  <h1>Editar usuario</h1>
-  <form name="add-admin" method="post" class="row" id="add-admin-form">
-  
+<div class="container">
+	<div class="row">
+		<div class="col-md-12">
+		<h1 class="title">Editar usuario</h1>
+		</div>
+	</div>
+	<form name="add-admin" method="post" class="row" id="add-admin-form">
+		<div class="col-sm-8 col-sm-offset-2">
               <strong id="error-message">
               <?php if($report && !$report['success']): ?>
                 <?php if(! $report['password']) : ?>
@@ -19,7 +17,7 @@
               </strong>
 
             </p>
-            <p>correo: <em><?php echo $user->email; ?></em></p>
+            <p>Correo: <em><?php echo $user->email; ?></em></p>
             <p><label>contraseña</label><input id="the-new-pass" type="password" name="password" value=""></p>
 
             <?php if($user->level >= '5'): ?>
@@ -37,9 +35,8 @@
             </ul>
             <?php endif; ?>
             
-            <p><label>mailgun apikey</label><input name="mailgun" value=""></p>
+            <p><label>mailgun apikey</label><input name="mailgun" type="text" value=""></p>
             <p><input type="submit" value="editar"></p>
             </div>
   </form>
-</body>
-</html>
+</div>

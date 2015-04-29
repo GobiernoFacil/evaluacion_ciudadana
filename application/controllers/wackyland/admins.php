@@ -100,7 +100,7 @@ class Admins extends CI_Controller {
     $this->email->to($email); 
 
     $this->email->subject('Bienvenido a tú evalúas!');
-    $this->email->message('Hola, bienvenido a tú evaluas, puedes acceder al 
+    $this->email->message('Hola, bienvenido a tú evalúas, puedes acceder al 
       admin desde este link: http://tuevaluas.com.mx/bienvenido');  
 
     $this->email->send();
@@ -125,8 +125,16 @@ class Admins extends CI_Controller {
     $data = [];
     $data['user'] = $this->admins_model->get($id);
     $data['report'] = $report;
-
+	
+	$data['title']       = 'Editar Usuario';
+    $data['description'] = '';
+    $data['body_class']  = 'users';
+    
+    $this->load->view('wackyland/templates/header_view', $data);
     $this->load->view('wackyland/update_admin_view', $data);
+    $this->load->view('wackyland/templates/footer_view');	  
+	
+	
   }
 
   //
