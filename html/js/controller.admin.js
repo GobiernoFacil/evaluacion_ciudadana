@@ -48,7 +48,8 @@ define(function(require){
       'click #survey-add-buttons a.add-text' : 'render_content_form',
       'click #survey-add-content-btn'        : '_save_content',
       // [ ADD RULE ]
-      'change #survey-navigation-rules-container .select-question' : '_render_rules_panel_answers'
+      'change #survey-navigation-rules-container .select-question' : '_render_rules_panel_answers',
+      'click #survey-navigation-rules-container .add-rule-btn'     : '_save_rule'
     },
 
     // 
@@ -200,7 +201,25 @@ define(function(require){
     },
 
     _render_rules_panel_answers : function(e){
-      console.log(':d');
+      var question_id  = e.target.value,
+          question     = this.collection.get(question_id),
+          answers      = document.querySelector('#survey-add-navigation-rule .select-answer'),
+          answers_list = '';
+      if(question){
+        if(question.attributes.options.length){
+          _.each(question.attributes.options, function(option){
+            answers_list += "<option class='rule-answer-option' value='" 
+                         + option.get('value') +"'>" 
+                         + option.get('description') + "</option>";
+          }, this);
+          console.log(answers);
+          answers.innerHTML = answers_list;
+          answers.style.display = "";
+        }
+      }
+      else{
+        answers.style.display = "none";
+      }
     },
 
     // [ RENDER SINGLE QUESTION ]
@@ -436,6 +455,10 @@ define(function(require){
           this.model.save();
         }
       }
+    },
+
+    _save_rule : function(e){
+      e.preventDefault();
     },
 
     // [ SAVE QUESTION ] 
