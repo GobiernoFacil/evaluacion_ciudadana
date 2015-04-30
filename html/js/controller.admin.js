@@ -80,6 +80,7 @@ define(function(require){
      this.collection            = new Backbone.Collection(SurveySettings.questions);
      this.collection.url        = '/index.php/surveys/question';
      this.collection.comparator = function(m){ return Number(m.get('section_id'));};
+     this.collection.sort();
       // [ THE OTHER COLLECTIONS ]
       this.sub_collection = new Backbone.Collection([]);
       this.q_options      = new Backbone.Collection(SurveySettings.options);
