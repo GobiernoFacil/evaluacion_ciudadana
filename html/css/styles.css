@@ -315,6 +315,10 @@ input[type="search"]::-webkit-search-decoration {
     .backend #survey-question-list .options-container li a:hover {
       background: #011C26;
       border: 0; }
+.backend #survey-navigation-rules-container {
+  background: #f9f9f9;
+  padding: 15px 20px;
+  margin-bottom: 40px; }
 .backend .survey-section-selector-container {
   border-bottom: 1px solid #eee;
   border-top: 1px solid #eee;
@@ -359,12 +363,9 @@ input[type="search"]::-webkit-search-decoration {
       background: #FF6F69;
       color: white;
       padding: 2px 5px; }
-      .backend #survey-navigation-menu li a:hover {
+      .backend #survey-navigation-menu li a:hover, .backend #survey-navigation-menu li a.current {
         background: #011C26;
         border: 0; }
-    .backend #survey-navigation-menu li.current a {
-      background: #011C26;
-      border: 0; }
 .backend .close-editor:link, .backend .close-editor:visited {
   background: #FF6F69;
   color: white;
