@@ -250,6 +250,17 @@ class Surveys extends CI_Controller {
   //
   //
   //
+  public function delete_rule($id){
+    $bp      = $this->session->userdata('blueprint');
+    $success = $this->rules_model->delete($bp->id, (int)$id);
+    header('Content-type: application/json');
+    echo json_encode(['success' => $success]);
+  }
+
+  //
+  //
+  //
+  //
   private function add_options($options, $question){
     $response = [];
     if(!empty($options)){

@@ -49,7 +49,8 @@ define(function(require){
       'click #survey-add-content-btn'        : '_save_content',
       // [ ADD RULE ]
       'change #survey-navigation-rules-container .select-question' : '_render_rules_panel_answers',
-      'click #survey-navigation-rules-container .add-rule-btn'     : '_save_rule'
+      'click #survey-navigation-rules-container .add-rule-btn'     : '_save_rule',
+      'click #survey-navigation-rules-container .remove-rule-btn'  : '_remove_rule'
     },
 
     // 
@@ -99,6 +100,7 @@ define(function(require){
       this.listenTo(this.sub_collection, 'add', this._render_question);
       this.listenTo(this.collection, 'remove', this._remove_question);
       this.listenTo(this.model, 'change:current_section', this._render_rules_panel);
+      this.listenTo(this.rules, 'add', this._render_rule);
       // [ FETCH SHORTCUTS ]
       this.html = {
         navigation_menu : this.$('#survey-navigation-menu'),
@@ -164,14 +166,25 @@ define(function(require){
       this.model.set({current_section : 0});
     },
 
+    //
+    //
+    //
     _render_rules_panel : function(model, value, options){
       var section  = Number(value),
           menu     = document.getElementById('survey-navigation-rules-container'),
+          list     = document.getElementById('survey-navigation-rules'),
+          rules    = app.rules.where({section_id : value});
           q_select = menu.querySelector('.select-question'),
           a_select = menu.querySelector('.select-answer'),
           sections = _.uniq(this.collection.pluck('section_id')),
-          low_sections,
+          low_sections = null,
           q_select_content = "";
+
+      list.innerHTML = "";
+      _.each(rules, function(rule){
+        this._render_rule(rule);
+      }, this);
+
 
       low_sections = _.filter(sections, function(sec){
         return Number(sec) < section;
@@ -200,6 +213,9 @@ define(function(require){
       }
     },
 
+    //
+    //
+    //
     _render_rules_panel_answers : function(e){
       var question_id  = e.target.value,
           question     = this.collection.get(question_id),
@@ -220,6 +236,32 @@ define(function(require){
       else{
         answers.style.display = "none";
       }
+    },
+
+    // [ ADD NEW RULE TO THE LIST ]
+    //
+    //
+    _render_rule : function(model){
+      var li       = document.createElement('li'),
+          anchor   = document.createElement('a'),
+          q_id     = model.get('question_id'),
+          question = this.collection.get(q_id),
+          q_text   = question.get('question'),
+          option   = _.find(question.get('options'), function(m){
+            return m.get('value') == model.get('value');
+          }, this),
+          o_text   = option.get('description'),
+          text     = document.createTextNode(q_text + ' | ' + o_text),
+          ul       = document.getElementById('survey-navigation-rules');
+
+          anchor.innerHTML = "x";
+          anchor.setAttribute('class', 'remove-rule-btn');
+          anchor.setAttribute('href', '#');
+          anchor.setAttribute('data-rule', model.id);
+
+          li.appendChild(text);
+          li.appendChild(anchor);
+          ul.appendChild(li);
     },
 
     // [ RENDER SINGLE QUESTION ]
@@ -268,7 +310,7 @@ define(function(require){
       }
     },
 
-    //
+    // 
     //
     //
     render_section_menu : function(){
@@ -458,14 +500,20 @@ define(function(require){
       }
     },
 
+    // [ SAVE RULE ]
+    //
+    //
     _save_rule : function(e){
       e.preventDefault();
       var container   = document.querySelector('#survey-add-navigation-rule'),
           question_id = container.querySelector('.select-question').value,
           value       = container.querySelector('.select-answer').value,
           section_id  = this.model.get('current_section'),
-          rule        = new Backbone.Model(null, {collection : this.rules});
+          rule        = new Backbone.Model(null, {collection : this.rules}),
+          that        = this;
 
+      if(!Number(question_id)) return;
+      
       rule.set({
         section_id  : section_id,
         question_id : question_id,
@@ -474,12 +522,9 @@ define(function(require){
 
       rule.save(null, {
         success : function(model, response, options){
-          console.log(model, response);
+          that.rules.add(model);
         }
       });
-
-
-
     },
 
     // [ SAVE QUESTION ] 
@@ -556,6 +601,17 @@ define(function(require){
 
     _remove_question : function(){
       this.render_section_selector();
+    },
+
+    _remove_rule : function(e){
+      e.preventDefault();
+      var rule_id = e.target.getAttribute('data-rule'),
+          li      = e.target.parentNode;
+      this.rules.get(rule_id).destroy({
+        success : function(m, response){
+          li.parentNode.removeChild(li);
+        }
+      });
     },
 
     _get_options : function(){
