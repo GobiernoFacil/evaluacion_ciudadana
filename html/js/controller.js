@@ -61,6 +61,7 @@ define(function(require){
       // en él.
       this.q_options = new Backbone.Collection(agentesFormSettings.options);
       this.answers   = new Backbone.Collection(agentesFormSettings.answers);
+      this.rules     = new Backbone.Collection(agentesFormSettings.rules);
       this.sections  = [];
       this._define_nav_rules();
 
@@ -182,25 +183,22 @@ define(function(require){
       // con esta guía, no se muestran todos los páneles, solo
       // los que concuerden con la navegación.
       // hace falta definir algo similar para validar las respuestas.
-      this.nav_rules = [
-      null, // 1
-      null, // 2
-      {question : '6', val : ['1', '2']}, // 3
-      null, // 4
-      {question : '12', val : ['1']}, // 5
-      {question : '6',  val : ['1', '2']}, //6
-      {question : '6',  val : ['2']},//7
-      {question : '6',  val : ['3']},//8
-      {question : '25', val : ['1']},//9
-      null,//10
-      /*
-      {question : '6',  val : ['1', '2']},//11
-      {question : '32', val : ['1']},// 12
-      */
-      null,//13
-      {question : '38', val : ['1']},//14
-      null// 15
-      ];
+
+      var sections  = _.uniq(this.collection.pluck('section_id'));
+
+      this.nav_rules = [];
+      _.each(sections, function(section){
+        var rules = this.rules.where({section_id : section});
+        if(rules.length){
+          this.nav_rules.push({
+            question : rules[0].get('question_id'),
+            val      : _.map(rules, function(rule){return rule.get('value');})
+          });
+        }
+        else{
+          this.nav_rules.push(null);
+        }
+      }, this);
     },
 
     _create_sections : function(){

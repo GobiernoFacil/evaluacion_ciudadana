@@ -93,6 +93,7 @@
         id        : <?php echo $blueprint->id; ?>,
         questions : <?php echo json_encode($questions); ?>,
         options   : <?php echo json_encode($options); ?>,
+        rules     : <?php echo json_encode($rules); ?>,
         answers   : <?php echo json_encode($answers); ?>
       };
 

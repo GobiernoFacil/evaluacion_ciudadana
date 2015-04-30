@@ -51,6 +51,7 @@ class Form_application extends CI_Controller {
         $data['questions'] = $this->question_model->get($data['blueprint']->id);
         $data['options']   = $this->question_options_model->get($data['blueprint']->id);
         $data['answers']   = $this->answers_model->get($applicant->form_key);
+        $data['rules']     = $this->rules_model->get($applicant->blueprint_id);
 
         $this->load->view('form_application_view', $data);
       }
