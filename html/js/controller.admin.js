@@ -99,7 +99,7 @@ define(function(require){
       this.listenTo(this.model, 'sync', this._render_saved_title);
       this.listenTo(this.sub_collection, 'add', this._render_question);
       this.listenTo(this.collection, 'remove', this._remove_question);
-      this.listenTo(this.rules, 'add', this._render_rule);
+      // this.listenTo(this.rules, 'add', this._render_rule);
       // [ FETCH SHORTCUTS ]
       this.html = {
         navigation_menu : this.$('#survey-navigation-menu'),
@@ -202,7 +202,7 @@ define(function(require){
     //
     //
     _render_rule : function(model){
-      // [1] método larguísmo para agregar en <li>!!!!!!
+      // [1] método larguísmo para agregar un <li>!!!!!!
       var ul       = document.getElementById('survey-navigation-rules'),
           li       = document.createElement('li'),
           anchor   = document.createElement('a'),
@@ -240,7 +240,6 @@ define(function(require){
                          + option.get('value') +"'>" 
                          + option.get('description') + "</option>";
           }, this);
-          console.log(answers);
           answers.innerHTML = answers_list;
           answers.style.display = "";
         }
@@ -612,9 +611,6 @@ define(function(require){
       _.each(inputs, function(op){
         if(op.value) options.push(op.value);
       }, this);
-
-      console.log(inputs, options);
-
       return options;
     }
 

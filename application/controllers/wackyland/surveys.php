@@ -241,6 +241,7 @@ class Surveys extends CI_Controller {
 
     $new_id    = $this->rules_model->add($rule_obj);
     $rule_obj['id'] = (string)$new_id;
+    $rule_obj['section_id'] = (string)$rule_obj['section_id'];
 
     header('Content-type: application/json');
     echo json_encode($rule_obj);
