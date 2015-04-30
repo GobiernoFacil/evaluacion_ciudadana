@@ -6,7 +6,7 @@
 <head>
   <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Custionario | Test</title>
+	<title><?php echo $blueprint->title; ?> | Tú Evalúas</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="/img/favicon.ico">
 	<link rel="stylesheet" href="/css/normalize.css">
@@ -24,7 +24,7 @@
 	
 
 	<div class="container cuestiona">
-		<h1>Jóvenes Prospera</h1>
+		<h1><?php echo $blueprint->title; ?></h1>
 		<div id="main" class="row">
 			<div class="col-sm-12">
 				<form id="survey">
