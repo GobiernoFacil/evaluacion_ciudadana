@@ -39,7 +39,7 @@
       <div id="survey-add-question" class="new_question" style="display:none">
         <!-- [1] agrega el título -->
         <p>
-          <label>Pregunta:</label>
+          <label><strong>Pregunta:</strong></label>
           <input name="question" type="text">
         </p>
         <!-- [1] --> 
@@ -52,21 +52,11 @@
           <label><input type="radio" name="type" value="location">ubicación</label>
         </p>
         <!-- [2] -->
-        <!-- [3] define a la sección a la que pertenece la pregunta -->
         
-        <div class="survey-section-selector-container"><!-- weird hack -->
-        <p class="survey-section-selector" style="display:none">
-          <label>sección</label>
-          <select name="section_id">
-            <option value="1" selected>sección 1</option>
-            <option value="0">nueva sección</option>
-          </select>
-        </p>
-        </div><!-- weird hack ends -->
-        <!-- [3] -->
         <!-- [4] agrega las respuestas para opción múltiple -->
         <div id="survey-add-options" style="display:none">
-          <h5>Respuestas:</h5>
+          <h4>Opciones de respuesta:</h4>
+          <p>Presiona [ ENTER ] para agregar otra respuesta</p>
           <ul>
           </ul>
           <p>
@@ -77,6 +67,20 @@
           </p>
         </div>
         <!-- [4] -->
+        
+        <!-- [3] define a la sección a la que pertenece la pregunta -->
+        
+        <div class="survey-section-selector-container"><!-- weird hack -->
+        <p class="survey-section-selector" style="display:none">
+          <label><strong>Sección a la que pertenece:</strong>
+          <select name="section_id">
+            <option value="1" selected>sección 1</option>
+            <option value="0">nueva sección</option>
+          </select></label>
+        </p>
+        </div><!-- weird hack ends -->
+        <!-- [3] -->
+        
         <!-- [5] salva la pregunta -->
         <p><a id="survey-add-question-btn" href="#" class="btn_add">agregar</a></p>
         <!-- [5] -->
@@ -90,7 +94,7 @@
         <p><textarea name="html"></textarea></p>
         <div class="survey-section-selector-container"><!-- weird hack -->
         </div><!-- weird hack ends -->
-        <p><a id="survey-add-content-btn" href="#">agregar contenido</a></p>
+        <p><a id="survey-add-content-btn" href="#" class="btn_add">Agregar contenido</a></p>
       </div>
       <!-- { NEW CONTENT FORM ENDS } -->
       		</div>
