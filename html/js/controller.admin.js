@@ -607,11 +607,13 @@ define(function(require){
     },
 
     _get_options : function(){
-      var inputs = this.$('#survey-add-options input'),
+      var inputs = this.$('#survey-add-options input[type="text"]'),
           options = [];
       _.each(inputs, function(op){
         if(op.value) options.push(op.value);
       }, this);
+
+      console.log(inputs, options);
 
       return options;
     }
