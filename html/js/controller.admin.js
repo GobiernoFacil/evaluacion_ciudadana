@@ -83,7 +83,7 @@ define(function(require){
       // [ THE OTHER COLLECTIONS ]
       this.sub_collection = new Backbone.Collection([]);
       this.q_options      = new Backbone.Collection(SurveySettings.options);
-      this.sections       = new Backbone.Collection(SurveySettings.sections);
+      //this.sections       = new Backbone.Collection(SurveySettings.sections);
       this.rules          = new Backbone.Collection(SurveySettings.rules);
       this.rules.url      = '/index.php/surveys/rule';
       // [ MAP THE OPTIONS FOR EACH QUESTION ]
@@ -99,7 +99,6 @@ define(function(require){
       this.listenTo(this.model, 'sync', this._render_saved_title);
       this.listenTo(this.sub_collection, 'add', this._render_question);
       this.listenTo(this.collection, 'remove', this._remove_question);
-      this.listenTo(this.model, 'change:current_section', this._render_rules_panel);
       this.listenTo(this.rules, 'add', this._render_rule);
       // [ FETCH SHORTCUTS ]
       this.html = {
@@ -121,15 +120,9 @@ define(function(require){
     //
     //
     render : function(){
-      // [0] guarda referencias con nombres cortos
-      var sec_nav = this.$('#survey-navigation-menu'); // SEC-NAV #lol
-      // [1] agrega el título
+      // [1] agrega el título de la encuesta al input
       this.$('#survey-app-title input').val(this.model.get('title'));
-      // [2] crea el navegador de secciones
-      this.sections.each(function(model){
-        sec_nav.append(this.sec_nav_template(model.attributes));
-      }, this);
-      // [3] muestra la información de la primera sección disponible
+      // [2] renderea todas las preguntas
       this.render_section(0);
     },
 
@@ -138,67 +131,47 @@ define(function(require){
     //
     render_section : function(e){
       if(typeof e !== "number") e.preventDefault();
-
-      // [1] obtiene la nueva sección
-      var section = typeof e === "number" ? String(e) : e.currentTarget.getAttribute('data-section');
-
-      $('#survey-navigation-menu a').removeClass('current');
-      $('#survey-navigation-menu a[data-section="' + section + '"]').addClass('current');
-
-      // [2] revisa si hay que mostrar todas las preguntas
-      if(section === "0"){
-        this.render_all_sections();
-        return;
-      }
-      // [3] le asigna la clase de seleccionado
-      /*
-      var sec_nav = this.$('#survey-navigation-menu');
-      sec_nav.children().removeClass('current');
-      sec_nav.children().eq(Number(section)+1).addClass('current');
-      */
-      $('#survey-navigation-menu a').removeClass('current');
-      $('#survey-navigation-menu a[data-section="' + section + '"]').addClass('current');
-      // [4] obtiene las reglas
-      // [5] actualiza la sección en el modelo de la app
+      // [1] genera las variables de inicio
+      var section   = typeof e === "number" ? String(e) : e.currentTarget.getAttribute('data-section'),
+          coll      = this.collection,
+          questions = section === "0" ? coll.models : coll.where({section_id : section});
+      // [2] actualiza la sección en el modelo de la app
       this.model.set({current_section : section});
-      // [6] crea la lista de preguntas
-      this.sub_collection.set(this.collection.where({section_id : section}));
+      // [3] crea la lista de preguntas
+      this.sub_collection.set(questions);
+      // [4] genera el navegador de secciones
+      this.render_section_menu();
     },
 
-    // [ RENDER ALL QUESTIONS ]
+    // [ RENDER RULES PANEL ]
     //
     //
-    render_all_sections : function(){
-      this.collection.sort();
-      this.sub_collection.set(this.collection.models);
-      this.model.set({current_section : 0});
-    },
-
-    //
-    //
-    //
-    _render_rules_panel : function(model, value, options){
-      var section  = Number(value),
-          menu     = document.getElementById('survey-navigation-rules-container'),
+    _render_rules_panel : function(){
+      // [0] obtiene la referencia de los elementos a ocupar
+      var menu     = document.getElementById('survey-navigation-rules-container'),
           list     = document.getElementById('survey-navigation-rules'),
-          rules    = app.rules.where({section_id : value});
           q_select = menu.querySelector('.select-question'),
-          a_select = menu.querySelector('.select-answer'),
-          sections = _.uniq(this.collection.pluck('section_id')),
-          low_sections = null,
+      // [1] crea las variables de inicio
+          section          = this.model.get('current_section'),
+          rules            = this.rules.where({section_id : section}),
+          sections         = _.uniq(this.collection.pluck('section_id')),
+          low_sections     = null,
+          low_questions    = [],
           q_select_content = "";
-
+      // [2] vacía la lista de reglas
       list.innerHTML = "";
+      // [3] agrega la lista de reglas existentes
       _.each(rules, function(rule){
         this._render_rule(rule);
       }, this);
-
-
+      // [4] obtiene las secciones anteriores a la actual para 
+      //     buscar en ellas preguntas de opción múltiple de las
+      //     cuales pueda depender si se ve o no.
       low_sections = _.filter(sections, function(sec){
-        return Number(sec) < section;
+        return Number(sec) < Number(section);
       }, this);
-
-      low_questions = [];
+      // [5] busca preguntas de opción múltiple de secciones
+      //     anteriores para el <select> de crear nueva regla.
       _.each(low_sections, function(section_id){
         questions = this.collection.where({
           is_description : '0', 
@@ -207,21 +180,52 @@ define(function(require){
         });
         Array.prototype.push.apply(low_questions, questions);
       }, this);
-
+      // [6] si hay preguntas de opción múltiple anteriores,
+      //     llena el <select> de preguntas
       if(low_questions.length){
         this.$('.rule-answer').remove();
         _.each(low_questions, function(q){
           q_select_content += "<option class='rule-answer' value='" + q.id +"'>" + q.get('question') + "</option>";
         },this);
+
         this.$(q_select).append(q_select_content);
         menu.style.display = "";
       }
+      // [7] si no hay preguntas de opción múltiple anteriores,
+      //     se oculta el menú de reglas
       else{
         menu.style.display = "none";
       }
     },
 
+    // [ ADD NEW RULE TO THE LIST ]
     //
+    //
+    _render_rule : function(model){
+      // [1] método larguísmo para agregar en <li>!!!!!!
+      var ul       = document.getElementById('survey-navigation-rules'),
+          li       = document.createElement('li'),
+          anchor   = document.createElement('a'),
+          q_id     = model.get('question_id'),
+          question = this.collection.get(q_id),
+          q_text   = question.get('question'),
+          option   = _.find(question.get('options'), function(m){
+            return m.get('value') == model.get('value');
+          }, this),
+          o_text   = option.get('description'),
+          text     = document.createTextNode(q_text + ' | R= ' + o_text);
+
+          anchor.innerHTML = "x";
+          anchor.setAttribute('class', 'remove-rule-btn');
+          anchor.setAttribute('href', '#');
+          anchor.setAttribute('data-rule', model.id);
+
+          li.appendChild(text);
+          li.appendChild(anchor);
+          ul.appendChild(li);
+    },
+
+    // [ RENDER THE ANSWERS <SELECT> FOR THE RULES ]
     //
     //
     _render_rules_panel_answers : function(e){
@@ -244,32 +248,6 @@ define(function(require){
       else{
         answers.style.display = "none";
       }
-    },
-
-    // [ ADD NEW RULE TO THE LIST ]
-    //
-    //
-    _render_rule : function(model){
-      var li       = document.createElement('li'),
-          anchor   = document.createElement('a'),
-          q_id     = model.get('question_id'),
-          question = this.collection.get(q_id),
-          q_text   = question.get('question'),
-          option   = _.find(question.get('options'), function(m){
-            return m.get('value') == model.get('value');
-          }, this),
-          o_text   = option.get('description'),
-          text     = document.createTextNode(q_text + ' | R= ' + o_text),
-          ul       = document.getElementById('survey-navigation-rules');
-
-          anchor.innerHTML = "x";
-          anchor.setAttribute('class', 'remove-rule-btn');
-          anchor.setAttribute('href', '#');
-          anchor.setAttribute('data-rule', model.id);
-
-          li.appendChild(text);
-          li.appendChild(anchor);
-          ul.appendChild(li);
     },
 
     // [ RENDER SINGLE QUESTION ]
@@ -325,6 +303,7 @@ define(function(require){
       var menu     = document.getElementById('survey-navigation-menu'),
           nav      = document.getElementById('survey-app-navigation'),
           sections = _.uniq(this.collection.pluck('section_id')),
+          section  = this.model.get('current_section'),
           content  = '';
 
       if(sections.length < 2){
@@ -342,8 +321,12 @@ define(function(require){
                 + sections[i] +"'>" 
                 + (sections[i] ? sections[i] : 'todas') + "</a></li>"
       }
-
       menu.innerHTML = content;
+      // [2] le asigna la clase de seleccionado
+      this.$('#survey-navigation-menu a').removeClass('current');
+      this.$('#survey-navigation-menu a[data-section="' + section + '"]').addClass('current');
+
+      this._render_rules_panel();
     },
 
     // [ SHOW THE SECTION SELECTOR ]
@@ -531,6 +514,7 @@ define(function(require){
       rule.save(null, {
         success : function(model, response, options){
           that.rules.add(model);
+          that._render_rules_panel();
         }
       });
     },
@@ -566,7 +550,7 @@ define(function(require){
           that.collection.add(model);
           that.render_section_selector();
           that.clear_question_form();
-          that.render_all_sections();
+          that.render_section(Number(model.get('section_id')));
         }
       });
     },
@@ -602,7 +586,7 @@ define(function(require){
           that.render_section_selector();
           //that.render_section(that.model.get('current_section'));
           that.html.content_form[0].querySelector('textarea').value = "";
-          that.render_all_sections();
+          that.render_section(0);
         }
       });
     },
