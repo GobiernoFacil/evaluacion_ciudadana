@@ -1,16 +1,4 @@
-#survey-navigation-menu{
-  border:1px solid gold;
-  height:1.5em;
-}
-#survey-navigation-menu li{
-  float:left;
-  list-style:none;
-  margin:.3em;
-}
 
-#survey-navigation-menu li.current{
-  background:red;
-}
 
 #survey-add-question input:disabled{
   background:#ccc;

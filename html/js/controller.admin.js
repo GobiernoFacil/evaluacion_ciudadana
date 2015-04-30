@@ -147,7 +147,7 @@ define(function(require){
       // [3] le asigna la clase de seleccionado
       var sec_nav = this.$('#survey-navigation-menu');
       sec_nav.children().removeClass('current');
-      sec_nav.children().eq(Number(section)-1).addClass('current');
+      sec_nav.children().eq(Number(section)+1).addClass('current');
       // [4] obtiene las reglas
       // [5] actualiza la sección en el modelo de la app
       this.model.set({current_section : section});
@@ -285,7 +285,8 @@ define(function(require){
       nav.style.display = "";
       sections.unshift(0);
       menu.innerHTML = "";
-
+	  
+	  content += "<li>Ver secciones:</li>";
       for(var  i = 0; i < sections.length; i++){
         content += "<li><a href='#' data-section='" 
                 + sections[i] +"'>" 
