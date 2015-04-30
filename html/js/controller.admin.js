@@ -259,7 +259,7 @@ define(function(require){
             return m.get('value') == model.get('value');
           }, this),
           o_text   = option.get('description'),
-          text     = document.createTextNode(q_text + ' | ' + o_text),
+          text     = document.createTextNode(q_text + ' | R= ' + o_text),
           ul       = document.getElementById('survey-navigation-rules');
 
           anchor.innerHTML = "x";

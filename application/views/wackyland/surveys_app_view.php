@@ -115,7 +115,8 @@
 
         <!-- [ THE RULES NAVIGATION ] -->
         <div id="survey-navigation-rules-container" style="display:none">
-          <h5>Reglas</h5>
+          <h5>Reglas de navegación de la sección</h5>
+          <p class="instructions">Selecciona una pregunta y su respuesta para determinar que usuarios verán esta sección</p>
           <p id="survey-add-navigation-rule">
             <select class="select-question">
               <option value="">Selecciona una pregunta</option>
@@ -125,15 +126,15 @@
               <option value="">Selecciona una respuesta</option>
             </select>
 
-            <a href="#" class="add-rule-btn">agregar</a>
+            <a href="#" class="add-rule-btn btn_add">Agregar Regla</a>
           </p>
-          <ul id="survey-navigation-rules"></ul>
+          <ul id="survey-navigation-rules" start="1"></ul>
         </div>
 
 
       </div>
       
-      <ol id="survey-question-list" ></ol> 
+      <ol id="survey-question-list" start="1"></ol> 
     </div>
   </div>
 </section>

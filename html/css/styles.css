@@ -317,13 +317,58 @@ input[type="search"]::-webkit-search-decoration {
       border: 0; }
 .backend #survey-navigation-rules-container {
   background: #f9f9f9;
-  padding: 15px 20px;
+  padding: 15px 20px 0;
   margin-bottom: 40px; }
+  .backend #survey-navigation-rules-container h5 {
+    display: block;
+    margin-bottom: 6px; }
+  .backend #survey-navigation-rules-container #survey-navigation-rules {
+    padding: 20px 20px 0; }
+    .backend #survey-navigation-rules-container #survey-navigation-rules li {
+      border-top: 1px solid #eee;
+      color: #555;
+      font-size: 14px;
+      padding: 10px;
+      position: relative; }
+      .backend #survey-navigation-rules-container #survey-navigation-rules li a {
+        margin: 0 10px;
+        background: #FF6F69;
+        color: white;
+        padding: 1px 5px; }
+        .backend #survey-navigation-rules-container #survey-navigation-rules li a:hover {
+          border-bottom: none;
+          color: white;
+          background: #011C26; }
+      .backend #survey-navigation-rules-container #survey-navigation-rules li:first-child:before {
+        content: "Reglas existentes:";
+        display: block;
+        position: absolute;
+        top: -22px;
+        left: -20px;
+        color: #999;
+        font-size: 15px; }
+      .backend #survey-navigation-rules-container #survey-navigation-rules li:last-child {
+        padding-bottom: 15px; }
+  .backend #survey-navigation-rules-container select {
+    margin: 10px 0;
+    width: auto;
+    max-width: 100%; }
+  .backend #survey-navigation-rules-container .btn_add {
+    padding: 5px 10px;
+    font-size: 14px;
+    display: inline-block; }
+    .backend #survey-navigation-rules-container .btn_add:hover {
+      background: #FF6F69;
+      color: white; }
 .backend .survey-section-selector-container {
   border-bottom: 1px solid #eee;
   border-top: 1px solid #eee;
   padding: 15px 0 0;
   margin-bottom: 45px; }
+.backend .instructions {
+  font-size: 13px;
+  color: #777;
+  margin-bottom: 5px; }
 .backend #survey-add-options {
   background: #f9f9f9;
   padding: 15px 20px;
