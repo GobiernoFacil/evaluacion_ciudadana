@@ -1,15 +1,28 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
+/**
+* SURVEYS
+* -------------------------------------------------------
+* Este controller es el CRUD para los formularios.
+*
+*/
+
 // use Ezyang\HTMLPurifier;
 require_once __DIR__ . '/../../../vendor/ezyang/htmlpurifier/library/HTMLPurifier.auto.php';
 
 class Surveys extends CI_Controller {
 
+  /**
+  * CONSTRUCTOR
+  * -----------------------------------------------------
+  *
+  */
+
   //
   // [ THE SETTINGS ]
   //
   //
-  const MIN_LEVEL     = 3;
+  const MIN_LEVEL     = 1;
   const CREATE_LEVEL  = 3;
   const ADMIN_LEVEL   = 5;
 
@@ -20,43 +33,52 @@ class Surveys extends CI_Controller {
   function __construct(){
     parent::__construct();
     $this->user = $this->session->userdata('user');
-    if(! $this->user || self::MIN_LEVEL > $this->user->level){
-      redirect('wackyland/login', 'refresh');
-    }   
+    $this->login_library->can_access(self::MIN_LEVEL);  
   }
 
+  /**
+  * THE SURVEY
+  * -----------------------------------------------------
+  *
+  */
+
   //
-  // [ THE SURVEY LIST ]
+  // [ THE SURVEY LIST ] [ VIEW ]
   //
   //
   public function index(){
-	 $data['title']       = 'Encuestas Tú Evalúas';
-	 $data['description'] = '';
-	 $data['body_class']  = 'surveys';
-   $data['surveys']     = $this->user->level >= 5 ? $this->blueprint_model->all() : $this->blueprint_model->all_from($this->user->id);
-   $data['user']        = $this->user;
+    $data['title']       = 'Encuestas Tú Evalúas';
+    $data['description'] = '';
+    $data['body_class']  = 'surveys';
 
-   $surveys = $this->blueprint_model->all();
-    
+    $data['surveys']     = $this->user->level >= 5 ? $this->blueprint_model->all() : $this->blueprint_model->all_from($this->user->id);
+    $data['user']        = $this->user;
+
     $this->load->view('wackyland/templates/header_view', $data);
     $this->load->view('wackyland/surveys_view', $data);
     $this->load->view('wackyland/templates/footer_view');	  
   }
 
   //
-  // [ THE SURVEY CREATOR ]
+  // [ THE SURVEY CREATOR ] [ POST ]
   //
   //
   public function create(){
     // [1] revisa que tenga el nivel de usuario necesario para
     //     crear un cuestionario.
-    if(self::CREATE_LEVEL > $this->session->userdata('user')->level){
-      redirect('wackyland/surveys', 'refresh');
-    }
+    $this->login_library->can_access(self::CREATE_LEVEL, 'wackyland/surveys');  
 
+    // [2] si la información POST existe, se crea un nuevo formulario,
+    //     y redirecciona a editarlo
     $title = filter_input(INPUT_POST, 'title', FILTER_SANITIZE_STRING);
     if($title){
-      $blueprint = ['title' => $title, 'creator' => $this->user->id];
+      $blueprint = [
+        'title'     => $title, 
+        'creator'   => $this->user->id, 
+        'is_public' => 0, 
+        'is_closed' => 0
+      ];
+
       $new_id    = $this->blueprint_model->add($blueprint);
       if($new_id){
         redirect('wackyland/surveys/update/' . $new_id);
@@ -64,39 +86,30 @@ class Surveys extends CI_Controller {
       else{
         die('something wrong x_____x');
       }
+    // [3] si no existe la información POST, envía a la lisa de encuestas
     }else{
       redirect('wackyland/surveys', 'refresh');
     }
   }
 
   //
-  // [ THE SURVEY EDITOR ]
+  // [ THE SURVEY EDITOR ] [ VIEW ]
   //
   //
   public function update($id){
     // [ GET THE BLUEPRINT ]
-    // [1] limpia los datos
-    $id      = (int)$id;
-    $creator = $this->user->level < self::ADMIN_LEVEL ? $this->user->id : false;
-    // [2] busca el blueprint. Si es admin, puede ver cualquier cuestionario.
-    //     Si no, solo los que le pertenecen.
-    $blueprint = $this->blueprint_model->get($id, $creator);
-    // [3] Si no encuentra el bluprint, lo redirecciona a la sección de cuestionarios
-    if(! $blueprint){
-      redirect('wackyland/surveys');
-      die();
-    }
-
-    // [ PREPARE THE DATA ]
-    $this->session->set_userdata('blueprint', $blueprint);
+    // guarda en la sesión el fomrulario a editar, para evitar que se modifiquen 
+    // otros fomularios
+    $is_admin = $this->user->level >= self::ADMIN_LEVEL;
+    $this->login_library->set_blueprint((int)$id, $is_admin);
+   
     $data = [];
-
     $data['title']       = 'Editar encuesta Tú Evalúas';
     $data['description'] = '';
     $data['body_class']  = 'surveys';
     $data['user']        = $this->user;
 
-    $data['blueprint'] = $blueprint;
+    $data['blueprint'] = $this->session->userdata('blueprint');
     $data['questions'] = $this->question_model->get($data['blueprint']->id);
     $data['rules']     = $this->rules_model->get($data['blueprint']->id);
     $data['options']   = $this->question_options_model->get($data['blueprint']->id);
@@ -128,6 +141,12 @@ class Surveys extends CI_Controller {
     header('Content-type: application/json');
     echo json_encode($blueprint);
   }
+
+  /**
+  * THE QUESTIONS
+  * -----------------------------------------------------
+  *
+  */
 
   //
   //
@@ -224,42 +243,14 @@ class Surveys extends CI_Controller {
     }
   }
 
-  //
-  //
-  //
-  //
-  public function add_rule(){
-    $bp        = $this->session->userdata('blueprint');
-    $response  = json_decode(file_get_contents('php://input'), true);
-
-    $rule_obj = [
-      'blueprint_id' =>  $bp->id,
-      'section_id'   => (int)$response['section_id'],
-      'question_id'  => (int)$response['question_id'],
-      'value'        => (int)$response['value'],
-    ];
-
-    $new_id    = $this->rules_model->add($rule_obj);
-    $rule_obj['id'] = (string)$new_id;
-    $rule_obj['section_id'] = (string)$rule_obj['section_id'];
-
-    header('Content-type: application/json');
-    echo json_encode($rule_obj);
-  }
+  /**
+  * THE OPTIONS
+  * -----------------------------------------------------
+  *
+  */
 
   //
-  //
-  //
-  //
-  public function delete_rule($id){
-    $bp      = $this->session->userdata('blueprint');
-    $success = $this->rules_model->delete($bp->id, (int)$id);
-    header('Content-type: application/json');
-    echo json_encode(['success' => $success]);
-  }
-
-  //
-  //
+  // [ ADD OPTIONS TO A QUESTION ]
   //
   //
   private function add_options($options, $question){
@@ -284,8 +275,56 @@ class Surveys extends CI_Controller {
     return $response;
   }
 
+
+
+  /**
+  * THE RULES
+  * -----------------------------------------------------
+  *
+  */
+
+  //
+  // [ ADD RULE ]
   //
   //
+  public function add_rule(){
+    $bp        = $this->session->userdata('blueprint');
+    $response  = json_decode(file_get_contents('php://input'), true);
+
+    $rule_obj = [
+      'blueprint_id' =>  $bp->id,
+      'section_id'   => (int)$response['section_id'],
+      'question_id'  => (int)$response['question_id'],
+      'value'        => (int)$response['value'],
+    ];
+
+    $new_id    = $this->rules_model->add($rule_obj);
+    $rule_obj['id'] = (string)$new_id;
+    $rule_obj['section_id'] = (string)$rule_obj['section_id'];
+
+    header('Content-type: application/json');
+    echo json_encode($rule_obj);
+  }
+
+  //
+  // [ DELETE RULE ]
+  //
+  //
+  public function delete_rule($id){
+    $bp      = $this->session->userdata('blueprint');
+    $success = $this->rules_model->delete($bp->id, (int)$id);
+    header('Content-type: application/json');
+    echo json_encode(['success' => $success]);
+  }
+
+  /**
+  * THE PRIVATE FUNCTIONS
+  * -----------------------------------------------------
+  *
+  */
+
+  //
+  // [ SANITAZE STRING ]
   //
   //
   private function sanitize_string($string){
