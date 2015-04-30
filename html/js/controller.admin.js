@@ -141,6 +141,10 @@ define(function(require){
 
       // [1] obtiene la nueva sección
       var section = typeof e === "number" ? String(e) : e.currentTarget.getAttribute('data-section');
+
+      $('#survey-navigation-menu a').removeClass('current');
+      $('#survey-navigation-menu a[data-section="' + section + '"]').addClass('current');
+
       // [2] revisa si hay que mostrar todas las preguntas
       if(section === "0"){
         this.render_all_sections();
