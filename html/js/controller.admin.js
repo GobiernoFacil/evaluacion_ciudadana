@@ -33,9 +33,12 @@ define(function(require){
     events :{
       // [ SURVEY NAVIGATION ]
       'click #survey-navigation-menu a' : 'render_section',
-      // [ UPDATE TITLE ]
-      'focus #survey-app-title input'   : '_enable_save',
-      'blur #survey-app-title input'    : '_disable_save',
+      // [ UPDATE BLUEPRINT ]
+      'focus #survey-app-title input[type="text"]'       : '_enable_save',
+      'blur #survey-app-title input[type="text"]'        : '_disable_save',
+      'change #survey-app-title input[name="is_closed"]' : '_update_bluprint',
+      'change #survey-app-title input[name="is_public"]' : '_update_bluprint',
+      'click #survey-app-title .create-survey-btn'       : '_save_csv',
       // [ ADD QUESTION ]
       'change #survey-add-question input[name="type"]' : '_set_is_type',
       'click #survey-add-buttons a.add-question'       : 'render_question_form',
@@ -74,7 +77,7 @@ define(function(require){
 
       // [ THE MODEL ]
       this.model         = new Backbone.Model(SurveySettings.blueprint);
-      this.model.url     = "/index.php/surveys/title/update";
+      this.model.url     = "/index.php/surveys/blueprint/update";
       this.model.set({current_section : 0}); // show all
       // [ THE COLLECTION ]
      this.collection            = new Backbone.Collection(SurveySettings.questions);
@@ -121,9 +124,16 @@ define(function(require){
     //
     //
     render : function(){
-      // [1] agrega el título de la encuesta al input
-      this.$('#survey-app-title input').val(this.model.get('title'));
-      // [2] renderea todas las preguntas
+      // [1] agrega el título al campo de input y asigna el valor a los
+      //     checkboxs "is_public", "is_closed"
+      var container = document.getElementById('survey-app-title'),
+          model     = this.model.attributes;
+
+      container.querySelector('input[type="text"]').value      = model.title;
+      container.querySelector('input[name="is_closed"]').checked = Number(model.is_closed);
+      container.querySelector('input[name="is_public"]').checked = Number(model.is_public);
+
+      // [2] agrega todas las preguntas a la lista
       this.render_section(0);
     },
 
@@ -483,40 +493,33 @@ define(function(require){
     //
     _update_title : function(e){
       if(e === void 0 || e.keyCode === 13){
-        var title = this.$('#survey-app-title input').val();
-        if(title){
-          this.model.set({title : title});
-          this.model.save();
-        }
+        this._update_bluprint();
       }
     },
 
-    // [ SAVE RULE ]
+    // [ UPDATE BLUEPRINT ]
     //
     //
-    _save_rule : function(e){
-      e.preventDefault();
-      var container   = document.querySelector('#survey-add-navigation-rule'),
-          question_id = container.querySelector('.select-question').value,
-          value       = container.querySelector('.select-answer').value,
-          section_id  = this.model.get('current_section'),
-          rule        = new Backbone.Model(null, {collection : this.rules}),
-          that        = this;
-
-      if(!Number(question_id)) return;
+    _update_bluprint : function(e){
+      var container = document.getElementById('survey-app-title'),
+          is_closed = container.querySelector('input[name="is_closed"]').checked,
+          is_public = container.querySelector('input[name="is_public"]').checked,
+          title     = container.querySelector('input[type="text"]').value;
       
-      rule.set({
-        section_id  : section_id,
-        question_id : question_id,
-        value       : value
+      if(title) this.model.set({title : title});
+      this.model.set({
+        is_public : is_public,
+        is_closed : is_closed,
       });
 
-      rule.save(null, {
-        success : function(model, response, options){
-          that.rules.add(model);
-          that._render_rules_panel();
-        }
-      });
+      this.model.save();
+    },
+
+    // [ CREATE THE CSV ]
+    // 
+    //
+    _save_csv : function(e){
+
     },
 
     // [ SAVE QUESTION ] 
@@ -555,6 +558,13 @@ define(function(require){
       });
     },
 
+    // [ REMOVE QUESTION ]
+    //
+    //
+    _remove_question : function(){
+      this.render_section_selector();
+    },
+
     // [ SAVE CONTENT ] 
     //
     //
@@ -591,10 +601,37 @@ define(function(require){
       });
     },
 
-    _remove_question : function(){
-      this.render_section_selector();
+    // [ SAVE RULE ]
+    //
+    //
+    _save_rule : function(e){
+      e.preventDefault();
+      var container   = document.querySelector('#survey-add-navigation-rule'),
+          question_id = container.querySelector('.select-question').value,
+          value       = container.querySelector('.select-answer').value,
+          section_id  = this.model.get('current_section'),
+          rule        = new Backbone.Model(null, {collection : this.rules}),
+          that        = this;
+
+      if(!Number(question_id)) return;
+      
+      rule.set({
+        section_id  : section_id,
+        question_id : question_id,
+        value       : value
+      });
+
+      rule.save(null, {
+        success : function(model, response, options){
+          that.rules.add(model);
+          that._render_rules_panel();
+        }
+      });
     },
 
+    // [ REMOVE RULE ]
+    //
+    //
     _remove_rule : function(e){
       e.preventDefault();
       var rule_id = e.target.getAttribute('data-rule'),
@@ -606,6 +643,9 @@ define(function(require){
       });
     },
 
+    // [ GET QUESTION OPTIONS AS AN ARRAY ] 
+    //
+    //
     _get_options : function(){
       var inputs = this.$('#survey-add-options input[type="text"]'),
           options = [];

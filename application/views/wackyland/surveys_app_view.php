@@ -8,22 +8,47 @@
   <form name="survey-app">
   <div class="row">
   	
-    <!-- [ THE TITLE ] -->
+    <!-- [ THE BLUEPRINT ] -->
     <div class="col-sm-4">
-    <section id="survey-app-title" class="box">
-    	<h2>Título</h2>
-		<div class="row">
-			<div class="col-sm-10 col-sm-offset-1">
-				<p>
-				  <input type="text" name="survey-title">
-				</p>
-      		</div>
+      <section id="survey-app-title" class="box">
+        <h2>Datos</h2>
+        <!-- THE TITLE -->
+        <div class="row">
+          <div class="col-sm-10 col-sm-offset-1">
+            <p><input type="text" name="survey-title"></p>
+          </div>
         </div>
-    </section>
+        <!-- IS VISIBLE -->
+        <div class="row">
+          <div class="col-sm-10 col-sm-offset-1">
+            <p><label>
+              <input type="checkbox" name="is_public">
+              Es pública
+            </label></p>
+          </div>
+        </div>
+        <!-- IS CLOSED -->
+        <div class="row">
+          <div class="col-sm-10 col-sm-offset-1">
+            <p><label>
+              <input type="checkbox" name="is_closed">
+              Está en curso
+            </label></p>
+          </div>
+        </div>
+        <!-- CREATE/GET CSV -->
+        <div class="row">
+          <div class="col-sm-10 col-sm-offset-1">
+            <p><a href="#" class="create-survey-btn">crear CSV</a></p>
+            <p><a style="display:none" id="get-csv-btn" href="#">descargar CSV</a></p>
+          </div>
+        </div>
+      </section>
   	</div>
+    <!-- { THE BLUEPRINT ENDS } -->
   	
-  	<div class="col-sm-8">
-	  	
+
+  	<div class="col-sm-8"> 	
     <!-- [ THE CONTENT CREATOR ] -->
     <section id="survey-app-questions" class="box">
     	<h2>Agregar preguntas</h2>

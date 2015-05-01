@@ -63,7 +63,7 @@ $route['bienvenido/usuarios/(:num)'] = 'wackyland/admins/update/$1';
 $route['bienvenido/usuarios']        = 'wackyland/admins';
 
 // SURVEY APP
-$route['surveys/title/update']    = 'wackyland/surveys/update_title';
+$route['surveys/blueprint/update']    = 'wackyland/surveys/update_blueprint';
 $route['surveys/question/(:num)'] = 'wackyland/surveys/update_question/$1';
 $route['surveys/question']        = 'wackyland/surveys/add_question';
 $route['surveys/rule/(:num)']    = 'wackyland/surveys/delete_rule/$1';

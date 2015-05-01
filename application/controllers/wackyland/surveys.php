@@ -131,15 +131,21 @@ class Surveys extends CI_Controller {
   // [ UDPATE TITLE ]
   //
   //
-  public function update_title(){
+  public function update_blueprint(){
     $blueprint = json_decode(file_get_contents('php://input'), true);
     $title     = $this->sanitize_string($blueprint['title']);
-    
-    $blueprint['success'] = $this->update_blueprint->update(['title' => $title]);
-    $blueprint['title']   = $title;
+    $bp        = $this->session->userdata('blueprint');
+    $is_closed = (int)$blueprint['is_closed'];
+    $is_public = (int)$blueprint['is_public'];
+    $bp_obj    = [
+      'title'     => $title, 
+      'is_closed' => $is_closed, 
+      'is_public' => $is_public
+    ];
+    $blueprint['success'] = $this->blueprint_model->update($bp->id, $bp_obj);
 
     header('Content-type: application/json');
-    echo json_encode($blueprint);
+    echo json_encode($bp_obj);
   }
 
   public function set_public(){
@@ -148,15 +154,6 @@ class Surveys extends CI_Controller {
 
   public function set_tatus(){
     // is_closed
-  }
-
-  //
-  //
-  //
-  //
-  private function update_blueprint($blueprint){
-    $bp = $this->session->userdata('blueprint');
-    return $this->blueprint_model->update($bp->id, $blueprint);
   }
 
   /**
