@@ -102,7 +102,7 @@ class Surveys extends CI_Controller {
     // otros fomularios
     $is_admin = $this->user->level >= self::ADMIN_LEVEL;
     $this->login_library->set_blueprint((int)$id, $is_admin);
-   
+
     $data = [];
     $data['title']       = 'Editar encuesta Tú Evalúas';
     $data['description'] = '';
@@ -120,7 +120,7 @@ class Surveys extends CI_Controller {
   }
 
   //
-  //
+  // [ DELETE SURVEY ]
   //
   //
   public function delete($id){
@@ -128,18 +128,35 @@ class Surveys extends CI_Controller {
   }
 
   //
-  //
+  // [ UDPATE TITLE ]
   //
   //
   public function update_title(){
-    $bp        = $this->session->userdata('blueprint');
     $blueprint = json_decode(file_get_contents('php://input'), true);
     $title     = $this->sanitize_string($blueprint['title']);
-    $success   = $this->blueprint_model->update($bp->id, ['title' => $title]);
-    $blueprint['success'] = $success;
+    
+    $blueprint['success'] = $this->update_blueprint->update(['title' => $title]);
     $blueprint['title']   = $title;
+
     header('Content-type: application/json');
     echo json_encode($blueprint);
+  }
+
+  public function set_public(){
+    // is_public
+  }
+
+  public function set_tatus(){
+    // is_closed
+  }
+
+  //
+  //
+  //
+  //
+  private function update_blueprint($blueprint){
+    $bp = $this->session->userdata('blueprint');
+    return $this->blueprint_model->update($bp->id, $blueprint);
   }
 
   /**
