@@ -13,16 +13,10 @@
 		</div>
 		<div class="col-sm-8 col-sm-offset-2">
 		<ul>
-		<?php 
-			$i=0;
-			foreach($surveys as $survey): 
-				// break foreach
-				$i++;
-				if($i==3) break;
-			?>
+		<?php foreach($surveys as $survey): ?>
 			<li class="row">
 				<div class="col-sm-8">
-					<?php echo anchor('resultados/'. $survey->id, $survey->id ==1 ? "Jóvenes Prospera <strong>&gt;</strong>" : $survey->title . " <strong>&gt;</strong>");?>
+					<?php echo anchor('resultados/'. $survey->id, $survey->title . " <strong>&gt;</strong>");?>
 					
 				</div>
 				<div class="col-sm-4">

@@ -32,40 +32,58 @@ class Form_application extends CI_Controller {
   *
   */
   public function index($form = FALSE){
-
     // evalúa el form key
     if($form){
       // busca en la DB que exista la form key
       $applicant = $this->applicants_model->get($form);
-
-      // si el form key no es válida o ya fue aplicada/cerrada
-      if(empty($applicant) || (int)$applicant->is_over){
-        $this->handle_error();
+      $blueprint = empty($applicant) ? false : $this->blueprint_model->get($applicant->blueprint_id);
+      // si el form key no es válida, no es pública o si ya fue cerrada, pelas.
+      if( empty($blueprint) || ! (bool)$blueprint->is_public || (bool)$blueprint->is_closed){
+        $this->handle_error($blueprint);
       }
-
-      // si el form key es válido
+      // entonces sí se puede
       else{
         $data = [];
         $data['applicant'] = $applicant;
-        $data['blueprint'] = $this->blueprint_model->get($applicant->blueprint_id);
-        $data['questions'] = $this->question_model->get($data['blueprint']->id);
-        $data['options']   = $this->question_options_model->get($data['blueprint']->id);
+        $data['blueprint'] = $blueprint;
+        $data['questions'] = $this->question_model->get($blueprint->id);
+        $data['options']   = $this->question_options_model->get($blueprint->id);
         $data['answers']   = $this->answers_model->get($applicant->form_key);
-        $data['rules']     = $this->rules_model->get($applicant->blueprint_id);
+        $data['rules']     = $this->rules_model->get($blueprint->id);
 
         $this->load->view('form_application_view', $data);
       }
     }
-
-    // no se recibió un form key
+    // entonces no se puede
     else{
-      $this->handle_error();
+      $this->handle_error(false);
     }
   }
 
-  public function handle_error(){
-    die('aquí no hay ningún formulario :/');
+  /**
+  * HANDLE ERROR
+  * -----------------------------------------------------
+  * Hay tres posibles errores: 
+  * 1. no existe la encuesta (para el form_key)
+  * 2. la encuesta no es pública
+  * 3. la encuesta ya se cerró
+  * 4. sepa la bola*
+  *
+  */
+  public function handle_error($blueprint){
+    if(empty($blueprint)){
+      die('aquí no hay ningún formulario :/');
+    }
+    elseif($blueprint->is_closed == '1'){
+      die('la encuesta ya se cerró :P');
+    }
+    elseif($blueprint->is_public == '0'){
+      die('la encuesta no está disponible O____O');
+    }
+    else{
+      die('x_______x');
+    }
   }
 }
 
-/* End of file test.php */
+/* End of form_application.php */
