@@ -230,6 +230,19 @@ $config['encryption_key'] = $ci_keys['encryption_key'];
 
 /*
 |--------------------------------------------------------------------------
+| Mailgun api Key
+|--------------------------------------------------------------------------
+|
+| Nomás por si hay que enviar mesajes.
+|
+*/
+$config['mailgun_key']      = empty($ci_keys['mailgun_api_key']) ? false : $ci_keys['mailgun_api_key'];
+$config['mailgun_public']   = empty($ci_keys['mailgun_public_key']) ? false : $ci_keys['mailgun_public_key'];
+$config['mailgun_domain']   = empty($ci_keys['mailgun_domain']) ? false : $ci_keys['mailgun_domain'];
+$config['mailgun_basepath'] = empty($ci_keys['mailgun_basepath']) ? false : $ci_keys['mailgun_basepath'];
+
+/*
+|--------------------------------------------------------------------------
 | Session Variables
 |--------------------------------------------------------------------------
 |

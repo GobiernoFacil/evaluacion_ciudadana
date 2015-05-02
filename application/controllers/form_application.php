@@ -74,11 +74,12 @@ class Form_application extends CI_Controller {
     if(empty($blueprint)){
       die('aquí no hay ningún formulario :/');
     }
-    elseif($blueprint->is_closed == '1'){
-      die('la encuesta ya se cerró :P');
-    }
     elseif($blueprint->is_public == '0'){
       die('la encuesta no está disponible O____O');
+    }
+    elseif($blueprint->is_closed == '1'){
+      redirect('resultados/' . $blueprint->id);
+      // die('la encuesta ya se cerró :P');
     }
     else{
       die('x_______x');
