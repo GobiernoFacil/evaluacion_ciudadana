@@ -51,16 +51,4 @@ class Mailgun_library{
 
     return $mailgun->sendMessage($this->domain, $message);
   }
-
-  //
-  // [ SET BLUEPRINT ]
-  //
-  //
-  function set_blueprint($id, $is_admin = false){
-    $user_id   = $this->CI->session->userdata('user')->id;
-    $blueprint = $this->CI->blueprint_model->get($id, $is_admin ? false : $user_id);
-    if(! $blueprint) redirect('bienvenido/encuestas');
-    
-    $this->CI->session->set_userdata('blueprint', $blueprint);
-  }
 }
