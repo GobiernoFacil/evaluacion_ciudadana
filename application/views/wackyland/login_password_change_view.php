@@ -16,12 +16,14 @@
 			</div>
 		  	<div class="col-sm-6 col-sm-offset-3">
           <?php if($success): ?>
-          <p>Tu contraseña se ha actualizado</p>
+          <p>Tu contraseña se ha actualizado, 
+          <a href="<?php echo site_url("bienvenido"); ?>">accede al sitio</a></p>
           <?php else: ?>
 		  		<form name="nock-nock" method="post">
             <!-- [ ERROR MESSAGE ] -->
             <?php if($error): ?>
-            <p>No se logró cambiar tu contraseña. Esta debe contener por lo menos ocho caracteres</p>
+            <p>No se logró cambiar tu contraseña. Esta debe contener 
+            por lo menos ocho caracteres</p>
             <?php endif; ?>
     			  
             <!-- [ THE PASSWORD ] -->

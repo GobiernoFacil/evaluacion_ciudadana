@@ -63,12 +63,13 @@ class Login extends CI_Controller {
     $pass_key = filter_var($pass_key,FILTER_SANITIZE_STRING);
     $user = $this->admins_model->can_reset_password($pass_key);
     if(empty($user)){
-      show_error('el plazo para cambiar tu contraseña ha expirado O___O', 404);
+      show_error('algo falló O___O', 404);
       die();
     }
 
     $error   = false;
     $success = false;
+    
     if($this->input->post('pass') && mb_strlen($this->input->post('pass'))>=8){
       $new_pass = filter_input(INPUT_POST, 'pass');
       $admin = [
@@ -78,6 +79,9 @@ class Login extends CI_Controller {
       ];
       $success = $this->admins_model->update($user->id, $admin);
       $error   = $success ? false : true;
+    }
+    elseif($this->input->post('pass') && mb_strlen($this->input->post('pass'))<8){
+      $error = true;
     }
 
     $this->load->view('wackyland/login_password_change_view', ['error' => $error, 'success' => $success]);
