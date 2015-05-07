@@ -34,8 +34,6 @@
               </label></li>
             </ul>
             <?php endif; ?>
-            
-            <p><label>mailgun apikey</label><input name="mailgun" type="text" value=""></p>
             <p><input type="submit" value="editar"></p>
             </div>
   </form>

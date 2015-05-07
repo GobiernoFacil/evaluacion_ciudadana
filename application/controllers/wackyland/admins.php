@@ -151,9 +151,6 @@ class Admins extends CI_Controller {
     $password = filter_input(INPUT_POST, 'password');
     $pass_len = mb_strlen($password) >= self::PASSWORD_MIN;
 
-    // [3] limpia la clave para mailgun
-    $mailgun  = filter_input(INPUT_POST, 'mailgun');
-
     // [4] valida el password. Es en el único lugar donde puede haber errores
     if( ! empty($password) && !$pass_len){
       return ['success'  => $success, 'password' => $password, 'pass_len' => $pass_len];
@@ -169,10 +166,6 @@ class Admins extends CI_Controller {
       // [5.3] si el campo del password no está vacío, agrega el nuevo pass
       if(! empty($password)){
         $user['password'] = password_hash($password, PASSWORD_DEFAULT, ['cost' => 12]);
-      }
-      // [5.4] si no está vacío el campo de mailgun, también lo agrega
-      if(! empty($mailgun)){
-        $user['mailgun'] = $mailgun;
       }
 
       // [5.5] si hay algo que actualizar, pues lo actualiza
