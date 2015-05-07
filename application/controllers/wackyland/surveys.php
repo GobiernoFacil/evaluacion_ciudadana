@@ -124,7 +124,13 @@ class Surveys extends CI_Controller {
   //
   //
   public function delete($id){
-
+    $is_admin = $this->user->level >= self::ADMIN_LEVEL;
+    $user = $is_admin ? false : $this->user->id;
+    $blueprint = $this->blueprint_model->get((int)$id, $user);
+    if(! empty($blueprint)){
+      $this->blueprint_model->soft_delete((int)$id);
+    }
+    redirect('bienvenido/encuestas', 'refresh');
   }
 
   //
@@ -148,13 +154,6 @@ class Surveys extends CI_Controller {
     echo json_encode($bp_obj);
   }
 
-  public function set_public(){
-    // is_public
-  }
-
-  public function set_tatus(){
-    // is_closed
-  }
 
   /**
   * THE QUESTIONS

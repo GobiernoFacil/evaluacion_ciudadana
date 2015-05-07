@@ -65,11 +65,12 @@ $route['bienvenido/usuarios/(:num)'] = 'wackyland/admins/update/$1';
 $route['bienvenido/usuarios']        = 'wackyland/admins';
 
 // SURVEY APP
-$route['surveys/blueprint/update']    = 'wackyland/surveys/update_blueprint';
-$route['surveys/question/(:num)'] = 'wackyland/surveys/update_question/$1';
-$route['surveys/question']        = 'wackyland/surveys/add_question';
-$route['surveys/rule/(:num)']    = 'wackyland/surveys/delete_rule/$1';
-$route['surveys/rule']           = 'wackyland/surveys/add_rule';
+$route['surveys/blueprint/update'] = 'wackyland/surveys/update_blueprint';
+$route['surveys/question/(:num)']  = 'wackyland/surveys/update_question/$1';
+$route['surveys/question']         = 'wackyland/surveys/add_question';
+$route['surveys/rule/(:num)']      = 'wackyland/surveys/delete_rule/$1';
+$route['surveys/rule']             = 'wackyland/surveys/add_rule';
+$route['surveys/eliminar/(:num)']  = 'wackyland/surveys/delete/$1';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

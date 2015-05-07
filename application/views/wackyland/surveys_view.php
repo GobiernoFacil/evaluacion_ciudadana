@@ -45,7 +45,7 @@
 					      </a>
 					      </div>
 					       <div class="col-sm-2">
-						   		<a href="<?= site_url("wackyland/surveys/delete/" . $survey->id); ?>" class="danger">Eliminar</a>
+						   		<a href="<?= site_url("surveys/eliminar/" . $survey->id); ?>" class="danger">Eliminar</a>
 					       </div>
 					    </li>
 					  <?php endforeach; ?>
