@@ -31,22 +31,32 @@ class Mailgun_library{
   //
   //
   function can_access(){
+    // [1] revisa que el correo sea válido y que esté disponible una 
+    //     api key de gunmail
     $email = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
     if(!$email || !$this->key){
       return false;
     }
-    
+    // [2] revisa que el usuario exista
     $user  = $this->CI->admins_model->get_by_email($email);
     if(empty($user)){
       return false;
     }
-
+    // [3] genera la clave para cambiar password y la fecha de vencimiento
+    //     de la clave, y las guarda en la DB
+    $pass_key = sha1(uniqid($user->id));
+    $date     = date_create(null);
+    date_add($date, date_interval_create_from_date_string('4 days'));
+    $expire_date = date_format($date, 'Y-m-d');
+    $update      = ['pass_key' => $pass_key, 'expire_date' => $expire_date];
+    $success     = $this->CI->admins_model->update($user->id, $update);
+    // [4] envía el mensaje
     $mailgun = new Mailgun ($this->key);
     $message = [
         'from'    => 'prospera@tuevaluas.com.mx',
         'to'      => $email,
         'subject' => 'Recupera tu contraseña de tuevaluas.com.mx',
-        'html'    => $this->CI->load->view('emails/vas_bulk_view', [], true)
+        'html'    => $this->CI->load->view('emails/mail_restore_password_view', ['pass_key' => $pass_key], true)
     ];
 
     return $mailgun->sendMessage($this->domain, $message);

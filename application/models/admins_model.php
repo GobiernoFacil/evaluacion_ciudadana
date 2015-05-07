@@ -30,6 +30,14 @@ class Admins_model extends CI_Model{
     return $this->db->count_all_results();
   }
 
+  function can_reset_password($pass_key){
+    $today = date_format(date_create(null), 'Y-m-d');
+    $this->db->from(self::TABLE);
+    $this->db->where('expire_date <', $today);
+    $this->db->where('pass_key', $pass_key);
+    return $q->row();
+  }
+
   function all(){
     $q = $this->db->get(self::TABLE);
     return $q->result();

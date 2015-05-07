@@ -56,6 +56,7 @@ $route['contacto']             = 'home/contact';
 
 // ADMIN AMIGO
 $route['bienvenido']                 = 'wackyland/login';
+$route['bienvenido/se-me-olvido']    = 'wackyland/login/restore';
 $route['adios']                      = 'wackyland/login/logout';
 $route['bienvenido/tuevaluas']       = 'wackyland/tuevaluas';
 $route['bienvenido/encuestas']       = 'wackyland/surveys';

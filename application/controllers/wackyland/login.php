@@ -17,8 +17,7 @@ class Login extends CI_Controller {
   // [ LOGIN ]
   //
   //
-  public function index()
-  {
+  public function index(){
     $errors = [];
     if(!empty($_POST)){
       $validation = $this->validate();
@@ -33,6 +32,55 @@ class Login extends CI_Controller {
       }
     }
     $this->load->view('wackyland/login_view', ['errors' => $errors]);
+  }
+
+  //
+  // [ RESTORE PASSWORD ]
+  //
+  //
+  public function restore(){
+    $error   = false;
+    $success = false;
+
+    if(!empty($_POST)){
+      $success = $this->mailgun_library->can_access();
+      $error   = $success ? false : true;
+    }
+
+    $this->load->view('wackyland/login_restore_view', ['error' => $error, 'success' => $success]);
+  }
+
+  //
+  // [ CHANGE PASSWORD ]
+  //
+  //
+  public function change_password($pass_key = false){
+    if(! $pass_key){
+      show_error('algo falló :/', 404);
+      die();
+    }
+    
+    $pass_key = filter_var($pass_key,FILTER_SANITIZE_STRING);
+    $user = $this->admins_model->can_reset_password($pass_key);
+    if(empty($user)){
+      show_error('el plazo para cambiar tu contraseña ha expirado O___O', 404);
+      die();
+    }
+
+    $error   = false;
+    $success = false;
+    if($this->input->post('pass') && mb_strlen($this->input->post('pass'))>=8){
+      $new_pass = filter_input(INPUT_POST, 'pass');
+      $admin = [
+        'password'    => password_hash($new_pass, PASSWORD_DEFAULT, ['cost' => 12]),
+        'pass_key'    => null,
+        'expire_date' => null
+      ];
+      $success = $this->admins_model->update($user->id, $admin);
+      $error   = $success ? false : true;
+    }
+
+    $this->load->view('wackyland/login_password_change_view', ['error' => $error, 'success' => $success]);
   }
 
   //
@@ -58,7 +106,7 @@ class Login extends CI_Controller {
   }
 
   //
-  // [ LOG USER ] 
+  // [ LOGOUT USER ] 
   //
   //
   public function logout(){
