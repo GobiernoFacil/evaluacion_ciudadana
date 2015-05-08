@@ -70,7 +70,20 @@
 				    	 </a>
 				    	</div>
 				    	<div class="col-sm-4">
-				    	   <?php echo $admin->level; ?>
+				    	  <?php 
+                  if($admin->level == 1){
+                    echo "curioso";
+                  }
+                  elseif($admin->level == 3){
+                    echo "funcionario";
+                  }
+                  elseif($admin->level == 5){
+                    echo "administrador";
+                  }
+                  else{
+                    echo "usuario raro";
+                  }
+                ?>
 				    	</div>
 				    </li>
 				  <?php endforeach; ?>

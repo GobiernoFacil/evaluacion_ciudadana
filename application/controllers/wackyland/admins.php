@@ -86,24 +86,9 @@ class Admins extends CI_Controller {
     else{
       $hash    = password_hash($password, PASSWORD_DEFAULT, ['cost' => 12]);
       $user_id = $this->admins_model->add(['email' => $email, 'password' => $hash, 'level'=>$level]);
-      $this->send_welcome_email($email);
+      $notify  = $this->mailgun_library->send_welcome_email($email);
       return ['success' => true, 'user' => ['id' => $user_id, 'email' => $email, 'level'=>$level]];
     }
-  }
-
-  //
-  // [ THE WELCOME EMAIL ] <-- out of service -->
-  //
-  //
-  private function send_welcome_email($email){
-    $this->email->from('welcome.robot@tuevaluas.com.mx', 'un robot de tú evalúas');
-    $this->email->to($email); 
-
-    $this->email->subject('Bienvenido a tú evalúas!');
-    $this->email->message('Hola, bienvenido a tú evalúas, puedes acceder al 
-      admin desde este link: http://tuevaluas.com.mx/bienvenido');  
-
-    $this->email->send();
   }
 
   //

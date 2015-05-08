@@ -31,7 +31,7 @@
             <!-- [ THE PASSWORD ] -->
             <p><label>Contraseña</label>
 	    			  <input type="password" name="pass" id="the-pass"><br>
-              <a href="<?php echo site_url("bienvenido/se-me-olvido"); ?>">no recuerdo mi contraseña</a></p>
+              <a href="<?php echo site_url("bienvenido/se-me-olvido"); ?>">recuperar contraseña</a></p>
     			  <p><input type="submit" value="acceder"></p>
     			</form>
 		  	</div>

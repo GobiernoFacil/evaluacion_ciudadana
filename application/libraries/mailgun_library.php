@@ -27,6 +27,21 @@ class Mailgun_library{
   }
 
   //
+  // [ THE WELCOME EMAIL ]
+  //
+  //
+  function send_welcome_email($email){
+    $mailgun = new Mailgun ($this->key);
+    $message = [
+        'from'    => 'welcome.robot@tuevaluas.com.mx',
+        'to'      => $email,
+        'subject' => 'Bienvenido a tú evalúas!',
+        'html'    => $this->CI->load->view('emails/mail_welcome_view', null, true)
+    ];
+    return $mailgun->sendMessage($this->domain, $message);
+  }
+
+  //
   // [ RESTORE PASSWORD ]
   //
   //
@@ -53,7 +68,7 @@ class Mailgun_library{
     // [4] envía el mensaje
     $mailgun = new Mailgun ($this->key);
     $message = [
-        'from'    => 'prospera@tuevaluas.com.mx',
+        'from'    => 'robot.recuperador@tuevaluas.com.mx',
         'to'      => $email,
         'subject' => 'Recupera tu contraseña de tuevaluas.com.mx',
         'html'    => $this->CI->load->view('emails/mail_restore_password_view', ['pass_key' => $pass_key], true)
