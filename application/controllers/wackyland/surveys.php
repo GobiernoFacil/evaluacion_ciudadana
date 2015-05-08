@@ -257,6 +257,49 @@ class Surveys extends CI_Controller {
   }
 
   /**
+  * THE CSV
+  * -----------------------------------------------------
+  *
+  */
+
+  //
+  //
+  //
+  //
+  public function make_csv(){
+    $bp = $this->session->userdata('blueprint');
+
+    if($bp){
+      $id       = $bp->id;
+      $filename = uniqid("cuestionario-{$id}-v-") . '.csv';
+      $path     = __DIR__ . '/../../../html/';
+      $index    = $path . 'index.php';
+      $new_file = $path . 'csv/' . $filename;
+
+      exec("php {$index} wackyland/make_csv index {$id} > {$new_file}");
+    }
+
+    header('Content-type: application/json');
+    echo json_encode(['file' => $new_file]);
+  }
+
+  //
+  //
+  //
+  //
+  public function csv_is_avaliable($file = false){
+    $this->load->helper('file');
+    $filename = $this->sanitize_string($file);
+    $file = __DIR__ . '/../../../html/csv/' . $filename;
+
+    $response = get_file_info($file);
+
+    header('Content-type: application/json');
+    echo json_encode(['file' => $response]);
+  }
+
+
+  /**
   * THE OPTIONS
   * -----------------------------------------------------
   *
