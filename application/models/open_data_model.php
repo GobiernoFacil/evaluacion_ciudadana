@@ -42,13 +42,13 @@ class Open_data_model extends CI_Model{
   }
 
   public function get_blueprints(){
-    $pb = $this->db->get(self::BLUEPRINTS);
+    $pb = $this->db->get_where(self::BLUEPRINTS, ['is_public' => 1, 'is_visible' => 1]);
     return $pb->result();
   }
 
   private function _get_blueprint($id){
-    $this->db->select('id, title, creation_date');
-    $pb = $this->db->get_where(self::BLUEPRINTS, ['id' => $id]);
+    // $this->db->select('id, title, creation_date');
+    $pb = $this->db->get_where(self::BLUEPRINTS, ['id' => $id, 'is_public' => 1, 'is_visible' => 1]);
     return $pb->row();
   }
 

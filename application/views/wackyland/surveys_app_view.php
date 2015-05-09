@@ -41,7 +41,7 @@
           <div class="col-sm-10 col-sm-offset-1">
             
             <!-- GET CSV -->
-            <?php if($blueprint->csv_file && $csv_file): ?>
+            <?php if($blueprint->csv_file && $csv_file && $csv_file['size']): ?>
               <p><a href="#" class="create-survey-btn">crear nuevo CSV</a></p>
               <p>
                 <a id="get-csv-btn" href="/csv/<?php echo $csv_file['name']; ?>">descargar CSV (<?php echo date('d-m-Y h:iA', $csv_file['date']); ?>)</a>
@@ -53,7 +53,7 @@
               <p><a style="display:none" id="get-csv-btn" href="#">[ CSV PLACEHOLDER ]</a></p>
             <?php endif; ?>
 
-            <!-- <pre><?php var_dump($csv_file); ?></pre>-->
+            <!-- <pre><?php var_dump($csv_file); ?></pre> -->
           </div>
         </div>
       </section>

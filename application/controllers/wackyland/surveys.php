@@ -284,7 +284,7 @@ class Surveys extends CI_Controller {
       $index    = $path . 'index.php';
       $new_file = $path . 'csv/' . $filename;
 
-      exec("php {$index} wackyland/make_csv index {$id} > {$new_file}");
+      exec("php {$index} wackyland/make_csv index {$id} > {$new_file} &");
 
       $this->blueprint_model->update($id, ['csv_file' => $filename]);
     }

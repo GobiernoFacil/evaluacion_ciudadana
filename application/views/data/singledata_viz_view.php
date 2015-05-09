@@ -8,8 +8,10 @@
 					<!--<div class="col-sm-12">
 						<h3 class="col-sm-6" >Participantes: <strong><?php echo $response['applicants'];?></strong></h3>
 					</div>-->
-					<?php echo anchor("resultados/". $response['survey']->id ."/csv", 'Descargar datos en CSV', array("class"=>"btn col-sm-5"));?>
-					<?php echo anchor("resultados/". $response['survey']->id ."/archivo", 'Descargar datos en JSON', array("class"=>"btn col-sm-5 col-sm-offset-1"));?>
+					<?php if($file): ?>
+					<a class="btn col-sm-5" href="<?php echo $file; ?>">Descargar datos en CSV</a>
+				  <?php endif; ?>
+
 				</section>
 				
 				<div class="answers">
@@ -76,7 +78,8 @@
 									<?php 
 										///calcula porcentaje de respuestas… sad thing
 										if ($le_total > 0) {
-											$amount =  ($respuesta->answer_num / $le_total) * 100;																			$amount = round($amount, 2);
+											$amount =  ($respuesta->answer_num / $le_total) * 100;
+											$amount = round($amount, 2);
 										}
 										else {
 											$amount = 0;
@@ -99,8 +102,9 @@
 					<?php endforeach;?>
 					</ol>
 	 			</div>
-				<p><?php echo anchor("resultados/". $response['survey']->id ."/csv", 'Descargar datos en CSV', array("class"=>"btn"));?></p>
-				<p><?php echo anchor("resultados/". $response['survey']->id ."/archivo", 'Descargar datos en JSON', array("class"=>"btn"));?></p>
+	 			<?php if($file): ?>
+				<p><a class="btn" href="<?php echo $file; ?>">Descargar datos en CSV</a></p>
+				<?php endif; ?>
 			</div>			
 		</article>
 	</div>

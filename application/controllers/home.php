@@ -1,23 +1,28 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 class Home extends CI_Controller {
-		
+
+	static $csv_path;
 	public function __construct() {
 		parent::__construct();
 		$this->load->library('form_validation');
 		$this->load->helper('url');
+		$this->load->helper('file');
 		$this->load->library('email');
+		
+		$this->csv_path = __DIR__ . '/../../html/csv/';
+    date_default_timezone_set('America/Mexico_City');
 	}
 
 	public function index()
 	{
-		$data['title'] 			= 'Tú Evalúas';
+		$data['title'] 			  = 'Tú Evalúas';
 		$data['description'] 	= 'Tu opinión sobre los programas públicos federales ayuda a mejorarlos.';
 		$data['body_class'] 	= 'home';
-		$surveys = $this->blueprint_model->all_public();
+		$surveys              = $this->blueprint_model->all_public();
 		
 		$this->load->view('/templates/header_view', $data);
-		$this->load->view('/home/home_view',['surveys' => $surveys]);
+		$this->load->view('/home/home_view',['surveys' => $surveys, 'csv_path' => $this->csv_path]);
 		$this->load->view('/templates/footer_view');
 	}
 	

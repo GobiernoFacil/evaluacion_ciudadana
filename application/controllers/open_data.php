@@ -10,6 +10,8 @@
 use League\Csv\Writer;
 
 class Open_data extends CI_Controller {
+  
+  static $csv_path;
 
   /**
   * CONSTRUCTOR
@@ -22,7 +24,9 @@ class Open_data extends CI_Controller {
     if (! ini_get("auto_detect_line_endings")){
       ini_set("auto_detect_line_endings", '1');
     }
-	//$this->output->enable_profiler(TRUE);
+    $this->load->helper('file');
+    $this->csv_path = __DIR__ . '/../../html/csv/';
+    date_default_timezone_set('America/Mexico_City');
   }
 
   /**
@@ -30,193 +34,77 @@ class Open_data extends CI_Controller {
   * -----------------------------------------------------
   * si no se uncluye un ID, debería mostrar una lista de
   * elementos disponibles. Si incluye un ID, el default es
-  * la visualización; si incluye el formato, este puede ser
-  * archivo o json. 
+  * la visualización; se elimina la opción de distintos formatos.
+  * instrucciones gobies, que poruqe a la verga vergas.
   *
   */
-  public function index($form_id = false, $format = false){
-	if  ( $form_id == false) 
-	{
-		
-		$blueprints				=  $this->open_data_model->get_blueprints();
-		
-		$data['title'] 			= 'Resultados de las encuestas Tú Evalúas';
-		$data['description'] 	= 'Resultados de las encuestas Tú Evalúas';
-		$data['body_class'] 	= 'data';
-		$data['response'] 				= $blueprints;
-		
-		$this->load->view('/templates/header_view', $data);
-		$this->load->view('/data/data_view');
-		$this->load->view('/templates/footer_view');
-	}  
-  	
-  	else {
-	 	$blueprint_id = (int)$form_id;
-	 		
-	 	$response = $this->open_data_model->get($blueprint_id);
-	 		
-	 	foreach($response['questions'] as $question){
-	 	  $question->options = array_filter($response['options'], function($option) use($question){
-	 		  return $option->question_id == $question->id;
-	 	  });
+  public function index($form_id = false){
+    // [A] se muestra una sola encuesta
+    if($form_id){
+      // [1] busca el blueprint, y si no lo encuentra, redirecciona a mostrar
+      //     todas las encuestas
+		  $blueprint_id = (int)$form_id;
+      $response     = $this->open_data_model->get($blueprint_id);
+      if(empty($response)) redirect('resultados', 'refresh');
 
-      if(empty($question->options)){
-        $question->answers = array_filter($response['answers'], function($answer) use($question){
-          return $answer->question_id == $question->id;
+      // [2] prepara el resultado agregando las respuestas por pregunta
+      foreach($response['questions'] as $question){
+        // [2.1] le asigna a cada pregunta sus opciones
+        $question->options = array_filter($response['options'], function($option) use($question){
+          return $option->question_id == $question->id;
         });
-      }
-      else{
-        $question->answers = false;
-        foreach($question->options as $option){
-          $option->answer = array_filter($response['answers'], function($answer) use($question, $option){
-            return $answer->question_id == $question->id && $answer->num_value == $option->value;
+        // [2.2] si la pregunta no tiene opciones, los valores de las
+        //       respuestas se pasan directamente
+        if(empty($question->options)){
+          $question->answers = array_filter($response['answers'], function($answer) use($question){
+            return $answer->question_id == $question->id;
           });
-
-          $option->answer_num = empty($option->answer) ? 0 : array_pop($option->answer)->total;
         }
-      }
-	 	}
-	 	
-	 	$r = [
-	 	  'survey'     => $response['blueprint'],
-	 	  'applicants' => $response['applicants'],
-	 	  'questions'  => $response['questions']
-	 	];
-	 	
-	 	if($format == 'json'){
-	 	  header('Content-Type: application/json');
-	 	  echo json_encode($r);
-	 	}
-    elseif($format == 'csv'){
-      $writer = Writer::createFromFileObject(new SplTempFileObject()); //the CSV file will be created into a temporary File
-      $writer->setDelimiter(","); //the delimiter will be the tab character
-      $writer->setNewline("\r\n"); //use windows line endings for compatibility with some csv libraries
-      $writer->setEncodingFrom("utf-8");
-      $headers = ["pregunta" , "respuesta", "numero"];
-      $writer->insertOne($headers);
-
-      $datos = [];
-      foreach ($r['questions'] as $question){
-        $entry = [];
-        $question_text = html_entity_decode($question->question);
-        foreach ($question->options as $option){
-          $option_text = html_entity_decode($option->description);
-          $option_num  = $option->answer_num;
-          $datos[] = [$question_text, $option_text, $option_num];
-        }
-      }
-
-      $writer->insertAll($datos);
-      header("Content-type: text/csv");
-      header("Content-Disposition: attachment; filename=file.csv");
-      header("Pragma: no-cache");
-      header("Expires: 0");
-      echo $writer;
-    }
-    
-
-    /*
-    ***
-    ***
-    */
-    elseif($format == 'fullcsv'){
-      // get the base data
-      $questions  = $this->question_model->get($blueprint_id, false, true);
-      $options    = $this->question_options_model->get($blueprint_id);
-      $applicants = array_column($this->answers_model->get_applicant_list($blueprint_id), 'form_key');
-  
-      $writer = Writer::createFromFileObject(new SplTempFileObject()); //the CSV file will be created into a temporary File
-      $writer->setDelimiter(","); //the delimiter will be the tab character
-      $writer->setNewline("\r\n"); //use windows line endings for compatibility with some csv libraries
-      $writer->setEncodingFrom("utf-8");
-      $headers = $this->get_csv_header($questions);
-      $writer->insertOne($headers);
-
-      $datos = [];
-
-      foreach($applicants as $applicant){
-        $answers    = $this->answers_model->get($applicant, true);
-        $answers_id = array_column($answers, 'question_id');
-
-        $row = [];
-        foreach($questions as $q){
-          $q->options = array_filter($options, function($opt) use($q){
-            return $opt->question_id == $q->id;
-          });
-          $q_id = array_search($q->id, $answers_id);
-          $res  = $q->type == 'text' ? $answers[$q_id]['text_value'] : $answers[$q_id]['num_value'];
-          if(! empty($q->options) && $q->type == 'number'){
-            $res = array_filter($q->options, function($opt) use($res){
-              return $opt->value == $res;
+        // [2.3] si la pregunta tiene opciones, se cuentan las coincidencias por opción
+        else{
+          $question->answers = false;
+          foreach($question->options as $option){
+            $option->answer = array_filter($response['answers'], function($answer) use($question, $option){
+              return $answer->question_id == $question->id && $answer->num_value == $option->value;
             });
-            $res = empty($res) ? false : array_shift($res)->description;
+            $option->answer_num = empty($option->answer) ? 0 : array_pop($option->answer)->total;
           }
-          $row[] = $res;
         }
-        $datos[] = $row;
       }
 
-      $writer->insertAll($datos);
-      header("Content-type: text/csv");
-      header("Content-Disposition: attachment; filename=file.csv");
-      header("Pragma: no-cache");
-      header("Expires: 0");
-      echo $writer;
-    }
-    /*
-    ***
-    ***
-    */
-	 	
-    elseif($format == 'archivo'){
-	 	  $filename = "data.json";
-	 	  header("Content-type: application/octet-stream");
-	 	  header("Content-disposition: attachment;filename=$filename");
-	 	  echo json_encode($r);
-	 	}
-	 	else{
-	 	  
-	 	
-	 	$data['response'] 				= $r;
-  
-	 	  
-	 	$data['title'] 			 = 'Resultados de las encuestas Tú Evalúas';
-		$data['description'] 	= 'Resultados de las encuestas Tú Evalúas';
-		$data['body_class'] 	= 'data';
-		$this->load->view('/templates/header_view', $data);
-		$this->load->view('/data/singledata_viz_view');
-		$this->load->view('/templates/footer_view');
-	 	}
-	 	
-	 	
-	 }	
-	 	
-  }
+      // [3] revisa si está dispoinble el CSV
+      $csv  = $response['blueprint']->csv_file;
+      $path = $csv ? $this->csv_path . $csv : false;
+      $file = $path ? get_file_info($path) : false;
+      $url  = $file && $file['size'] ? "/csv/{$csv}" : false;
 
-  //
-  // [ HEADER CONTRUCTOR ]
-  //
-  //
-  private function get_csv_header($questions){
-    $columns = array_map(function($question){
-      return $question->question;
-    },$questions);
+      // [4] se agrupan los resultados para el view
+      $r = [
+        'survey'     => $response['blueprint'],
+        'applicants' => $response['applicants'],
+        'questions'  => $response['questions']
+      ];
 
-    return $columns;
-  }
-
-  //
-  // [ CSV ROW CONTRUCTOR ]
-  //
-  //
-  private function get_csv_rows($blueprint_id, $questions, $options){
-    $answers = $this->answers_model->get_by_blueprint($blueprint_id);
-
-    foreach ($answer as $key => $value) {
-      # code...
+      $data['response']    = $r;
+      $data['file']        = $url;
+      $data['title']       = 'Resultados de las encuestas Tú Evalúas';
+      $data['description'] = 'Resultados de las encuestas Tú Evalúas';
+      $data['body_class']  = 'data';
+      $this->load->view('/templates/header_view', $data);
+      $this->load->view('/data/singledata_viz_view', $data);
+      $this->load->view('/templates/footer_view');
+	  }
+    // [B] Se muestran todas las encuestas
+    else{
+      $blueprints          =  $this->open_data_model->get_blueprints();
+      $data['title']       = 'Resultados de las encuestas Tú Evalúas';
+      $data['description'] = 'Resultados de las encuestas Tú Evalúas';
+      $data['body_class']  = 'data';
+      $data['response']    = $blueprints;
+    
+      $this->load->view('/templates/header_view', $data);
+      $this->load->view('/data/data_view');
+      $this->load->view('/templates/footer_view');
     }
   }
-
-
-
 }

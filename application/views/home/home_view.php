@@ -20,10 +20,21 @@
 					
 				</div>
 				<div class="col-sm-4">
+					<?php
+					  // revisa si existe el CSV
+					  $csv  = $survey->csv_file;
+					  $path = $csv ? $csv_path . $csv : false;
+					  $file = $path ? get_file_info($path) : false;
+					  $url  = $file && $file['size'] ? "/csv/{$csv}" : false;
+					?>
+					<?php if($url): ?>
+					<!-- si existe el CSV, muestra el link -->
 					<span class="data">
-						<?php echo anchor('resultados/'. $survey->id, "Descargar datos");?>
+						<a href="<?php echo $url; ?>">Descargar datos</a>
 						</span>
-					<span class="date"><?php echo $survey->creation_date;?></span>
+					<span class="date"><?php echo date('d-m-Y h:iA', $file['date']); ?></span>
+				<?php endif; ?>
+
 				</div>
 			</li>
 		<?php endforeach; ?>
