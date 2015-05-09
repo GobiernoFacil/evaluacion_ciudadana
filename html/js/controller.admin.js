@@ -53,7 +53,9 @@ define(function(require){
       // [ ADD RULE ]
       'change #survey-navigation-rules-container .select-question' : '_render_rules_panel_answers',
       'click #survey-navigation-rules-container .add-rule-btn'     : '_save_rule',
-      'click #survey-navigation-rules-container .remove-rule-btn'  : '_remove_rule'
+      'click #survey-navigation-rules-container .remove-rule-btn'  : '_remove_rule',
+      // [ CREATE CSV ]
+      'click .create-survey-btn' : '_generate_csv'
     },
 
     // 
@@ -653,6 +655,23 @@ define(function(require){
         if(op.value) options.push(op.value);
       }, this);
       return options;
+    },
+
+    // [ GENERATE CSV ]
+    //
+    //
+    _generate_csv : function(e){
+      e.preventDefault();
+      $.post('/index.php/surveys/make-csv', {}, function(data){
+        var anchor     = document.getElementById('get-csv-btn'),
+            create_btn = document.querySelector('.create-survey-btn');
+
+        create_btn.style.display = 'none';   
+        anchor.href = data.full_path;
+        anchor.innerHTML = "generando CSV";
+        anchor.setAttribute('target', '_blank');
+        anchor.style.display = "";
+      }, 'json');
     }
 
   });

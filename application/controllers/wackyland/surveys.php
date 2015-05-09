@@ -25,6 +25,7 @@ class Surveys extends CI_Controller {
   const MIN_LEVEL     = 1;
   const CREATE_LEVEL  = 3;
   const ADMIN_LEVEL   = 5;
+  static $csv_path;
 
   //
   // [ THE CONSTRUCTOR ]
@@ -33,7 +34,10 @@ class Surveys extends CI_Controller {
   function __construct(){
     parent::__construct();
     $this->user = $this->session->userdata('user');
-    $this->login_library->can_access(self::MIN_LEVEL);  
+    $this->login_library->can_access(self::MIN_LEVEL);
+    $this->load->helper('file');
+    $this->csv_path = __DIR__ . '/../../../html/csv/';
+    date_default_timezone_set('America/Mexico_City');
   }
 
   /**
@@ -103,6 +107,8 @@ class Surveys extends CI_Controller {
     $is_admin = $this->user->level >= self::ADMIN_LEVEL;
     $this->login_library->set_blueprint((int)$id, $is_admin);
 
+    $bp  = $this->session->userdata('blueprint');
+    $csv = $bp->csv_file ? get_file_info($this->csv_path . $bp->csv_file) : false;
     $data = [];
     $data['title']       = 'Editar encuesta Tú Evalúas';
     $data['description'] = '';
@@ -113,6 +119,7 @@ class Surveys extends CI_Controller {
     $data['questions'] = $this->question_model->get($data['blueprint']->id);
     $data['rules']     = $this->rules_model->get($data['blueprint']->id);
     $data['options']   = $this->question_options_model->get($data['blueprint']->id);
+    $data['csv_file']  = $csv;
     
     $this->load->view('wackyland/templates/header_view', $data);
     $this->load->view('wackyland/surveys_app_view', $data);
@@ -268,6 +275,7 @@ class Surveys extends CI_Controller {
   //
   public function make_csv(){
     $bp = $this->session->userdata('blueprint');
+    $filename = false;
 
     if($bp){
       $id       = $bp->id;
@@ -277,10 +285,12 @@ class Surveys extends CI_Controller {
       $new_file = $path . 'csv/' . $filename;
 
       exec("php {$index} wackyland/make_csv index {$id} > {$new_file}");
+
+      $this->blueprint_model->update($id, ['csv_file' => $filename]);
     }
 
     header('Content-type: application/json');
-    echo json_encode(['file' => $new_file]);
+    echo json_encode(['file' => $filename, 'full_path' => "/csv/{$filename}"]);
   }
 
   //
@@ -288,9 +298,8 @@ class Surveys extends CI_Controller {
   //
   //
   public function csv_is_avaliable($file = false){
-    $this->load->helper('file');
     $filename = $this->sanitize_string($file);
-    $file = __DIR__ . '/../../../html/csv/' . $filename;
+    $file     = __DIR__ . '/../../../html/csv/' . $filename;
 
     $response = get_file_info($file);
 

@@ -42,7 +42,7 @@ $route['default_controller']  = "home";
 $route['404_override']        = '';
 $route['cuestionario/(:any)'] = 'form_application/index/$1';
 
-$route['municipios/(:num)']  = 'question_options/get_cities/$1';
+$route['municipios/(:num)']         = 'question_options/get_cities/$1';
 $route['localidades/(:num)/(:num)'] = 'question_options/get_localities/$1/$2';
 							  	
 $route['resultados']           = 'open_data';
@@ -71,6 +71,7 @@ $route['surveys/question']         = 'wackyland/surveys/add_question';
 $route['surveys/rule/(:num)']      = 'wackyland/surveys/delete_rule/$1';
 $route['surveys/rule']             = 'wackyland/surveys/add_rule';
 $route['surveys/eliminar/(:num)']  = 'wackyland/surveys/delete/$1';
+$route['surveys/make-csv']         = 'wackyland/surveys/make_csv';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */
