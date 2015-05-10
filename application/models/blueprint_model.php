@@ -31,8 +31,10 @@ class Blueprint_model extends CI_Model{
     return $q->result();
   }
 
-  function all_from($user_id){
-    $q = $this->db->get_where(self::TABLE, ['creator' => $user_id, 'is_visible' => 1]);
+  function all_from($user_id, $public = false){
+    $where = ['creator' => $user_id, 'is_visible' => 1];
+    if($public) $where['is_public'] = 1;
+    $q = $this->db->get_where(self::TABLE, $where);
     return $q->result();
   }
 
