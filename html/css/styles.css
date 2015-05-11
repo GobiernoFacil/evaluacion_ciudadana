@@ -1422,6 +1422,14 @@ article {
       background: #23272d; }
   .box .options li {
     list-style: none; }
+  .box.cuestionario h3 {
+    border-top: 1px solid #ccc;
+    margin-top: 30px;
+    padding: 10px 0 20px;
+    font-size: 18px;
+    font-weight: 700; }
+  .box.cuestionario li {
+    list-style: none; }
 
 .dashboard .box {
   padding-bottom: 0; }
