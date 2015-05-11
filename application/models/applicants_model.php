@@ -42,4 +42,8 @@ class Applicants_model extends CI_Model{
     $this->db->where(['blueprint_id' => $blueprint_id]);
     return $this->db->count_all_results();
   }
+
+  function delete_from_blueprint($blueprint_id){
+    $this->db->delete(self::TABLE, ['blueprint_id' => $blueprint_id]); 
+  }
 }

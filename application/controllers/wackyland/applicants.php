@@ -141,7 +141,13 @@ class Applicants extends CI_Controller {
   }
 
   function delete($blueprint_id){
+    $creator    = $this->user->level >= self::ADMIN_LEVEL ? false : $this->user->id;
+    $blueprint  = $this->blueprint_model->get((int)$blueprint_id, $creator);
 
+    if(!empty($blueprint)){
+      $this->applicants_model->delete_from_blueprint($blueprint->id);
+    }
+    redirect('bienvenido/cuestionarios');
   }
 
   private function add_applicant($blueprint_id, $form_key, $email = null){
