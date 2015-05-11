@@ -21,8 +21,10 @@ class Blueprint_model extends CI_Model{
     return $q->row();
   }
 
-  function all(){
-    $q = $this->db->get_where(self::TABLE, ['is_visible' => 1]);
+  function all($only_public = false){
+    $where = ['is_visible' => 1];
+    if($only_public) $where['is_public'] = 1;
+    $q = $this->db->get_where(self::TABLE, $where);
     return $q->result();
   }
 

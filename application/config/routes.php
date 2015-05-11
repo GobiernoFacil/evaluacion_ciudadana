@@ -64,9 +64,13 @@ $route['bienvenido/encuestas']       = 'wackyland/surveys';
 $route['bienvenido/usuarios/(:num)'] = 'wackyland/admins/update/$1';
 $route['bienvenido/usuarios']        = 'wackyland/admins';
 $route['bienvenido/cuestionarios']   = 'wackyland/applicants';
-$route['bienvenido/cuestionarios/mail_to/(:num)']  = 'wackyland/applicants/mailto/$1';
-$route['bienvenido/cuestionarios/new_num/(:num)']  = 'wackyland/applicants/newnum/$1';
-$route['bienvenido/cuestionarios/new_file/(:num)'] = 'wackyland/applicants/newfile/$1';
+
+$route['bienvenido/cuestionarios/mail_to/(:num)']    = 'wackyland/applicants/mailto/$1';
+$route['bienvenido/cuestionarios/new_num/(:num)']    = 'wackyland/applicants/newnum/$1';
+$route['bienvenido/cuestionarios/new_file/(:num)']   = 'wackyland/applicants/newfile/$1';
+$route['bienvenido/cuestionarios/get_all/(:num)']    = 'wackyland/applicants/getall/$1';
+$route['bienvenido/cuestionarios/get_emails/(:num)'] = 'wackyland/applicants/getemails/$1';
+$route['bienvenido/cuestionarios/delete/(:num)']     = 'wackyland/applicants/delete/$1';
 
 // SURVEY APP
 $route['surveys/blueprint/update'] = 'wackyland/surveys/update_blueprint';

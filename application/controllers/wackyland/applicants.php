@@ -40,12 +40,18 @@ class Applicants extends CI_Controller {
   }
 
   function index(){
-    $blueprints = $this->blueprint_model->all_from($this->user->id, true);
+    if($this->user->level >= self::ADMIN_LEVEL){
+      $blueprints = $this->blueprint_model->all(true);
+    }
+    else{
+      $blueprints = $this->blueprint_model->all_from($this->user->id, true);
+    }
     $this->load->view('wackyland/applicants_view', ['blueprints' => $blueprints]);
   }
 
   function mailto($bluerint_id){
-
+    $blueprint = $this->blueprint_model->get($id, $creator = false);
+     $email    = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
   }
 
   function newnum($blueprint_id){
@@ -53,6 +59,18 @@ class Applicants extends CI_Controller {
   }
 
   function newfile($blueprint_id){
+
+  }
+
+  function getall($blueprint_id){
+
+  }
+
+  function getemails($blueprint_id){
+
+  }
+
+  function delete($blueprint_id){
 
   }
 
