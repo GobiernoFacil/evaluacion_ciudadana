@@ -58,6 +58,13 @@ class Applicants extends CI_Controller {
         $blueprint->applicants = $this->applicants_model->count_all($blueprint->id);
       }
     }
+    $data['title']       = 'Encuestas por aplicar Tú Evalúas';
+    $data['description'] = '';
+    $data['body_class']  = 'cuestionarios';
+    $data['user']        = $this->user;
+
+    
+    $this->load->view('wackyland/templates/header_view', $data);
     $this->load->view('wackyland/applicants_view', ['blueprints' => $blueprints, 'max_app' => $this->max_applicants]);
   }
 
