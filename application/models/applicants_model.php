@@ -36,4 +36,10 @@ class Applicants_model extends CI_Model{
     $q = $this->db->get_where(self::TABLE, ['blueprint_id' => $blueprint_id]);
     return $q->result();
   }
+
+  function count_all($blueprint_id){
+    $this->db->from(self::TABLE);
+    $this->db->where(['blueprint_id' => $blueprint_id]);
+    return $this->db->count_all_results();
+  }
 }

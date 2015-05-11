@@ -46,12 +46,27 @@ class Applicants extends CI_Controller {
     else{
       $blueprints = $this->blueprint_model->all_from($this->user->id, true);
     }
-    $this->load->view('wackyland/applicants_view', ['blueprints' => $blueprints]);
+    if(!empty($blueprints)){
+      foreach ($blueprints as $blueprint){
+        $blueprint->applicants = $this->applicants_model->count_all($blueprint->id);
+      }
+    }
+    $this->load->view('wackyland/applicants_view', ['blueprints' => $blueprints, 'max_app' => $this->max_applicants]);
   }
 
-  function mailto($bluerint_id){
-    $blueprint = $this->blueprint_model->get($id, $creator = false);
-     $email    = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+  function mailto($blueprint_id){
+    $creator   = $this->user->level >= self::ADMIN_LEVEL ? false : $this->user->id;
+    $blueprint = $this->blueprint_model->get((int)$blueprint_id, $creator);
+    $email     = filter_input(INPUT_POST, 'email', FILTER_VALIDATE_EMAIL);
+
+    if(empty($blueprint) || !$email){
+      die('ora qué!');
+    }
+
+    $form_key = md5('blueprint' . $blueprint_id . $email);
+    $this->add_applicant((int)$blueprint_id, $form_key, $email);
+    $this->mailgun_library->survey_invitation($email, $form_key);
+    redirect('bienvenido/cuestionarios');
   }
 
   function newnum($blueprint_id){
@@ -74,4 +89,40 @@ class Applicants extends CI_Controller {
 
   }
 
+  private function add_applicant($blueprint_id, $form_key, $email = null){
+    $this->applicants_model->save([
+      'blueprint_id' => $blueprint_id,
+      'user_email'   => $email,
+      'form_key'     => $form_key,
+      'is_over'      => 0
+    ]);
+  }
+
+  private function makeRange($length) {
+    for ($i = 0; $i < $length; $i++) {
+        yield $i;
+    }
+  }
+/*
+foreach (makeRange(1000000) as $i) {
+    echo $i, PHP_EOL;
+}
+*/
+
+  private function getRows($file) {
+    $handle = fopen($file, 'rb');
+    if ($handle === false) {
+        throw new Exception();
+    }
+    while (feof($handle) === false) {
+        yield fgetcsv($handle);
+    }
+    fclose($handle);
+  }
+
+/*
+foreach (getRows('data.csv') as $row) {
+    print_r($row);
+}
+*/
 }

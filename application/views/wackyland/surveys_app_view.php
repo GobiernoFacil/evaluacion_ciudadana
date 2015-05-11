@@ -32,7 +32,7 @@
           <div class="col-sm-10 col-sm-offset-1">
             <p><label>
               <input type="checkbox" name="is_closed">
-              Está en curso
+              Ya terminó
             </label></p>
           </div>
         </div>

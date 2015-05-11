@@ -16,7 +16,7 @@
   <ul>
     <?php foreach ($blueprints as $bp): ?>
     <li>
-    <h2><?= $bp->title; ?></h2>
+    <h2><?= $bp->title; ?> (<?= number_format($bp->applicants) . ' de ' . number_format($max_app); ?>)</h2>
     <!-- [A] envía una a algún correo -->
     <form id="mail-to-<?=$bp->id;?>" action="<?="{$base_path}/mail_to/{$bp->id}";?>" method="post">
       <h3>Envía formulario a un correo</h3>
