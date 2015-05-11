@@ -42,6 +42,7 @@
     		  <li <?php echo (isset($body_class) && ($body_class == "surveys")) ? 'class="current"' : '';?>>
     		  	<a href="<?= site_url("bienvenido/encuestas"); ?>">Encuestas</a>
     		  </li>
+
     		  <li <?php echo (isset($body_class) && ($body_class == "users")) ? 'class="current"' : '';?>>
             <?php if($user->level >= 5): ?>
     		  	<a href="<?= site_url("bienvenido/usuarios"); ?>">Usuarios</a>
@@ -49,6 +50,10 @@
             <a href="<?= site_url("bienvenido/usuarios/" . $user->id); ?>">Cuenta</a>
             <?php endif; ?>
     		  </li>
+
+          <li <?php echo (isset($body_class) && ($body_class == "applicants")) ? 'class="current"' : '';?>>
+          <a href="<?= site_url("bienvenido/cuestionarios"); ?>">Cuestionarios</a>
+        </li>
     		 <!-- <li><a href="<?= site_url("wackyland/opendata"); ?>">Datos abiertos</a></li>
     		  <li><a href="<?= site_url("wackyland/lists"); ?>">Correos</a></li>-->
     		</ul>

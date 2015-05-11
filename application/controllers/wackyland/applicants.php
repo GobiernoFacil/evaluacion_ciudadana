@@ -7,6 +7,8 @@
 * encuestas aplicadas o por aplicar
 *
 */
+use League\Csv\Writer;
+use League\Csv\Reader;
 
 class Applicants extends CI_Controller {
 
@@ -37,6 +39,11 @@ class Applicants extends CI_Controller {
     $this->max_applicants = $this->config->item('max_applicants');
     $this->login_library->can_access(self::MIN_LEVEL);
     date_default_timezone_set('America/Mexico_City');
+
+    // recomendación de la librería de CSV para mac OSX
+    if (! ini_get("auto_detect_line_endings")){
+      ini_set("auto_detect_line_endings", '1');
+    }
   }
 
   function index(){
@@ -70,11 +77,52 @@ class Applicants extends CI_Controller {
   }
 
   function newnum($blueprint_id){
+    $num = $this->input->post('cuestionarios');
+    if(!$num){
+      redirect('bienvenido/cuestionarios');
+    }
 
+    $creator    = $this->user->level >= self::ADMIN_LEVEL ? false : $this->user->id;
+    $blueprint  = $this->blueprint_model->get((int)$blueprint_id, $creator);
+    $applicants = $this->applicants_model->count_all($blueprint->id);
+    $available  = $this->max_applicants - $applicants;
+
+    $total      = $available - (int)$num > 0 ? $num : $available;
+
+    foreach($this->makeRange($total) as $i){
+      $form_key = md5('blueprint' . $blueprint->id . uniqid($i));
+      $this->add_applicant($blueprint->id, $form_key);
+    }
+
+    redirect('bienvenido/cuestionarios');
   }
 
   function newfile($blueprint_id){
+    //$reader = Reader::createFromPath('/path/to/your/csv/file.csv');
+    if(empty($_FILES) || $_FILES['csv']['error']) redirect('bienvenido/cuestionarios');
+    
+    $creator    = $this->user->level >= self::ADMIN_LEVEL ? false : $this->user->id;
+    $blueprint  = $this->blueprint_model->get((int)$blueprint_id, $creator);
+    $applicants = $this->applicants_model->count_all($blueprint->id);
+    $available  = $this->max_applicants - $applicants;
 
+    if($available <= 0 || empty($blueprint)) redirect('bienvenido/cuestionarios');
+
+
+    $reader = Reader::createFromPath($_FILES['csv']['tmp_name']);
+    $data = $reader->query();
+    $counter = 0;
+    foreach ($data as $lineIndex => $row){
+      $email = filter_var($row[0], FILTER_VALIDATE_EMAIL);
+      if($email){
+        $form_key = md5('blueprint' . $blueprint->id . $email);
+        $this->add_applicant($blueprint->id, $form_key, $email);
+        $counter++;
+      }
+      if($counter > $available) break;
+    }
+
+    redirect('bienvenido/cuestionarios');
   }
 
   function getall($blueprint_id){
