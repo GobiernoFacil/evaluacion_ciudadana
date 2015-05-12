@@ -21,9 +21,7 @@ class Tuevaluas extends CI_Controller {
     parent::__construct();
     // [ THE SESSION CHECK ] 
     $this->user = $this->session->userdata('user');
-		if(! $this->user || self::MIN_LEVEL > $this->user->level){
-		redirect('bienvenido', 'refresh');
-    }
+		$this->login_library->can_access(self::MIN_LEVEL);
   }
 
   //

@@ -10,10 +10,10 @@ class Admins extends CI_Controller {
   // [ SETTINGS ]
   //
   //
-  const MIN_LEVEL     = 3;
-  const CREATE_LEVEL  = 5;
-  const PASSWORD_MIN  = 8;
-  const DEFAULT_LEVEL = 1;
+  const MIN_LEVEL     = 3; // debe ser funcionario para entrar aquí
+  const CREATE_LEVEL  = 5; // para crear usuarios, debe ser admin
+  const PASSWORD_MIN  = 8; // mínimo de caracteres para los passwords
+  const DEFAULT_LEVEL = 1; // si el nivel no está definido, se va a la goma
 
   //
   // [ CONSTRUCTOR ]
@@ -21,11 +21,11 @@ class Admins extends CI_Controller {
   //
   function __construct(){
     parent::__construct();
-    $this->load->library('email');
+    // referencia a la información de login del usuario
     $this->user = $this->session->userdata('user');
-    if(! $this->user || self::MIN_LEVEL > $this->user->level){
-      redirect('wackyland/login', 'refresh');
-    }   
+    // revisa que el usuario esté logeado y tenga el 
+    // nivel necesario para acceder a esta sección
+    $this->login_library->can_access(self::MIN_LEVEL); 
   }
 
   //
@@ -33,14 +33,20 @@ class Admins extends CI_Controller {
   //
   //
   public function index(){
-    if($this->user->level < self::CREATE_LEVEL){
-      redirect('bienvenido/usuarios/' . $this->user->id,  'refresh');
-    }
+    // revisa que el usuario esté logeado y tenga el 
+    // nivel necesario para acceder a esta sección
+    $redirect = 'bienvenido/usuarios/' . $this->user->id;
+    $this->login_library->can_access(self::CREATE_LEVEL, $redirect); 
 
+    // la información de salida para el view. Si no se recibe información
+    // del POST para crear un nuevo usuario, el reporte no contiene nada.
     $report = false;
     if(!empty($_POST)){
+    // si se recibe infomración para crear un nuevo usuario, intenta crearlo,
+    // y el resultado se asigna al reporte de salida
       $report = $this->create();
     }
+
     $admins = $this->admins_model->all();
     
     $data['title']       = 'Admins Tú Evalúas';
@@ -82,7 +88,8 @@ class Admins extends CI_Controller {
               'exist'    => $exist, 
               'level'    => $level];
     }
-    // [4] si pasa la validación, crea un usuario y lo regresa
+    // [4] si pasa la validación, crea un usuario y lo regresa. También envía
+    //     una notificación por correo.
     else{
       $hash    = password_hash($password, PASSWORD_DEFAULT, ['cost' => 12]);
       $user_id = $this->admins_model->add(['email' => $email, 'password' => $hash, 'level'=>$level]);
@@ -96,8 +103,8 @@ class Admins extends CI_Controller {
   //
   //
   public function update($id = false){
+    // revisa que el id exista, que pertenzca al usuario, o que el usuario sea administrador
     $id = $id ? (int)$id : $this->user->id;
-
     if($id != $this->user->id && self::CREATE_LEVEL > $this->session->userdata('user')->level){
       $id = $this->user->id;
     }
@@ -108,10 +115,10 @@ class Admins extends CI_Controller {
       $report = $this->update_user($id);
     }
     $data = [];
-    $data['user'] = $this->admins_model->get($id);
+    $data['user']   = $this->admins_model->get($id);
     $data['report'] = $report;
 	
-	$data['title']       = 'Editar Usuario';
+	$data['title']         = 'Editar Usuario';
     $data['description'] = '';
     $data['body_class']  = 'users';
     
