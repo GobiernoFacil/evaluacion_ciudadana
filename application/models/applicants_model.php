@@ -9,9 +9,11 @@
 class Applicants_model extends CI_Model{
 
   const TABLE = 'applicants';
+  static $base_url;
   
   function __construct(){
     parent::__construct();
+    $this->base_url = base_url();
   }
 
   function get($form_key){
@@ -32,10 +34,26 @@ class Applicants_model extends CI_Model{
     return $this->db->insert_id();
   }
 
-  function all($blueprint_id){
+  function all($blueprint_id, $as_array = false){
+    $url = $this->base_url . 'index.php/cuestionario/';
+    $this->db->select("id, blueprint_id, user_email, form_key, is_over, CONCAT('{$url}', form_key) AS url", false);
     $q = $this->db->get_where(self::TABLE, ['blueprint_id' => $blueprint_id]);
-    return $q->result();
+    if($as_array){
+      return $q->result_array();
+    }
+    else{
+      return $q->result();
+    }
   }
+
+  function email_list($blueprint_id){
+    $this->db->select("user_email");
+    $this->db->where('blueprint_id', $blueprint_id);
+    $this->db->where('user_email !=', '');
+    $q = $this->db->get(self::TABLE);
+    return $q->result_array();
+  }
+
 
   function count_all($blueprint_id){
     $this->db->from(self::TABLE);

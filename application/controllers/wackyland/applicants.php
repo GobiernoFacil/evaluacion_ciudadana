@@ -133,11 +133,54 @@ class Applicants extends CI_Controller {
   }
 
   function getall($blueprint_id){
+    $creator    = $this->user->level >= self::ADMIN_LEVEL ? false : $this->user->id;
+    $blueprint  = $this->blueprint_model->get((int)$blueprint_id, $creator);
 
+    if(empty($blueprint)) redirect('bienvenido/cuestionarios');
+
+    $applicants = $this->applicants_model->all($blueprint->id, true);
+
+    $writer = Writer::createFromFileObject(new SplTempFileObject());
+    $writer->setDelimiter(","); 
+    $writer->setNewline("\r\n");
+    $writer->setEncodingFrom("utf-8");
+    $headers = ['id', 'blueprint_id', 'user_email', 'form_key', 'is_over', 'url'];
+    $writer->insertOne($headers);
+
+    $writer->insertAll($applicants);
+
+    header("Content-type: text/csv");
+    header("Content-Disposition: attachment; filename=file.csv");
+    header("Pragma: no-cache");
+    header("Expires: 0");
+    echo $writer . PHP_EOL;
   }
 
   function getemails($blueprint_id){
+    $creator    = $this->user->level >= self::ADMIN_LEVEL ? false : $this->user->id;
+    $blueprint  = $this->blueprint_model->get((int)$blueprint_id, $creator);
 
+    if(empty($blueprint)) redirect('bienvenido/cuestionarios');
+
+    $emails = $this->applicants_model->email_list($blueprint->id);
+
+    $writer = Writer::createFromFileObject(new SplTempFileObject());
+    $writer->setDelimiter(","); 
+    $writer->setNewline("\r\n");
+    $writer->setEncodingFrom("utf-8");
+    $headers = ['user_email'];
+    $writer->insertOne($headers);
+
+    $writer->insertAll($emails);
+
+    header("Content-type: text/csv");
+    header("Content-Disposition: attachment; filename=file.csv");
+    header("Pragma: no-cache");
+    header("Expires: 0");
+    echo $writer . PHP_EOL;
+  }
+
+  function sendall($blueprint_id){
   }
 
   function delete($blueprint_id){
