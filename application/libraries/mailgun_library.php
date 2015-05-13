@@ -47,7 +47,7 @@ class Mailgun_library{
   //
   function survey_invitation($email, $form_key){
     $mailgun = new Mailgun ($this->key);
-    $url  = base_url("cuestionario/" . $form_key);
+    $url  = 'http://tuevaluas.com.mx/index.php/cuestionario/' . $form_key; //base_url("cuestionario/" . $form_key);
     $message = [
       'from'    => 'robot.invitacion@tuevaluas.com.mx',
       'to'      => $email,
