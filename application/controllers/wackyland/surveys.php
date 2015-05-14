@@ -307,6 +307,28 @@ class Surveys extends CI_Controller {
     echo json_encode(['file' => $response]);
   }
 
+  //
+  //
+  //
+  //
+  public function upload_my_results(){
+    $success = false;
+    $name    = null;
+    $upload  = reset($_FILES);
+    if(! empty($upload) || ! $upload['error']){
+      $bp        = $this->session->userdata('blueprint');
+      $extension = pathinfo($upload['name'], PATHINFO_EXTENSION);
+      $name = uniqid('resultados') . (empty($extension) ? '' : '.' . $extension);
+      // $this->csv_path
+      if(move_uploaded_file($upload['tmp_name'], $this->csv_path . $name)){
+        $success = $this->blueprint_model->update($bp->id, ['csv_file' => $name]);
+      }
+    }
+
+    header('Content-type: application/json');
+    echo json_encode(['success' => $success, 'name' => $name]);
+  }
+
 
   /**
   * THE OPTIONS

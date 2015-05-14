@@ -52,8 +52,15 @@
               <p><a href="#" class="create-survey-btn">crear CSV</a></p>
               <p><a style="display:none" id="get-csv-btn" href="#">[ CSV PLACEHOLDER ]</a></p>
             <?php endif; ?>
-
             <!-- <pre><?php var_dump($csv_file); ?></pre> -->
+          </div>
+        </div>
+
+        <!-- PUT YOUR OWN FILE CSV -->
+        <div class="row">
+          <div class="col-sm-10 col-sm-offset-1">
+          <p>Sube tus propios resultados</p>
+          <p><input type="file" name="results" id="results-file"></p>
           </div>
         </div>
       </section>

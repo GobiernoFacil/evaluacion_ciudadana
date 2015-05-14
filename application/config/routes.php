@@ -80,6 +80,7 @@ $route['surveys/rule/(:num)']      = 'wackyland/surveys/delete_rule/$1';
 $route['surveys/rule']             = 'wackyland/surveys/add_rule';
 $route['surveys/eliminar/(:num)']  = 'wackyland/surveys/delete/$1';
 $route['surveys/make-csv']         = 'wackyland/surveys/make_csv';
+$route['surveys/upload-results']   = 'wackyland/surveys/upload_my_results';
 
 /* End of file routes.php */
 /* Location: ./application/config/routes.php */

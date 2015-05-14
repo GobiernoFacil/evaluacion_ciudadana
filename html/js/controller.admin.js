@@ -55,7 +55,9 @@ define(function(require){
       'click #survey-navigation-rules-container .add-rule-btn'     : '_save_rule',
       'click #survey-navigation-rules-container .remove-rule-btn'  : '_remove_rule',
       // [ CREATE CSV ]
-      'click .create-survey-btn' : '_generate_csv'
+      'click .create-survey-btn' : '_generate_csv', 
+      // [ UPLOAD RESULTS ]
+      'change #results-file' : '_upload_results'
     },
 
     // 
@@ -672,6 +674,28 @@ define(function(require){
         anchor.setAttribute('target', '_blank');
         anchor.style.display = "";
       }, 'json');
+    },
+
+    // [ UPLOAD RESULTS ]
+    //
+    //
+    _upload_results : function(e){
+      var files = e.target.files,
+          fData = new FormData(),
+          xhr   = new XMLHttpRequest(),
+          url   = "/index.php/surveys/upload-results",
+          file, name;
+
+      if(!files.length) return;
+
+      file = files[0];
+      name = file.name;
+      fData.append(name, file);
+      xhr.open('post', url, true);
+      xhr.onload = function(data){
+        console.log(data);
+      }
+      xhr.send(fData);
     }
 
   });
