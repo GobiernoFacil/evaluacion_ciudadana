@@ -684,12 +684,12 @@ define(function(require){
           fData = new FormData(),
           xhr   = new XMLHttpRequest(),
           url   = "/index.php/surveys/upload-results",
-          file, name;
+          name  = "results",
+          file;
 
       if(!files.length) return;
 
       file = files[0];
-      name = file.name;
       fData.append(name, file);
       xhr.open('post', url, true);
       xhr.onload = function(data){
