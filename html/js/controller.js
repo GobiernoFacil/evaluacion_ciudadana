@@ -11,7 +11,11 @@ define(function(require){
   // L O A D   T H E   A S S E T S   A N D   L I B R A R I E S
   // --------------------------------------------------------------------------------
   //
+  //  Backbone: Backbone.js
   var Backbone = require('backbone'),
+  //  Section: es un view que contiene la lógica y HTML de cada sección.
+  //  Este script carga a su vez un "view" llamado question_view.js, que 
+  //  Se encarga de generar el HTML de cada pregunta y su conexión con el servidor.
       Section  = require('views/section_view');
 
   //
@@ -20,29 +24,30 @@ define(function(require){
   //
   var controller = Backbone.View.extend({
     
-    // ------------------
-    // DEFINE THE EVENTS
-    // ------------------
+    // 
+    // [   DEFINE THE EVENTS   ]
+    // 
     //
     events :{
       'submit #survey' : '_do_nothing'
     },
 
-    // -----------------
-    // SET THE CONTAINER
-    // -----------------
+    // 
+    // [ SET THE CONTAINER ]
+    //
     //
     el : 'body',
 
-    // ------------------------
-    // THE INITIALIZE FUNCTION
-    // ------------------------
+    //
+    // [ THE INITIALIZE FUNCTION ]
+    //
     //
     initialize : function(){
 
       // [ THE MODEL ]
       // inicia el modelo con el id del bluprint, el identificador
-      // del formulario y el título
+      // del formulario y el título. agentesFormSettings se define en
+      // el HTML que carga este script (mediante require.js)
       this.model = new Backbone.Model({
         id    : agentesFormSettings.id,
         key   : agentesFormSettings.key, 
@@ -89,6 +94,10 @@ define(function(require){
     // R E N D E R   F U N C T I O N S 
     // --------------------------------------------------------------------------------
     //
+
+    // [ THE RENDER ]
+    //
+    //
     render : function(){
       // [ THE FIRST SECTION ]
       // [1] dibuja solo la primera sección del formulario
@@ -97,7 +106,22 @@ define(function(require){
       this.navigation_pointer = 0;
     },
 
+    // [ RENDER NEXT SECTION ]
+    //
+    //
     render_next : function(){
+      // [ SOME VALIDATION ]
+      // revisa si el usuario ha contestado todas las preguntas
+      // antes de pasar a la siguiente sección. Si le falta alguna,
+      // se le indica mediante un recuadro rosa que le falta contestar
+      // esa pregunta. Porque #YOLO
+      var errors = this._validate_section();
+      if(errors.length){
+        _.each(errors, function(view){
+          view.el.style.border = "1px solid #FF6F69";
+        });
+        return false;
+      }
       // [ THE n SECTION ]
       // dibuja la siguiente sección, siempre y cuando exista!
       // [1] obtiene la siguiente posición del formulario
@@ -151,45 +175,34 @@ define(function(require){
       }
     },
 
-    render_any : function(position){
-      // [ THE n SECTION ]
-      // dibuja CUALQUIER SECCIÓN O____O!!!!
-
-      // [1] hace hueco para el contenido
-        this.$('#survey').html('');
-      // [2] renderea la siguiente sección
-        this.$('#survey').append(this.sections[position].el);
-      // [5] actualiza el pointer
-        this.navigation_pointer = position;
-    },
-
-    render_all : function(){
-      // [ THE SECTIONS ]
-      // agrega un <fieldset> por cada sección del formulario;
-      // cada uno puede contener descripciones y preguntas.
-      _.each(this.sections, function(section){
-        this.$('#survey').append(section.el);
-      }, this);
-    },
-
-
     //
     // I N T E R N A L   F U N C T I O N S 
     // --------------------------------------------------------------------------------
     //
 
+    // [ SET NAVIGATION RULES ]
+    //
+    //
     _define_nav_rules : function(){
       // [ THE NAV RULES]
       // con esta guía, no se muestran todos los páneles, solo
       // los que concuerden con la navegación.
       // hace falta definir algo similar para validar las respuestas.
 
+      // [1] obtiene una lista de las secciones existentes.
       var sections  = _.uniq(this.collection.pluck('section_id'));
 
+      // [2] inicia un array que contendrá las reglas de navegación
+      //     para cada sección.
       this.nav_rules = [];
+
+      // [3] para cada sección, busca si existen reglas que aplicar.
+      //     si no hay ninguna regla, pasa el valor de NULL para la sección.
       _.each(sections, function(section){
         var rules = this.rules.where({section_id : section});
         if(rules.length){
+      // [3.1] cada regla contiene la pregunta a la que pertenece y un arreglo
+      //       con las reglas que debe aplicar
           this.nav_rules.push({
             question : rules[0].get('question_id'),
             val      : _.map(rules, function(rule){return rule.get('value');})
@@ -201,6 +214,9 @@ define(function(require){
       }, this);
     },
 
+    // [ CREATE SECTION ]
+    //
+    //
     _create_sections : function(){
       // [ THE SECTIONS ]
       // A partir de la colección de preguntas, genera una lista de secciones.
@@ -217,7 +233,13 @@ define(function(require){
       }, this);
     },
 
+    // [ UPDATE QUESTIONS ]
+    //
+    //
     _update_questions : function(){
+      // Esta función se ejecuta al inicio del cuestionario, para asignar 
+      // los valores disponibles a las preguntas ya contestadas, en caso de
+      // que se vuelva a acceder al mismo.
       this.collection.each(function(question){
         // [ THE ANSWER ]
         // para cada pregunta, revisa si ya ha sido contestada. Si no ha
@@ -241,7 +263,29 @@ define(function(require){
       }, this);
     },
 
+    // [ VALIDATE SECTION ]
+    //
+    //
+    _validate_section : function(){
+      var questions = this.sections[this.navigation_pointer].questions,
+          errors    = [];
+
+      _.each(questions, function(question){
+        var value = question.model.attributes.default_value;
+        if(!value) errors.push(question);
+      }, this);
+
+      return errors;
+    },
+
+    // [ DO NOTHING ]
+    //
+    //
     _do_nothing : function(e){
+      // [ DO NOTHING ]
+      // Esta función se ejecuta cuando se envía el formulario. Dado que es
+      // un sistema que se actualiza mediante ajax, no es necesario en ningún
+      // momento que el formulario se envíe.
       e.preventDefault();
     }
 

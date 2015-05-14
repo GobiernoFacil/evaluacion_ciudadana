@@ -237,6 +237,11 @@ define(function(require){
           form_key       : this.controller.model.get('key'),
           question_id    : this.model.id
         };
+      // [2.1] actualiza el valor antes de enviarlo al servidor; esto
+      //       para evitar que el usuario tenga una navegación equivocada
+      //       en caso de que el servidor tarde en responder y actualizar
+      //       el valor de la pregunta
+        this.model.set({'default_value' : res});
 
       // [3] envia la respuesta al servidor
         var that = this;

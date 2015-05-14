@@ -12,7 +12,9 @@ define(function(require){
   // --------------------------------------------------------------------------------
   //
   var Backbone = require('backbone'),
+  //  Question: Se encarga de generar el HTML de cada pregunta y su conexión con el servidor.
       Question = require('views/question_view'),
+  //  Next_btn: Es un template para el botón de next
       Next_btn = require('text!templates/next_button.html');
 
   //
@@ -21,29 +23,29 @@ define(function(require){
   //
   var section = Backbone.View.extend({
 
-    // ------------------
-    // DEFINE THE EVENTS
-    // ------------------
+    // 
+    // [   DEFINE THE EVENTS   ]
+    // 
     //
     events : {
       'click .next' : 'next'
     },
 
-    // -----------------
-    // SET THE CONTAINER
-    // -----------------
+    // 
+    // [ SET THE CONTAINER ]
+    //
     //
     tagName : 'fieldset',
 
-    // -----------------
-    // SET THE TEMPLATES
-    // -----------------
+    // 
+    // [ THE TEMPLATES ]
+    //
     //
     template : _.template(Next_btn),
 
-    // ------------------------
-    // THE INITIALIZE FUNCTION
-    // ------------------------
+    //
+    // [ THE INITIALIZE FUNCTION ]
+    //
     //
     initialize : function(settings){
       this.controller = settings.controller;
@@ -55,6 +57,10 @@ define(function(require){
     //
     // R E N D E R   F U N C T I O N S 
     // --------------------------------------------------------------------------------
+    //
+
+    // [ THE RENDER ]
+    //
     //
     render : function(){
       // [ THE SECTION ]
@@ -80,7 +86,7 @@ define(function(require){
 
       // [5] se agrega el botón de "siguiente"
       this.$el.append(Next_btn);
-      
+
       return this;
     },
 
@@ -88,9 +94,18 @@ define(function(require){
     // N A V   F U N C T I O N S 
     // --------------------------------------------------------------------------------
     //
+
+    // [ THE NEXT BTN ]
+    //
+    //
     next : function(e){
       e.preventDefault();
+      // la función de render_next() está definida en controller.js, que es el
+      // archivo que carga este script
       this.controller.render_next();
+
+      // se mueve al inicio el scroll, por si está muy abajo el asunto
+      $('html, body').animate({scrollTop : 0},800);
     }
   });
 
