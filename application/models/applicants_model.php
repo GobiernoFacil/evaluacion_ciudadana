@@ -8,7 +8,8 @@
 
 class Applicants_model extends CI_Model{
 
-  const TABLE = 'applicants';
+  const TABLE   = 'applicants';
+  const MAILGUN = 'mailgun';
   static $base_url;
   
   function __construct(){
@@ -34,9 +35,13 @@ class Applicants_model extends CI_Model{
     return $this->db->insert_id();
   }
 
-  function all($blueprint_id, $as_array = false){
+  function all($blueprint_id, $as_array = false, $only_valid_email = false){
     $url = $this->base_url . 'index.php/cuestionario/';
     $this->db->select("id, blueprint_id, user_email, form_key, is_over, CONCAT('{$url}', form_key) AS url", false);
+    if($only_valid_email){
+      $this->db->where('user_email !=', '');
+      $this->db->group_by("user_email"); 
+    }
     $q = $this->db->get_where(self::TABLE, ['blueprint_id' => $blueprint_id]);
     if($as_array){
       return $q->result_array();
@@ -63,5 +68,22 @@ class Applicants_model extends CI_Model{
 
   function delete_from_blueprint($blueprint_id){
     $this->db->delete(self::TABLE, ['blueprint_id' => $blueprint_id]); 
+  }
+
+  function register_mailgun_batch($blueprint_id){
+    $mailgun = ['blueprint_id' => $blueprint_id, 'completed' => 0];
+    $this->db->insert(self::MAILGUN, $mailgun);
+    return $this->db->insert_id();
+  }
+
+  function close_mailgun_batch($batch_id){
+    $this->db->update(self::MAILGUN, ['completed' => 1], ['id' => $batch_id]);
+    return $this->db->affected_rows();
+  }
+
+  function batch_in_progress($blueprint_id){
+    $this->db->from(self::MAILGUN);
+    $this->db->where(['blueprint_id' => $blueprint_id, 'completed' => 0]);
+    return $this->db->count_all_results();
   }
 }

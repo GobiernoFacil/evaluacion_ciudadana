@@ -323,19 +323,6 @@ define(function(require){
       this.render_section_menu();
     },
 
-    // [ SHOW THE LOADING STATUS: TITLE ]
-    //
-    //
-    _render_saving_title : function(e){
-
-    },
-
-    // [ SHOW THE SUCCESS STATUS: TITLE ]
-    //
-    //
-    _render_saved_title : function(model, response, options){
-    },
-
     // [ SHOW THE ADD QUESTION FORM ]
     //
     //
@@ -447,6 +434,19 @@ define(function(require){
         ul.children[0].querySelector('input').value = "";
       }
       form.querySelector('input[name="question"]').value = "";
+    },
+
+    // [ SHOW THE LOADING STATUS: TITLE ]
+    //
+    //
+    _render_saving_title : function(e){
+
+    },
+
+    // [ SHOW THE SUCCESS STATUS: TITLE ]
+    //
+    //
+    _render_saved_title : function(model, response, options){
     },
 
     //

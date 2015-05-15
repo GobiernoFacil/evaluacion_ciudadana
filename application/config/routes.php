@@ -72,6 +72,7 @@ $route['bienvenido/cuestionarios/new_num/(:num)']    = 'wackyland/applicants/new
 $route['bienvenido/cuestionarios/new_file/(:num)']   = 'wackyland/applicants/newfile/$1';
 $route['bienvenido/cuestionarios/get_all/(:num)']    = 'wackyland/applicants/getall/$1';
 $route['bienvenido/cuestionarios/get_emails/(:num)'] = 'wackyland/applicants/getemails/$1';
+$route['bienvenido/cuestionarios/send_all/(:num)']   = 'wackyland/applicants/sendall/$1';
 $route['bienvenido/cuestionarios/delete/(:num)']     = 'wackyland/applicants/delete/$1';
 
 // SURVEY APP

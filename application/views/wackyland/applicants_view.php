@@ -57,18 +57,25 @@
 					  </form>
 					  
 					  <div class="col-sm-12">
-					  <h3>Descargar:</h3>
-					  <!-- [D] descarga los cuestionarios y correos en CSV -->
-					  <p><a href="<?="{$base_path}/get_all/{$bp->id}";?>">descarga en CSV el id y correo de los cuestionarios</a></p>
+					    <h3>Descargar:</h3>
+					    <!-- [D] descarga los cuestionarios y correos en CSV -->
+					    <p><a href="<?="{$base_path}/get_all/{$bp->id}";?>">descarga en CSV el id y correo de los cuestionarios</a></p>
 					  
-					  <!-- [E] descarga los correos -->
-					  <p><a href="<?="{$base_path}/get_emails/{$bp->id}";?>">descarga en CSV los correos para 
-					  respaldo o para utilizarlos en otras encuestas</a></p>
+					    <!-- [E] descarga los correos -->
+					    <p><a href="<?="{$base_path}/get_emails/{$bp->id}";?>">descarga en CSV los correos para 
+					    respaldo o para utilizarlos en otras encuestas</a></p>
 					  
-					  <!-- [F] elimina las aplicaciones -->
-					  <p><a href="<?="{$base_path}/delete/{$bp->id}";?>">Elimina los cuestionarios. Esto solo borra el acceso a
-					  cada cuestionario, pero las respuestas de los cuestionarios ya contestados se mantienen.</a></p>
+					    <!-- [F] elimina las aplicaciones -->
+					    <p><a href="<?="{$base_path}/delete/{$bp->id}";?>">Elimina los cuestionarios. Esto solo borra el acceso a
+					    cada cuestionario, pero las respuestas de los cuestionarios ya contestados se mantienen.</a></p>
 					  </div>
+
+					  <div class="col-sm-12">
+					    <h3>Envío masivo:</h3>
+					    <!-- [D] descarga los cuestionarios y correos en CSV -->
+					    <p><a href="<?="{$base_path}/send_all/{$bp->id}";?>">Enviar el cuestionario a todos los correos registrados</a></p>
+					  </div>
+
 					  <div class="clearfix"></div>
 					  </li>
 					  <?php endforeach; ?>

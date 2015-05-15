@@ -181,6 +181,29 @@ class Applicants extends CI_Controller {
   }
 
   function sendall($blueprint_id){
+
+    $creator   = $this->user->level >= self::ADMIN_LEVEL ? false : $this->user->id;
+    $blueprint = $this->blueprint_model->get((int)$blueprint_id, $creator);
+
+    if(empty($blueprint)){
+      // redirect('bienvenido/cuestionarios');
+      die('no hay un cuestionario con ese ID');
+    }
+
+    if($this->applicants_model->batch_in_progress($blueprint->id)){
+      // redirect('bienvenido/cuestionarios');
+      die('el proceso se está ejecutando');
+    }
+
+    $batch_id = $this->applicants_model->register_mailgun_batch($blueprint->id);
+
+    $applications = $this->applicants_model->all($blueprint->id, false, true);
+    foreach ($applications as $applicant){
+      $this->mailgun_library->survey_invitation($applicant->user_email, $applicant->form_key);
+    }
+
+    $closed = $this->applicants_model->close_mailgun_batch($batch_id);
+    redirect('bienvenido/cuestionarios');
   }
 
   function delete($blueprint_id){
