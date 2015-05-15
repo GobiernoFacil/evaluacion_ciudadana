@@ -7,7 +7,7 @@ Se puede acceder a la versión oficial del sitio en: http://tuevaluas.com.mx
 
 ### Cosas necesarias. (Leland Gaunt)
 0. La maroma esta funciona con PHP y MySQL
-1.descargar e instalar la DB: https://www.dropbox.com/s/vyb2zirb8q3camy/agentes.sql.zip?dl=0
+1. descargar e instalar la DB: https://www.dropbox.com/s/vyb2zirb8q3camy/agentes.sql.zip?dl=0
 2. tener la librería mcrypt para PHP
 3. tener una cuenta de MAILGUN para los correos transaccionales
 4. tener composer para las librerías de PHP
