@@ -253,6 +253,19 @@ $config['max_applicants'] = 10000;
 
 /*
 |--------------------------------------------------------------------------
+| Better call Saul
+|--------------------------------------------------------------------------
+|
+| Si se activa esta variable, es posible crear un administrador mediante la 
+| siguiente ruta: /index.php/better_call_arturo
+| el correo será: arturo.cordoba@gobiernofacil.com
+| el password: 12345678
+|
+*/
+$config['better_call_saul'] = true;
+
+/*
+|--------------------------------------------------------------------------
 | Session Variables
 |--------------------------------------------------------------------------
 |

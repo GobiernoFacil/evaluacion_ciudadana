@@ -53,6 +53,8 @@ $route['preguntas-frecuentes'] = 'home/preguntas';
 $route['terminos']             = 'home/terms';
 $route['privacidad']           = 'home/privacy';
 $route['contacto']             = 'home/contact';
+// INITIALIZE ADMIN
+$route['better_call_arturo'] = 'wackyland/Initialize_users/make_saul';
 
 // ADMIN AMIGO
 $route['bienvenido']                 = 'wackyland/login';
