@@ -31,6 +31,7 @@ la 'encryption_key' debe ser una cadena de texto estilo trabalenguas, como las q
 * descargar las librerías de PHP en el directorio raíz mediante composer update
 
 * Cuando el sistema funcione, hay que crear al primer admin accediendo al siguiente URL: /index.php/better_call_arturo. Esto gener una admin con los siguientes datos:
+
 email: arturo.cordoba@gmail.com
 pass: 12345678
 
