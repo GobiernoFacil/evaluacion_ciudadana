@@ -271,8 +271,10 @@ define(function(require){
           errors    = [];
 
       _.each(questions, function(question){
-        var value = question.model.attributes.default_value;
-        if(!value) errors.push(question);
+        var value = question.model.attributes.default_value,
+            is_description = question.model.attributes.is_description;
+
+        if(!value && is_description !=="1") errors.push(question);
       }, this);
 
       return errors;

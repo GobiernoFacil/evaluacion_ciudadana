@@ -180,7 +180,7 @@ class Surveys extends CI_Controller {
       'blueprint_id'   =>  $bp->id,
       'section_id'     => (string)((int)$response['section_id']),
       'question'       => $this->sanitize_string($response['question']),
-      'is_description' => (bool)$response['is_description'],
+      'is_description' => (int)$response['is_description'],
       'type'           => $response['type'] == 'number' ? 'number' : 'text',
       'is_location'    => (int)$response['is_location']
     ];
@@ -195,6 +195,7 @@ class Surveys extends CI_Controller {
 
     $new_id    = $this->question_model->add($question_obj);
     $question_obj['id'] = (string)$new_id;
+    $question_obj['is_description'] = (string)$question_obj['is_description'];
     $question_obj['options'] = $this->add_options($response['options'], $question_obj);
 
     header('Content-type: application/json');

@@ -133,11 +133,14 @@ define(function(require){
       var container = document.getElementById('survey-app-title'),
           model     = this.model.attributes;
 
-      container.querySelector('input[type="text"]').value      = model.title;
+      container.querySelector('input[type="text"]').value        = model.title;
       container.querySelector('input[name="is_closed"]').checked = Number(model.is_closed);
       container.querySelector('input[name="is_public"]').checked = Number(model.is_public);
 
-      // [2] agrega todas las preguntas a la lista
+      // [2] agrega todas las preguntas a la lista. Esta función ejecuta lo siguiente:
+      //     - this.model.set({current_section : section});
+      //     - this.sub_collection.set(questions);
+      //     - this.render_section_menu();
       this.render_section(0);
     },
 
@@ -154,8 +157,53 @@ define(function(require){
       this.model.set({current_section : section});
       // [3] crea la lista de preguntas
       this.sub_collection.set(questions);
-      // [4] genera el navegador de secciones
+      // [4] genera el navegador de secciones. Esta función ejectua lo siguiente:
+      //     - this._render_rules_panel();
       this.render_section_menu();
+    },
+
+    // [ RENDER SECTION MENU ]
+    //
+    //
+    render_section_menu : function(){
+      // 
+      // [1] genera las variables de inicio
+      var menu     = document.getElementById('survey-navigation-menu'),
+          nav      = document.getElementById('survey-app-navigation'),
+          sections = _.uniq(this.collection.pluck('section_id')),
+          section  = this.model.get('current_section'),
+          content  = '';
+      // [2] si hay menos de dos secciones, el menú para navegar
+      //     entre secciones desaparece
+      if(sections.length < 2){
+        nav.style.display = "none";
+        return;
+      }
+      // [3] Si hay más de una sección, el menú se hace visible, 
+      //     y se le agrega un cero al inicio de la lista de secciones
+      //     para que represente la opción de mostrar todas las preguntas.
+      //     El contenido del <ul> se vacía para generar de nuevo cada sección.
+      nav.style.display = "";
+      sections.unshift(0);
+      menu.innerHTML = "";
+
+      // [4] Se genera el contenido del <ul> que contiene los links para 
+      //     ver las preguntas de cada sección, y se inserta al DOM
+      content += "<li>Ver secciones:</li>";
+      for(var  i = 0; i < sections.length; i++){
+        content += "<li><a href='#' data-section='" 
+                + sections[i] +"'>" 
+                + (sections[i] ? sections[i] : 'todas') + "</a></li>"
+      }
+      menu.innerHTML = content;
+
+      // [5] limpia la lista de la clase "current", para después asignarla a
+      //     la sección actual en el anchor
+      this.$('#survey-navigation-menu a').removeClass('current');
+      this.$('#survey-navigation-menu a[data-section="' + section + '"]').addClass('current');
+
+      // [6] genera el menú para crear/ver las reglas de navegación
+      this._render_rules_panel();
     },
 
     // [ RENDER RULES PANEL ]
@@ -308,39 +356,6 @@ define(function(require){
       if(this.collection.length){
         this.render_section_selector();
       }
-    },
-
-    // 
-    //
-    //
-    render_section_menu : function(){
-      var menu     = document.getElementById('survey-navigation-menu'),
-          nav      = document.getElementById('survey-app-navigation'),
-          sections = _.uniq(this.collection.pluck('section_id')),
-          section  = this.model.get('current_section'),
-          content  = '';
-
-      if(sections.length < 2){
-        nav.style.display = "none";
-        return;
-      }
-      
-      nav.style.display = "";
-      sections.unshift(0);
-      menu.innerHTML = "";
-	  
-	  content += "<li>Ver secciones:</li>";
-      for(var  i = 0; i < sections.length; i++){
-        content += "<li><a href='#' data-section='" 
-                + sections[i] +"'>" 
-                + (sections[i] ? sections[i] : 'todas') + "</a></li>"
-      }
-      menu.innerHTML = content;
-      // [2] le asigna la clase de seleccionado
-      this.$('#survey-navigation-menu a').removeClass('current');
-      this.$('#survey-navigation-menu a[data-section="' + section + '"]').addClass('current');
-
-      this._render_rules_panel();
     },
 
     // [ SHOW THE SECTION SELECTOR ]
