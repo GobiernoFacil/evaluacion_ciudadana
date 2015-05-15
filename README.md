@@ -15,6 +15,7 @@ Se puede acceder a la versión oficial del sitio en: http://tuevaluas.com.mx
 
 ### Configuración
 * En el directorio raíz del proyecto, hay que crear un archivo llamado .keys.php (está disponible un archivo llamado example.keys.php con la estructura del array de configuración). Este archivo debe contener lo siguiente:
+
 $ci_keys = [
   'encryption_key'     => 'aquí-la-llave-de-encriptación',
   'mailgun_api_key'    => 'aquí-el-api-key-de-mailgun',
