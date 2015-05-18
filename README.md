@@ -1,4 +1,4 @@
-# evaluacion_ciudadana
+# Tú Evalúas
 Permite a los beneficiarios de un programa presupuestario opinar fuera del esquema institucional.
 Se puede acceder a la versión oficial del sitio en: http://tuevaluas.com.mx
 
@@ -36,3 +36,6 @@ email: arturo.cordoba@gmail.com
 pass: 12345678
 
 Una vez creado el administrador, se recomienda deshabilitar en application/config/config.php la variable "better_call_saul", para evitar que se pueda generar de nuevo al primer admin. (Si el admin existe, la URL redirige al login). También es recomendable crear un nuevo administrador con un correo real. 
+
+
+¿Preguntas? visita la [Wiki](https://github.com/GobiernoFacil/evaluacion_ciudadana/wiki)
