@@ -19,6 +19,6 @@ tomará alrededor de 5 minutos.</p>
 
 <p style="padding: 0 20px;line-height: 1.4; color: #666;">Si estás de acuerdo con participar en la encuesta, por favor da 
 clic en el siguiente vínculo: <a href="<?php echo $url; ?>" style="background: #FF6F69;color: white;padding: 3px 5px;text-decoration: none;">tuevaluas.com.mx</a></p>
-</p>
+<p style="padding: 30px 20px;line-height: 1.4; color: #999; font-size: 14px">Esta dirección de correo electrónico no está habilitada para recibir mensajes.</p>
 </body>
 </html>
