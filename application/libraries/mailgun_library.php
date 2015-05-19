@@ -50,7 +50,7 @@ class Mailgun_library{
     $url  = base_url() . "index.php/cuestionario/" . $form_key;
     $data = ['url' => $url, 'title'=> $title];
     $message = [
-      'from'    => 'robot.invitacion@tuevaluas.com.mx',
+      'from'    => 'tuevaluas@tuevaluas.com.mx',
       'to'      => $email,
       'subject' => 'Te invitamos a participar en evalúas!',
       'html'    => $this->CI->load->view('emails/mail_applicant_invitation_view', $data, true)
