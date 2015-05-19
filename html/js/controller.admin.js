@@ -273,9 +273,9 @@ define(function(require){
           question = this.collection.get(q_id),
           q_text   = question.get('question'),
           option   = _.find(question.get('options'), function(m){
-            return m.get('value') == model.get('value');
+            return (m.value || m.get('value')) == model.get('value');
           }, this),
-          o_text   = option.get('description'),
+          o_text   = option.description || option.get('description'),
           text     = document.createTextNode(q_text + ' | R= ' + o_text);
 
           anchor.innerHTML = "x";
@@ -300,8 +300,8 @@ define(function(require){
         if(question.attributes.options.length){
           _.each(question.attributes.options, function(option){
             answers_list += "<option class='rule-answer-option' value='" 
-                         + option.get('value') +"'>" 
-                         + option.get('description') + "</option>";
+                         + (option.value || option.get('value')) +"'>" 
+                         + (option.description || option.get('description')) + "</option>";
           }, this);
           answers.innerHTML = answers_list;
           answers.style.display = "";

@@ -136,23 +136,35 @@ define(function(require){
       //     y así hasta llegar a una sección que cumpla los requisitos
       //     o al final del formulario
         while(rules){
-          console.log(position+1);
-        // [4.1] busca la pregunta que define si se despliega o no la siguiente
-        //       sección. Por ahora solo se puede poner una pregunta x regla.
-        //       Seguro en el futuro serán más lol.
-          var question = this.collection.findWhere({id : rules.question});
-        // [4.2] obtiene el valor de default de la pregunta.
-          var value    = question.get('default_value');
-        // [4.3] si el valor coincide con la condición, termina el ciclo
-          if(rules.val.indexOf(value) > -1){
+        // [4.1] revisa si se cumplen las condiciones. las condiciones pueden ser
+        //       un objeto, en caso de que solo dependa de una pregunta, o un array,
+        //       en caso de que dependa de varias preguntas. Si son varias preguntas,
+        //       debe cumplir con todas, o no se muestra la sección.
+          var condition = false;
+          if(_.isArray(rules)){
+            condition = true;
+            for(var i = 0; i < rules.length; i++){
+              var question = this.collection.findWhere({id : rules[i].question});
+              var value    = question.get('default_value');
+              condition    = rules[i].val.indexOf(value) > -1;
+              if(!condition) break;
+            }
+          }
+          else{
+            var question = this.collection.findWhere({id : rules.question});
+            var value    = question.get('default_value');
+            condition    = rules.val.indexOf(value) > -1
+          }
+
+          if(condition){
             break;
           }
-        // [4.4] si el valor no coincide, pero no hay más preguntas,
+        // [4.2] si el valor no coincide, pero no hay más preguntas,
         //       también termina el ciclo y renderea la última sección 
           else if(position + 1 >= this.sections.length){
             break;
           }
-        // [4.5] si el valor no coincide, pero hay más secciones, mueve
+        // [4.3] si el valor no coincide, pero hay más secciones, mueve
         //       el pointer y revisa de nuevo
           else{
             position++;
@@ -201,12 +213,35 @@ define(function(require){
       _.each(sections, function(section){
         var rules = this.rules.where({section_id : section});
         if(rules.length){
-      // [3.1] cada regla contiene la pregunta a la que pertenece y un arreglo
+      // [3.1] revisa de cuántas preguntas depende la sección. Si solo depende
+      //       de una pregunta, regresa un objeto, si depende de varias, regresa
+      //       un arreglo. Por ahora, si depende de una sola pregunta, hace
+      //       obligatoria la respuesta que se le pasa; si depende de una pregunta
+      //       pero varias posibles respuestas, se requiere que por lo menos una sea
+      //       la seleccionada; si depende de varias preguntas, se deben cumplir todas
+      //       las respuestas esperadas. Es decir, "OR" para respuestas de la misma
+      //       pregunta, y "AND" para varias preguntas. 
+          var r_collection = new Backbone.Collection(rules);
+          var questions_id = _.uniq(r_collection.pluck('question_id'));
+      // [3.2] cada regla contiene la pregunta a la que pertenece y un arreglo
       //       con las reglas que debe aplicar
-          this.nav_rules.push({
-            question : rules[0].get('question_id'),
-            val      : _.map(rules, function(rule){return rule.get('value');})
-          });
+          if(questions_id.length < 2){
+            this.nav_rules.push({
+              question : rules[0].get('question_id'),
+              val      : _.map(rules, function(rule){return rule.get('value');})
+            });
+          }
+          else{
+            var section_rules = [];
+            _.each(questions_id, function(id){
+              var r = r_collection.where({question_id : id});
+              section_rules.push({
+                question : id,
+                val      : _.map(r, function(rule){return rule.get('value');})
+              });
+            }, this);
+            this.nav_rules.push(section_rules);
+          }
         }
         else{
           this.nav_rules.push(null);
