@@ -11,7 +11,7 @@
 ¡Hola!</h2>
 <p style="padding: 0 20px;line-height: 1.4; color: #666;">Bienvenido a la plataforma <strong>Tú Evalúas</strong> mediante la cual podrás expresar 
 tu opinión acerca de los programas del Gobierno Federal. Para ello, te 
-pedimos que nos ayudes a responder una encuesta que te 
+pedimos que nos ayudes a responder una encuesta "<?php echo $title; ?>", que te 
 tomará alrededor de 5 minutos.</p>
 
 <p style="padding: 0 20px;line-height: 1.4; color: #666;">Toda la información que nos proporciones será confidencial y utilizada 

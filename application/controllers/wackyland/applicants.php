@@ -79,7 +79,7 @@ class Applicants extends CI_Controller {
 
     $form_key = md5('blueprint' . $blueprint_id . $email);
     $this->add_applicant((int)$blueprint_id, $form_key, $email);
-    $this->mailgun_library->survey_invitation($email, $form_key);
+    $this->mailgun_library->survey_invitation($email, $form_key, $blueprint->title);
     redirect('bienvenido/cuestionarios');
   }
 
@@ -199,7 +199,7 @@ class Applicants extends CI_Controller {
 
     $applications = $this->applicants_model->all($blueprint->id, false, true);
     foreach ($applications as $applicant){
-      $this->mailgun_library->survey_invitation($applicant->user_email, $applicant->form_key);
+      $this->mailgun_library->survey_invitation($applicant->user_email, $applicant->form_key, $blueprint->title);
     }
 
     $closed = $this->applicants_model->close_mailgun_batch($batch_id);

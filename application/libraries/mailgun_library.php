@@ -45,14 +45,15 @@ class Mailgun_library{
   // [ THE APPLICANT INVITATION ]
   //
   //
-  function survey_invitation($email, $form_key){
+  function survey_invitation($email, $form_key, $title = ''){
     $mailgun = new Mailgun ($this->key);
     $url  = base_url() . "index.php/cuestionario/" . $form_key;
+    $data = ['url' => $url, 'title'=> $title];
     $message = [
       'from'    => 'robot.invitacion@tuevaluas.com.mx',
       'to'      => $email,
       'subject' => 'Te invitamos a participar en evalúas!',
-      'html'    => $this->CI->load->view('emails/mail_applicant_invitation_view', ['url' => $url], true)
+      'html'    => $this->CI->load->view('emails/mail_applicant_invitation_view', $data, true)
     ];
     return $mailgun->sendMessage($this->domain, $message);
   }
