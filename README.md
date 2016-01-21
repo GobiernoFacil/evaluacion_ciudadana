@@ -28,7 +28,7 @@ la 'encryption_key' debe ser una cadena de texto estilo trabalenguas, como las q
 
 * agregar los datos de conexión a la DB en application/config/database.php
 * descargar las librerías de JS en html/js mediante: bower update
-* descargar las librerías de PHP en el directorio raíz mediante composer update
+* descargar las librerías de PHP en el directorio raíz mediante composer install
 
 * Cuando el sistema funcione, hay que crear al primer admin accediendo al siguiente URL: /index.php/better_call_arturo. Esto gener una admin con los siguientes datos:
 
