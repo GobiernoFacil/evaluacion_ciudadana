@@ -7,6 +7,17 @@
 				<div class="col-sm-4">
 					<section class="box">
 			  		<h2>Crear encuesta</h2>
+
+			  		<!-- SEARCH -->
+			  		<form id="search-survey" name="search-survey" method="post" class="row" action="<?= site_url("wackyland/surveys/search_survey"); ?>">
+					  <div class="col-sm-12">
+					  	<p><label>Buscar: </label> 
+						  	<input type="text" name="query" class="typeahead">
+					  	</p>
+					  </div>
+					</form>
+					<!-- SEARCH ENDS -->
+
 					<form name="add-survey" method="post" class="row" action="<?= site_url("wackyland/surveys/create"); ?>">
 					  <div class="col-sm-12">
 					  	<p><label>Título: </label> 
@@ -57,3 +68,36 @@
 		</div>
 	</div>
 </div>
+
+<script src="/js/bower_components/jquery/dist/jquery.min.js"></script>
+<script src="/js/bower_components/typeahead.js/dist/typeahead.jquery.min.js"></script>
+<script src="/js/bower_components/typeahead.js/dist/bloodhound.min.js"></script>
+<script>
+	$(document).ready(function(){
+	
+		var surveys = new Bloodhound({
+			datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+			queryTokenizer: Bloodhound.tokenizers.whitespace,
+			// prefetch: $("#search-survey").attr("action"),
+			
+			remote: {
+				url: $("#search-survey").attr("action"),
+				prepare : function(a, b){
+					var base = $("#search-survey").attr("action"),
+					    full = base + "?query=" + a;
+
+					b.url = full;
+					return b;
+				}
+
+			}
+			
+		});
+
+		$('#search-survey .typeahead').typeahead(null, {
+			name: 'query',
+			display: 'title',
+			source: surveys
+		});
+	});
+</script>
