@@ -166,7 +166,7 @@ class Surveys extends CI_Controller {
   //
   //
   public function search_survey(){
-    $res = $this->blueprint_model->all();
+    $res = $this->blueprint_model->search($this->input->get("query"));
     header('Content-type: application/json');
     echo json_encode($res);
   }

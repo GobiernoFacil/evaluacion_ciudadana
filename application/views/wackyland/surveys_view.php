@@ -8,15 +8,26 @@
 					<section class="box">
 			  		<h2>Crear encuesta</h2>
 
-			  		<!-- SEARCH -->
+			  		<!-- SEARCH SURVEY -->
 			  		<form id="search-survey" name="search-survey" method="post" class="row" action="<?= site_url("wackyland/surveys/search_survey"); ?>">
 					  <div class="col-sm-12">
-					  	<p><label>Buscar: </label> 
+					  	<p><label>Buscar encuesta: </label> 
 						  	<input type="text" name="query" class="typeahead">
 					  	</p>
 					  </div>
 					</form>
-					<!-- SEARCH ENDS -->
+					<!-- SEARCH SURVEY ENDS -->
+
+					<!-- SEARCH USERS -->
+			  		<form id="search-user" name="search-user" method="post" class="row" action="<?= site_url("wackyland/admins/search_user"); ?>">
+					  <div class="col-sm-12">
+					  	<p><label>Buscar usuario (email): </label> 
+						  	<input type="text" name="query" class="typeahead">
+					  	</p>
+					  </div>
+					</form>
+					<!-- SEARCH USERS ENDS -->
+
 
 					<form name="add-survey" method="post" class="row" action="<?= site_url("wackyland/surveys/create"); ?>">
 					  <div class="col-sm-12">
@@ -98,6 +109,42 @@
 			name: 'query',
 			display: 'title',
 			source: surveys
+		});
+
+		var users = new Bloodhound({
+			datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+			queryTokenizer: Bloodhound.tokenizers.whitespace,
+			// prefetch: $("#search-survey").attr("action"),
+			
+			remote: {
+				url: $("#search-user").attr("action"),
+				prepare : function(a, b){
+					var base = $("#search-user").attr("action"),
+					    full = base + "?query=" + a;
+
+					b.url = full;
+					return b;
+				}
+
+			}
+			
+		});
+
+		$('#search-user .typeahead').typeahead(null, {
+			name: 'query',
+			display: 'email',
+			source: users
+		});
+
+		$('.typeahead').bind('typeahead:select', function(ev, suggestion){
+			console.log(suggestion);
+			if(suggestion.email){
+				window.location.href = "<?= site_url("bienvenido/usuarios"); ?>/" + suggestion.id;
+			}
+			else{
+				window.location.href = "<?= site_url("wackyland/surveys/update"); ?>/" + suggestion.id;
+			}
+			// window.location.href = "<?= site_url("wackyland/surveys/update"); ?>/" + suggestion.id;
 		});
 	});
 </script>

@@ -191,4 +191,14 @@ class Admins extends CI_Controller {
       redirect('administradores', 'refresh');
     }
   }
+
+  //
+  // [ SEARCH USER ]
+  //
+  //
+  public function search_user(){
+    $res = $this->admins_model->search($this->input->get("query"));
+    header('Content-type: application/json');
+    echo json_encode($res);
+  }
 }

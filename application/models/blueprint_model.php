@@ -14,6 +14,12 @@ class Blueprint_model extends CI_Model{
     parent::__construct();
   }
 
+  function search($string){
+    $this->db->like("title", $string);
+    $q = $this->db->get(self::TABLE);
+    return $q->result();
+  }
+
   function get($id, $creator = false){
     $where = ['id' => $id, 'is_visible' => 1];
     if($creator) $where['creator'] = $creator;
