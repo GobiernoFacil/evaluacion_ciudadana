@@ -1115,22 +1115,22 @@ header.pg {
     header.pg nav + nav {
       background: #FF6F69; }
 
-nav {
+nav, .nav_sm {
   margin-top: 30px;
   padding: 15px 0;
   text-align: right; }
-  nav ul {
+  nav ul, .nav_sm ul {
     float: right; }
-  nav .tw, nav .fb {
+  nav .tw, nav .fb, .nav_sm .tw, .nav_sm .fb {
     text-align: left;
     float: left;
     margin: 0 10px; }
-  nav li {
+  nav li, .nav_sm li {
     display: inline-block;
     margin: 0 30px 0 0;
     color: #999;
     padding: 25px 10px 0; }
-    nav li a:link, nav li a:visited {
+    nav li a:link, nav li a:visited, .nav_sm li a:link, .nav_sm li a:visited {
       color: white;
       border-bottom: 2px solid white;
       font-weight: 700;
@@ -1138,16 +1138,16 @@ nav {
       padding-bottom: 3px;
       letter-spacing: 1px;
       text-transform: uppercase; }
-      nav li a:link.hm_link, nav li a:visited.hm_link {
+      nav li a:link.hm_link, nav li a:visited.hm_link, .nav_sm li a:link.hm_link, .nav_sm li a:visited.hm_link {
         color: #999;
         border-bottom: 2px solid #999; }
-      nav li a:link:hover, nav li a:visited:hover {
+      nav li a:link:hover, nav li a:visited:hover, .nav_sm li a:link:hover, .nav_sm li a:visited:hover {
         color: #011C26;
         border-bottom-color: #011C26; }
-    nav li.current a:link, nav li.current a:visited {
+    nav li.current a:link, nav li.current a:visited, .nav_sm li.current a:link, .nav_sm li.current a:visited {
       color: #011C26;
       border-bottom-color: #011C26; }
-  nav .tuevaluas {
+  nav .tuevaluas, .nav_sm .tuevaluas {
     margin: 15px 0 0 20px;
     background-position: 0;
     height: 48px;
@@ -1156,10 +1156,13 @@ nav {
     -webkit-opacity: 1;
     -moz-opacity: 1;
     opacity: 1; }
-    nav .tuevaluas:hover {
+    nav .tuevaluas:hover, .nav_sm .tuevaluas:hover {
       -webkit-opacity: 0.8;
       -moz-opacity: 0.8;
       opacity: 0.8; }
+
+.nav_sm {
+  margin: 0; }
 
 .intro {
   color: #011C26;
