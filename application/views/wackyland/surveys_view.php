@@ -83,16 +83,28 @@
 <script src="/js/bower_components/jquery/dist/jquery.min.js"></script>
 <script src="/js/bower_components/typeahead.js/dist/typeahead.jquery.min.js"></script>
 <script src="/js/bower_components/typeahead.js/dist/bloodhound.min.js"></script>
+<script src="/js/bower_components/sweetalert/dist/sweetalert.min.js"></script>
 <script>
+  /*
+   * ENABLE THE USERS AND SURVEY SEARCH
+   *
+   */
 	$(document).ready(function(){
-	
+
+		// THE SURVEY SEARCH
+		//
+		//
+		//
+
+		// [1] define the search engine
 		var surveys = new Bloodhound({
+			// [1.1] default setup
 			datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
 			queryTokenizer: Bloodhound.tokenizers.whitespace,
-			// prefetch: $("#search-survey").attr("action"),
-			
 			remote: {
+				// [1.2] set the search URL
 				url: $("#search-survey").attr("action"),
+				// [1.3] write the query URL
 				prepare : function(a, b){
 					var base = $("#search-survey").attr("action"),
 					    full = base + "?query=" + a;
@@ -105,12 +117,18 @@
 			
 		});
 
+		// [2] enable the search field
 		$('#search-survey .typeahead').typeahead(null, {
 			name: 'query',
 			display: 'title',
 			source: surveys
 		});
 
+
+		// THE USERS SEARCH
+		//
+		//
+		//
 		var users = new Bloodhound({
 			datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
 			queryTokenizer: Bloodhound.tokenizers.whitespace,

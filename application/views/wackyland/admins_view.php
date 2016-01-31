@@ -59,7 +59,7 @@
 				   	<li class="row los_titles">
 				   	   <div class="col-sm-8">
 				   	    	 <h4>Correo</h4>
-				   	   </div>
+				   	   </div>o
 				   	   <div class="col-sm-4">
 				   	    	  <h4>Tipo</h4>
 				   	   </div>
