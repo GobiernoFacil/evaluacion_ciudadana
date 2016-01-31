@@ -67,7 +67,7 @@
 					      </a>
 					      </div>
 					       <div class="col-sm-2">
-						   		<a href="<?= site_url("surveys/eliminar/" . $survey->id); ?>" class="danger">Eliminar</a>
+						   		<a data-title="<?php echo $survey->title; ?>" href="<?= site_url("surveys/eliminar/" . $survey->id); ?>" class="danger">Eliminar</a>
 					       </div>
 					    </li>
 					  <?php endforeach; ?>
@@ -90,6 +90,31 @@
    *
    */
 	$(document).ready(function(){
+
+		// DELETE SURVEY WARNING
+		//
+		//
+		//
+		$("ul.list").on("click", ".danger", function(e){
+		  e.preventDefault();
+			var url   = $(this).attr("href"),
+			    title = $(this).attr("data-title");
+			deleteSurvey(url, title);
+		});
+
+		function deleteSurvey(url, title){
+			swal({
+        title: "Eliminar encuesta", 
+        text: "Vas a eliminar \"" + title + "\" del sistema. Esto no se puede deshacer!", 
+        type: "warning",
+        confirmButtonText : "Eliminar",
+        //confirmButtonColor: "#ec6c62"
+        showCancelButton: true,
+        cancelButtonText : "Mejor no",
+      }, function(){
+        window.location.href = url;
+      });
+		}
 
 		// THE SURVEY SEARCH
 		//
