@@ -135,7 +135,16 @@ class Surveys extends CI_Controller {
     $user = $is_admin ? false : $this->user->id;
     $blueprint = $this->blueprint_model->get((int)$id, $user);
     if(! empty($blueprint)){
-      $this->blueprint_model->soft_delete((int)$id);
+      if($this->blueprint_model->soft_delete((int)$id)){
+        $this->session->set_flashdata('sys_message', [
+          "type" => "success", "message" =>"has eliminado la encuesta"
+        ]);
+      }
+      else{
+        $this->session->set_flashdata('sys_message', [
+          "type" => "error", "message" =>"No se logró eliminar la encuesta"
+        ]);
+      }
     }
     redirect('bienvenido/encuestas', 'refresh');
   }

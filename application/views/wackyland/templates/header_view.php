@@ -63,3 +63,8 @@
 		</div>
 	</div>
 </nav>
+
+<!-- ERROR / SUCCESS MESSAGE -->
+<?php $m = $this->session->flashdata('sys_message'); if($m): ?>
+  <div class="<?php echo $m["type"]; ?>"><?php echo $m["message"]; ?></div>
+<?php endif; ?>
