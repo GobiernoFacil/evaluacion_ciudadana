@@ -3,6 +3,7 @@
         "cartalyst/sentry": "~2.1",
         "mailgun/mailgun-php": "~1.7",
         "league/csv": "~7.0",
-        "ezyang/htmlpurifier": "~4.6"
+        "ezyang/htmlpurifier": "~4.6",
+        "happydemon/txt": "^1.0"
     }
 }

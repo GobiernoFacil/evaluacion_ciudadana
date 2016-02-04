@@ -35,7 +35,10 @@
 					  <p><label>contraseña</label><input id="the-new-pass" type="password" name="password" value=""></p>
 					  <p>Tipo de administrador</p>
 					  <ul class="options">
-					    <li><label><input type="radio" name="level" value="1" checked="checked">curioso</label></li>
+
+					    <!-- THIS KIND OF USER NO LONGER EXIST
+              <li><label><input type="radio" name="level" value="1" checked="checked">curioso</label></li>
+              -->
 					    <li><label><input type="radio" name="level" value="3">funcionario</label></li>
 					    <li><label><input type="radio" name="level" value="5">administrador</label></li>
 					  </ul>
@@ -56,7 +59,7 @@
 				   	<li class="row los_titles">
 				   	   <div class="col-sm-8">
 				   	    	 <h4>Correo</h4>
-				   	   </div>
+				   	   </div>o
 				   	   <div class="col-sm-4">
 				   	    	  <h4>Tipo</h4>
 				   	   </div>

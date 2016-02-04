@@ -10,8 +10,11 @@
 	<meta name="description" content="<?php echo $description;?>">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" href="/img/favicon.ico">
-	<link rel="stylesheet" type="text/css" href="/css/normalize.css">
+    <link rel="stylesheet" type="text/css" href="/css/normalize.css">
     <link rel="stylesheet" type="text/css" href="/css/styles.css">
+
+    <!-- NEW CSS -->
+    <link rel="stylesheet" type="text/css" href="/js/bower_components/sweetalert/dist/sweetalert.css">
     <link rel="stylesheet" type="text/css" href="/css/dev.css">
 </head>
 <body class="backend">
@@ -60,3 +63,8 @@
 		</div>
 	</div>
 </nav>
+
+<!-- ERROR / SUCCESS MESSAGE -->
+<?php $m = $this->session->flashdata('sys_message'); if($m): ?>
+  <div class="<?php echo $m["type"]; ?>"><?php echo $m["message"]; ?></div>
+<?php endif; ?>

@@ -14,6 +14,13 @@ class Admins_model extends CI_Model{
     parent::__construct();
   }
 
+  function search($string){
+    $this->db->like("email", $string);
+    $this->db->select("id, email");
+    $q = $this->db->get(self::TABLE);
+    return $q->result();
+  }
+
   function get($id){
     $q = $this->db->get_where(self::TABLE, ['id' => $id]);
     return $q->row();

@@ -3,7 +3,7 @@
 		<article>
 			<div class="col-sm-8 col-sm-offset-2">
 				<h1>¿Qué es <strong>Tú Evalúas</strong>?</h1>
-				<p><strong>Tú Evalúas</strong> es una plataforma digital que tiene como objetivo evaluar el desempeño de los programas públicos 
+				<p><strong>Tú Evalúas</strong> es una plataforma digital que <strong>tiene como objetivo evaluar el desempeño</strong> de los programas públicos 
 					federales mediante la participación ciudadana. A través de <strong>Tú Evalúas</strong> podrás calificar los procesos seguidos 
 					por cada programa y expresar tu 
 					satisfacción con los productos y servicios que ofrecen.</p>
